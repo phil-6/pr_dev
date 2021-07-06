@@ -1,0 +1,25 @@
+<section id="projects">
+    <h2 class="heading">Projects I've worked on</h2>
+
+    <div class="project-cards">
+        {% for project in site.data.projects %}
+            <div class="project available-{{ project.available }}">
+                <p class="year"> {{ project.year }}</p>
+                <h3 class="icon"><i class="fas fa-{{ project.icon }}"></i></h3>
+                <h3 class="title"> {{ project.name }}</h3>
+                <hr>
+                <p class="description">{{ project.description }}</p>
+                <p class="tech"><strong>Tech: </strong>{{ project.tech }}</p>
+                <div class="btn-container">
+                    {% if project.available %}
+                        <a class="btn" href="{{ project.link }}">Visit Project <i class="fas fa-external-link-alt"></i></a>
+                    {% else %}
+                        <p class="unavailable">Project no longer available</p>
+                    {% endif %}
+                    <a class="btn" href="{{ project.github }}">View Code <i class="fab fa-github"></i></a>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+</section>

@@ -34,6 +34,15 @@ body.dark.red button.color-button:hover, body.dark.red a.color-button:hover {
   background-color: #010A1B;
   border-color: #FF6C00;
 }
+body.dark.red .social a {
+  background-color: #EB9304;
+  color: #42000C;
+}
+body.dark.red .social a:hover {
+  background-color: #42000C;
+  border-color: #EB9304;
+  color: #EB9304;
+}
 body.dark.red #form-container form label {
   color: #42000C;
 }
@@ -84,6 +93,15 @@ body.dark.orange button.color-button:hover, body.dark.orange a.color-button:hove
   color: #140008;
   background-color: #FADE0A;
   border-color: #140008;
+}
+body.dark.orange .social a {
+  background-color: #A34500;
+  color: #010A1B;
+}
+body.dark.orange .social a:hover {
+  background-color: #010A1B;
+  border-color: #A34500;
+  color: #A34500;
 }
 body.dark.orange #form-container form label {
   color: #010A1B;
@@ -136,6 +154,15 @@ body.dark.yellow button.color-button:hover, body.dark.yellow a.color-button:hove
   background-color: #4AB944;
   border-color: #050F25;
 }
+body.dark.yellow .social a {
+  background-color: #FADE0A;
+  color: #000A0F;
+}
+body.dark.yellow .social a:hover {
+  background-color: #000A0F;
+  border-color: #FADE0A;
+  color: #FADE0A;
+}
 body.dark.yellow #form-container form label {
   color: #140008;
 }
@@ -186,6 +213,15 @@ body.dark.green button.color-button:hover, body.dark.green a.color-button:hover 
   color: #00d4ff;
   background-color: #0a2540;
   border-color: #00d4ff;
+}
+body.dark.green .social a {
+  background-color: #21851C;
+  color: #032D01;
+}
+body.dark.green .social a:hover {
+  background-color: #032D01;
+  border-color: #21851C;
+  color: #21851C;
 }
 body.dark.green #form-container form label {
   color: #050F25;
@@ -238,6 +274,15 @@ body.dark.blue button.color-button:hover, body.dark.blue a.color-button:hover {
   background-color: #3E0ECB;
   border-color: #5cdb95;
 }
+body.dark.blue .social a {
+  background-color: #00d4ff;
+  color: #0a2540;
+}
+body.dark.blue .social a:hover {
+  background-color: #0a2540;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
 body.dark.blue #form-container form label {
   color: #0a2540;
 }
@@ -288,6 +333,15 @@ body.dark.purple button.color-button:hover, body.dark.purple a.color-button:hove
   color: #F9B3BF;
   background-color: #42000C;
   border-color: #F9B3BF;
+}
+body.dark.purple .social a {
+  background-color: #F5F3FB;
+  color: #0E0137;
+}
+body.dark.purple .social a:hover {
+  background-color: #0E0137;
+  border-color: #F5F3FB;
+  color: #F5F3FB;
 }
 body.dark.purple #form-container form label {
   color: #210575;
@@ -340,6 +394,15 @@ body.light.red button.color-button:hover, body.light.red a.color-button:hover {
   background-color: #FFE0CA;
   border-color: #FF6C00;
 }
+body.light.red .social a {
+  background-color: #A66700;
+  color: #F9B3BF;
+}
+body.light.red .social a:hover {
+  background-color: #F9B3BF;
+  border-color: #A66700;
+  color: #A66700;
+}
 body.light.red #form-container form label {
   color: #42000C;
 }
@@ -390,6 +453,15 @@ body.light.orange button.color-button:hover, body.light.orange a.color-button:ho
   color: #140008;
   background-color: #FADE0A;
   border-color: #140008;
+}
+body.light.orange .social a {
+  background-color: #4E75BC;
+  color: #FFE0CA;
+}
+body.light.orange .social a:hover {
+  background-color: #FFE0CA;
+  border-color: #4E75BC;
+  color: #4E75BC;
 }
 body.light.orange #form-container form label {
   color: #291100;
@@ -442,6 +514,15 @@ body.light.yellow button.color-button:hover, body.light.yellow a.color-button:ho
   background-color: #5cdb95;
   border-color: #20396E;
 }
+body.light.yellow .social a {
+  background-color: #0E6F9E;
+  color: #FFF6B5;
+}
+body.light.yellow .social a:hover {
+  background-color: #FFF6B5;
+  border-color: #0E6F9E;
+  color: #0E6F9E;
+}
 body.light.yellow #form-container form label {
   color: #181500;
 }
@@ -492,6 +573,15 @@ body.light.green button.color-button:hover, body.light.green a.color-button:hove
   color: #0a2540;
   background-color: #00d4ff;
   border-color: #0a2540;
+}
+body.light.green .social a {
+  background-color: #032D01;
+  color: #5cdb95;
+}
+body.light.green .social a:hover {
+  background-color: #5cdb95;
+  border-color: #032D01;
+  color: #032D01;
 }
 body.light.green #form-container form label {
   color: #050F25;
@@ -544,6 +634,15 @@ body.light.blue button.color-button:hover, body.light.blue a.color-button:hover 
   background-color: #F5F3FB;
   border-color: #3E0ECB;
 }
+body.light.blue .social a {
+  background-color: #0a2540;
+  color: #00d4ff;
+}
+body.light.blue .social a:hover {
+  background-color: #00d4ff;
+  border-color: #0a2540;
+  color: #0a2540;
+}
 body.light.blue #form-container form label {
   color: #0a2540;
 }
@@ -594,6 +693,15 @@ body.light.purple button.color-button:hover, body.light.purple a.color-button:ho
   color: #9C001C;
   background-color: #FFE4B7;
   border-color: #9C001C;
+}
+body.light.purple .social a {
+  background-color: #210575;
+  color: #F5F3FB;
+}
+body.light.purple .social a:hover {
+  background-color: #F5F3FB;
+  border-color: #210575;
+  color: #210575;
 }
 body.light.purple #form-container form label {
   color: #3E0ECB;

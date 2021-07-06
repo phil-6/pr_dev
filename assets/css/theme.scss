@@ -55,6 +55,17 @@ body {
             }
           }
 
+          .social a {
+            background-color: map-get($color-themes, $theme, $color, header-button-color);
+            color: map-get($color-themes, $theme, $color, background);
+
+            &:hover {
+              background-color: map-get($color-themes, $theme, $color, background);
+              border-color: map-get($color-themes, $theme, $color, header-button-color);
+              color: map-get($color-themes, $theme, $color, header-button-color);
+            }
+          }
+
           #form-container form {
             label {
               color: map-get($color-themes, $theme, $color, form-label-ink);
@@ -80,5 +91,4 @@ body {
       }
     }
   }
-
 }
