@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,
+          initial-scale=1,
+          maximum-scale=1,
+          user-scalable=no">
+    <meta name="description" content="PurpleRiver">
+    <meta name="author" content="Phil Reynolds">
+    <meta name="theme-color" content="#2a5298">
+    <!--    <link rel="icon" type="image/png" href="../assets/favicon/favicon-16x16.png" sizes="16x16"/>-->
+    <!--    <link rel="icon" type="image/png" href="../assets/favicon/favicon-32x32.png" sizes="32x32"/>-->
+    <!--    <link rel="icon" type="image/png" href="../assets/favicon/favicon-96x96.png" sizes="96x96"/>-->
+
+    <title>Dashboard</title>
+
+    <!--  Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <!-- Boostrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"
+            integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q="
+            crossorigin="anonymous"></script>
+
+    <!--  Font Awesome -->
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          crossorigin="anonymous">
+
+    <!-- Font Family-->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Krub:400,700|"
+          rel="stylesheet">
+
+    <!-- StyleSheet -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="assets/css/main.css"/>
+
+
+</head>
+<body class="light-mode">
+
+<header class="">
+    <div class="row">
+
+        <div class="col">
+            <h1 class="">Dashboard</h1>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-2">
+            <h3 class="">Last Updated: </h3>
+            <h4 class="" id="last_updated"></h4>
+        </div>
+        <div class="col-md-2">
+            <h3></h3>
+            <h3>
+                <a onclick="reloadData()">Refresh <i class="fas fa-sync-alt fa-hover"></i>
+                </a>
+            </h3>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <h3>
+                <button class="btn btn-sm dark-mode-btn" onclick="toggleDarkMode()">Toggle Dark Mode
+                </button>
+            </h3>
+        </div>
+    </div>
+</header>
+
+<div class="row key-info-row">
+    <div class="col-md-3 key-info-card purple-card">
+        <h4>Total Calls</h4>
+        <div id="key_totalCalls" class="key-number"></div>
+    </div>
+    <div class="col-md-3 key-info-card blue-card">
+        <h4>Calls This Month</h4>
+        <div class="row mh-100 no-gutters">
+            <div class="col">
+                <div id="key_callsThisMonth" class="key-number"></div>
+            </div>
+            <div class="col align-self-center">
+                <span id="key_symbol_callsThisMonth" class="key-change-symbol"></span>
+                <span id="key_change_callsThisMonth" class="key-change-number"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 key-info-card green-card">
+        <h4>Collections Booked This Month</h4>
+        <div class="row mh-100 no-gutters">
+            <div class="col">
+                <div id="key_collectionsBooked" class="key-number"></div>
+            </div>
+            <div class="col align-self-center">
+                <span id="key_symbol_collectionsBooked" class="key-change-symbol"></span>
+                <span id="key_change_collectionsBooked" class="key-change-number"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 key-info-card red-card">
+        <h4>Dropped Calls This Month</h4>
+        <div class="row mh-100 no-gutters">
+            <div class="col">
+                <div id="key_droppedCalls" class="key-number"></div>
+            </div>
+            <div class="col align-self-center">
+                <span id="key_symbol_droppedCalls" class="key-change-symbol"></span>
+                <span id="key_change_droppedCalls" class="key-change-number "></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="chart">
+            <canvas id="barChartCallMatches"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="chart">
+            <canvas id="barChartCallOutcomes"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="extra-info-card">
+
+            <h2>Totals</h2>
+            <div class="row">
+                <div class="col extra-info-col">
+                    <h3>Matched Calls</h3>
+                    <div id="extra_matchedCalls" class="extra-number"></div>
+                </div>
+
+                <div class="col extra-info-col">
+                    <h3>Calls No Match</h3>
+                    <div id="extra_notMatchedCalls" class="extra-number"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="extra-info-card">
+            <h2>Totals</h2>
+            <div class="row">
+                <div class="col extra-info-col">
+                    <h3>Bookings</h3>
+                    <div id="extra_bookings" class="extra-number"></div>
+                </div>
+
+                <div class="col extra-info-col">
+                    <h3>Not Booked</h3>
+                    <div id="extra_notBooked" class="extra-number"></div>
+                </div>
+
+                <div class="col extra-info-col">
+                    <h3>Dropped Calls</h3>
+                    <div id="extra_dropped" class="extra-number"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-md-4">
+        <div class="chart">
+            <canvas id="callMatches_Doughnut" class="pie-chart"></canvas>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="chart">
+            <canvas id="callBookings_Doughnut" class="pie-chart"></canvas>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="chart full-width-chart">
+            <canvas id="lineChartAnnualCalls" class="line-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Custom JS -->
+<script src="assets/js/build-charts.js"></script>
+
+</html>

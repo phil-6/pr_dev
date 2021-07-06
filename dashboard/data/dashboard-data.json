@@ -1,0 +1,100 @@
+{
+  "last_update_timestamp": "2020-02-04 08:00:26.409017",
+  "last_update_date": "04/02/2020",
+  "last_update_time": "08:00",
+  "global_calls": {
+    "total_calls": 1442,
+    "annual_calls_last": 0,
+    "monthly_calls_last": 138,
+    "monthly_calls_current": 11,
+    "weekly_calls_last": 0,
+    "weekly_calls_current": 0,
+    "calls_by_month": {
+      "call_match": {
+        "jan": 51,
+        "feb": 4,
+        "mar": 31,
+        "apr": 25,
+        "may": 37,
+        "jun": 27,
+        "jul": 100,
+        "aug": 43,
+        "sep": 40,
+        "oct": 68,
+        "nov": 37,
+        "dec": 34
+      },
+      "call_no_match": {
+        "jan": 87,
+        "feb": 7,
+        "mar": 64,
+        "apr": 99,
+        "may": 79,
+        "jun": 85,
+        "jul": 68,
+        "aug": 67,
+        "sep": 82,
+        "oct": 114,
+        "nov": 95,
+        "dec": 98
+      },
+      "booked_calls": {
+        "jan": 29,
+        "feb": 4,
+        "mar": 0,
+        "apr": 2,
+        "may": 11,
+        "jun": 6,
+        "jul": 26,
+        "aug": 29,
+        "sep": 20,
+        "oct": 43,
+        "nov": 22,
+        "dec": 22
+      },
+      "total_calls": {
+        "jan": 138,
+        "feb": 11,
+        "mar": 95,
+        "apr": 124,
+        "may": 116,
+        "jun": 112,
+        "jul": 168,
+        "aug": 110,
+        "sep": 122,
+        "oct": 182,
+        "nov": 132,
+        "dec": 132
+      }
+    }
+  },
+  "calls_by_type": {
+    "total_to_date": {
+      "call_no_match": 945,
+      "call_match_home": 331,
+      "call_match_mob": 166,
+      "call_match_alt": 0,
+      "call_collection_booked": 220,
+      "call_collection_not_booked": 50,
+      "call_failure": 227
+    },
+    "total_this_month": {
+      "call_no_match": 7,
+      "call_match_home": 2,
+      "call_match_mob": 2,
+      "call_match_alt": 0,
+      "call_collection_booked": 4,
+      "call_collection_not_booked": 0,
+      "call_failure": 0
+    },
+    "total_last_month": {
+      "call_no_match": 87,
+      "call_match_home": 26,
+      "call_match_mob": 25,
+      "call_match_alt": 0,
+      "call_collection_booked": 29,
+      "call_collection_not_booked": 11,
+      "call_failure": 11
+    }
+  }
+}
