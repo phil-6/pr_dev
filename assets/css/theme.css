@@ -43,20 +43,25 @@ body.dark.red .social a:hover {
   border-color: #EB9304;
   color: #EB9304;
 }
-body.dark.red #form-container form label {
-  color: #42000C;
+body.dark.red #projects .project {
+  color: #F5F3FB;
+  border-color: #0E0137;
+  background-color: #472C00;
 }
-body.dark.red #form-container form input:focus {
-  border-bottom-color: #9C001C;
+body.dark.red #projects .project hr {
+  border-color: #3E0ECB;
 }
-body.dark.red #form-container form button {
-  color: #EB9304;
+body.dark.red #projects .project .btn-container .btn {
   border-color: #EB9304;
-  background: #42000C;
 }
-body.dark.red #form-container form button:hover {
-  color: #F9B3BF;
-  background: #0E0137;
+body.dark.red #projects .project .btn-container .btn:hover {
+  background-color: #42000C;
+}
+body.dark.red #projects .project:hover {
+  background-color: #613c00;
+}
+body.dark.red #projects .project:hover .icon {
+  color: #FFC15C;
 }
 body.dark.orange {
   color: #C2D2EF;
@@ -103,20 +108,25 @@ body.dark.orange .social a:hover {
   border-color: #A34500;
   color: #A34500;
 }
-body.dark.orange #form-container form label {
-  color: #010A1B;
+body.dark.orange #projects .project {
+  color: #4E75BC;
+  border-color: #1047A9;
+  background-color: #010A1B;
 }
-body.dark.orange #form-container form input:focus {
-  border-bottom-color: #FF6C00;
+body.dark.orange #projects .project hr {
+  border-color: #A34500;
 }
-body.dark.orange #form-container form button {
-  color: #FF6C00;
+body.dark.orange #projects .project .btn-container .btn {
   border-color: #FF6C00;
-  background: #010A1B;
 }
-body.dark.orange #form-container form button:hover {
-  color: #FFE0CA;
-  background: #082C6C;
+body.dark.orange #projects .project .btn-container .btn:hover {
+  background-color: #A34500;
+}
+body.dark.orange #projects .project:hover {
+  background-color: #031c4c;
+}
+body.dark.orange #projects .project:hover .icon {
+  color: #FF6C00;
 }
 body.dark.yellow {
   color: #ACD9EE;
@@ -163,20 +173,25 @@ body.dark.yellow .social a:hover {
   border-color: #FADE0A;
   color: #FADE0A;
 }
-body.dark.yellow #form-container form label {
-  color: #140008;
+body.dark.yellow #projects .project {
+  color: #FFF6B5;
+  border-color: #0E6F9E;
+  background-color: #9F8C00;
 }
-body.dark.yellow #form-container form input:focus {
-  border-bottom-color: #FADE0A;
-}
-body.dark.yellow #form-container form button {
-  color: #FADE0A;
+body.dark.yellow #projects .project hr {
   border-color: #FADE0A;
-  background: #0E6F9E;
 }
-body.dark.yellow #form-container form button:hover {
-  color: #0E6F9E;
-  background: #FADE0A;
+body.dark.yellow #projects .project .btn-container .btn {
+  border-color: #E54F89;
+}
+body.dark.yellow #projects .project .btn-container .btn:hover {
+  background-color: #D80959;
+}
+body.dark.yellow #projects .project:hover {
+  background-color: #a99500;
+}
+body.dark.yellow #projects .project:hover .icon {
+  color: #D80959;
 }
 body.dark.green {
   color: #FFD7D8;
@@ -223,20 +238,25 @@ body.dark.green .social a:hover {
   border-color: #21851C;
   color: #21851C;
 }
-body.dark.green #form-container form label {
-  color: #050F25;
+body.dark.green #projects .project {
+  color: #D7E2F9;
+  border-color: #21851C;
+  background-color: #050F25;
 }
-body.dark.green #form-container form input:focus {
-  border-bottom-color: #4AB944;
+body.dark.green #projects .project hr {
+  border-color: #3E0ECB;
 }
-body.dark.green #form-container form button {
-  color: #4AB944;
+body.dark.green #projects .project .btn-container .btn {
   border-color: #4AB944;
-  background: #032D01;
 }
-body.dark.green #form-container form button:hover {
+body.dark.green #projects .project .btn-container .btn:hover {
+  background-color: #425E99;
+}
+body.dark.green #projects .project:hover {
+  background-color: #08183b;
+}
+body.dark.green #projects .project:hover .icon {
   color: #4AB944;
-  background: #20396E;
 }
 body.dark.blue {
   color: #00d4ff;
@@ -283,20 +303,26 @@ body.dark.blue .social a:hover {
   border-color: #00d4ff;
   color: #00d4ff;
 }
-body.dark.blue #form-container form label {
-  color: #0a2540;
-}
-body.dark.blue #form-container form input:focus {
-  border-bottom-color: #00d4ff;
-}
-body.dark.blue #form-container form button {
+body.dark.blue #projects .project {
   color: #0a2540;
   border-color: #0a2540;
-  background: #00d4ff;
+  background-color: #00d4ff;
 }
-body.dark.blue #form-container form button:hover {
+body.dark.blue #projects .project hr {
+  border-color: #0a2540;
+}
+body.dark.blue #projects .project .btn-container .btn {
+  border-color: #0a2540;
+  background-color: #0a2540;
+}
+body.dark.blue #projects .project .btn-container .btn:hover {
+  background-color: #00d4ff;
+}
+body.dark.blue #projects .project:hover {
+  background-color: #1ad8ff;
+}
+body.dark.blue #projects .project:hover .icon {
   color: #0a2540;
-  background: #4AB944;
 }
 body.dark.purple {
   color: #F5F3FB;
@@ -343,20 +369,25 @@ body.dark.purple .social a:hover {
   border-color: #F5F3FB;
   color: #F5F3FB;
 }
-body.dark.purple #form-container form label {
-  color: #210575;
+body.dark.purple #projects .project {
+  color: #F5F3FB;
+  border-color: #210575;
+  background-color: #0E0137;
 }
-body.dark.purple #form-container form input:focus {
-  border-bottom-color: #7453D7;
+body.dark.purple #projects .project hr {
+  border-color: #A34500;
 }
-body.dark.purple #form-container form button {
-  color: #FFA059;
-  border-color: #FFA059;
-  background: #210575;
+body.dark.purple #projects .project .btn-container .btn {
+  border-color: #3E0ECB;
 }
-body.dark.purple #form-container form button:hover {
-  color: #FFE0CA;
-  background: #3E0ECB;
+body.dark.purple #projects .project .btn-container .btn:hover {
+  background-color: #291100;
+}
+body.dark.purple #projects .project:hover {
+  background-color: #110141;
+}
+body.dark.purple #projects .project:hover .icon {
+  color: #FF6C00;
 }
 body.light.red {
   color: #9C001C;
@@ -403,20 +434,25 @@ body.light.red .social a:hover {
   border-color: #A66700;
   color: #A66700;
 }
-body.light.red #form-container form label {
-  color: #42000C;
+body.light.red #projects .project {
+  color: #FFE4B7;
+  border-color: #7453D7;
+  background-color: #42000C;
 }
-body.light.red #form-container form input:focus {
-  border-bottom-color: #EF5671;
+body.light.red #projects .project hr {
+  border-color: #3E0ECB;
 }
-body.light.red #form-container form button {
-  color: #9C001C;
-  border-color: #9C001C;
-  background: #F9B3BF;
+body.light.red #projects .project .btn-container .btn {
+  border-color: #7453D7;
 }
-body.light.red #form-container form button:hover {
-  color: #F9B3BF;
-  background: #7453D7;
+body.light.red #projects .project .btn-container .btn:hover {
+  background-color: #42000C;
+}
+body.light.red #projects .project:hover {
+  background-color: #4c000e;
+}
+body.light.red #projects .project:hover .icon {
+  color: #EB9304;
 }
 body.light.orange {
   color: #010A1B;
@@ -463,20 +499,25 @@ body.light.orange .social a:hover {
   border-color: #4E75BC;
   color: #4E75BC;
 }
-body.light.orange #form-container form label {
-  color: #291100;
+body.light.orange #projects .project {
+  color: #082C6C;
+  border-color: #A34500;
+  background-color: #FFE0CA;
 }
-body.light.orange #form-container form input:focus {
-  border-bottom-color: #FF6C00;
+body.light.orange #projects .project hr {
+  border-color: #FFA059;
 }
-body.light.orange #form-container form button {
+body.light.orange #projects .project .btn-container .btn {
+  border-color: #C2D2EF;
+}
+body.light.orange #projects .project .btn-container .btn:hover {
+  background-color: #A34500;
+}
+body.light.orange #projects .project:hover {
+  background-color: #ffdac0;
+}
+body.light.orange #projects .project:hover .icon {
   color: #FF6C00;
-  border-color: #FF6C00;
-  background: none;
-}
-body.light.orange #form-container form button:hover {
-  color: #1047A9;
-  background: #FF6C00;
 }
 body.light.yellow {
   color: #140008;
@@ -523,20 +564,25 @@ body.light.yellow .social a:hover {
   border-color: #0E6F9E;
   color: #0E6F9E;
 }
-body.light.yellow #form-container form label {
-  color: #181500;
+body.light.yellow #projects .project {
+  color: #000A0F;
+  border-color: #054565;
+  background-color: #ACD9EE;
 }
-body.light.yellow #form-container form input:focus {
-  border-bottom-color: #FADE0A;
-}
-body.light.yellow #form-container form button {
-  color: #FADE0A;
+body.light.yellow #projects .project hr {
   border-color: #FADE0A;
-  background: #0E6F9E;
 }
-body.light.yellow #form-container form button:hover {
-  color: #054565;
-  background: #FADE0A;
+body.light.yellow #projects .project .btn-container .btn {
+  border-color: #FADE0A;
+}
+body.light.yellow #projects .project .btn-container .btn:hover {
+  background-color: #FADE0A;
+}
+body.light.yellow #projects .project:hover {
+  background-color: #c1e3f2;
+}
+body.light.yellow #projects .project:hover .icon {
+  color: #0E6F9E;
 }
 body.light.green {
   color: #032D01;
@@ -583,20 +629,25 @@ body.light.green .social a:hover {
   border-color: #032D01;
   color: #032D01;
 }
-body.light.green #form-container form label {
-  color: #050F25;
+body.light.green #projects .project {
+  color: #032D01;
+  border-color: #4AB944;
+  background-color: #D7FCD5;
 }
-body.light.green #form-container form input:focus {
-  border-bottom-color: #4AB944;
+body.light.green #projects .project hr {
+  border-color: #4AB944;
 }
-body.light.green #form-container form button {
-  color: #5cdb95;
-  border-color: #5cdb95;
-  background: #032D01;
+body.light.green #projects .project .btn-container .btn {
+  border-color: #E25357;
 }
-body.light.green #form-container form button:hover {
-  color: #425E99;
-  background: #4AB944;
+body.light.green #projects .project .btn-container .btn:hover {
+  background-color: #D7E2F9;
+}
+body.light.green #projects .project:hover {
+  background-color: #5cdb95;
+}
+body.light.green #projects .project:hover .icon {
+  color: #E25357;
 }
 body.light.blue {
   color: #0a2540;
@@ -643,20 +694,26 @@ body.light.blue .social a:hover {
   border-color: #0a2540;
   color: #0a2540;
 }
-body.light.blue #form-container form label {
-  color: #0a2540;
-}
-body.light.blue #form-container form input:focus {
-  border-bottom-color: #0a2540;
-}
-body.light.blue #form-container form button {
+body.light.blue #projects .project {
   color: #00d4ff;
-  border-color: #00d4ff;
-  background: #0a2540;
+  border-color: #0a2540;
+  background-color: #0a2540;
 }
-body.light.blue #form-container form button:hover {
-  color: #0a2540;
-  background: #4AB944;
+body.light.blue #projects .project hr {
+  border-color: #00d4ff;
+}
+body.light.blue #projects .project .btn-container .btn {
+  border-color: #00d4ff;
+  background-color: #00d4ff;
+}
+body.light.blue #projects .project .btn-container .btn:hover {
+  background-color: #0a2540;
+}
+body.light.blue #projects .project:hover {
+  background-color: #0d3256;
+}
+body.light.blue #projects .project:hover .icon {
+  color: #00d4ff;
 }
 body.light.purple {
   color: #210575;
@@ -703,20 +760,25 @@ body.light.purple .social a:hover {
   border-color: #210575;
   color: #210575;
 }
-body.light.purple #form-container form label {
+body.light.purple #projects .project {
+  color: #210575;
+  border-color: #3E0ECB;
+  background-color: #F5F3FB;
+}
+body.light.purple #projects .project hr {
+  border-color: #3E0ECB;
+}
+body.light.purple #projects .project .btn-container .btn {
+  border-color: #3E0ECB;
+}
+body.light.purple #projects .project .btn-container .btn:hover {
+  background-color: #3E0ECB;
+}
+body.light.purple #projects .project:hover {
+  background-color: #e9e4f9;
+}
+body.light.purple #projects .project:hover .icon {
   color: #3E0ECB;
-}
-body.light.purple #form-container form input:focus {
-  border-bottom-color: #3E0ECB;
-}
-body.light.purple #form-container form button {
-  color: #7453D7;
-  border-color: #7453D7;
-  background: #F5F3FB;
-}
-body.light.purple #form-container form button:hover {
-  color: #F5F3FB;
-  background: #3E0ECB;
 }
 
 /*# sourceMappingURL=theme.css.map */

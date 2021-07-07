@@ -78,7 +78,6 @@ body main h1 {
 @media (min-width: 1200px) {
   body main h1 {
     letter-spacing: 1.2rem;
-    font-size: 6.5rem;
   }
 }
 body main h2 {
@@ -87,10 +86,27 @@ body main h2 {
 body main .subheading {
   font-family: "Krub", Verdana, Geneva, sans-serif;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.4rem;
   line-height: 1.2;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02rem;
   text-align: center;
+}
+@media (min-width: 768px) {
+  body main .subheading {
+    font-size: 1.4rem;
+  }
+}
+@media (min-width: 992px) {
+  body main .subheading {
+    font-size: 1.6rem;
+    letter-spacing: 0.02rem;
+  }
+}
+@media (min-width: 1200px) {
+  body main .subheading {
+    font-size: 1.8rem;
+    letter-spacing: 0.2rem;
+  }
 }
 body main #projects .heading {
   text-align: center;
@@ -110,11 +126,10 @@ body main #projects .project-cards .project {
   min-width: 250px;
   max-width: 300px;
   margin: 15px;
-  border: 0.05rem solid #4A235A;
-  border-bottom: 0.25rem solid #4A235A;
+  border: 0.05rem solid;
+  border-bottom: 0.25rem solid;
   position: relative;
   word-wrap: break-word;
-  background-color: #222;
   background-clip: border-box;
   border-radius: 0.25rem;
   padding: 1rem;
@@ -137,7 +152,6 @@ body main #projects .project-cards .project .title {
   font-family: "Josefin Sans", Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 body main #projects .project-cards .project hr {
-  border-color: #5B2C6F;
   border-width: 0.25rem;
   border-radius: 200px;
   width: 3rem;
@@ -155,13 +169,15 @@ body main #projects .project-cards .project .btn-container {
 body main #projects .project-cards .project .btn-container .unavailable {
   margin: 0.2rem 0;
   padding-bottom: 0.6rem;
+  font-style: italic;
 }
 body main #projects .project-cards .project .btn-container .btn {
   text-decoration: none;
-  border: 1px solid blue;
+  border: 1px solid;
   border-radius: 100px;
   padding: 0.6rem;
   margin: 0.2rem auto;
+  opacity: 1 !important;
 }
 body main #projects .project-cards .project.available-false {
   opacity: 0.65;

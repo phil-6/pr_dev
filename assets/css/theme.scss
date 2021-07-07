@@ -66,28 +66,34 @@ body {
             }
           }
 
-          #form-container form {
-            label {
-              color: map-get($color-themes, $theme, $color, form-label-ink);
+          #projects .project {
+            color: map-get($color-themes, $theme, $color, project-ink);
+            border-color: map-get($color-themes, $theme, $color, project-border-color);
+            background-color: map-get($color-themes, $theme, $color, project-background-color);
+
+            hr {
+              border-color: map-get($color-themes, $theme, $color, project-hr-color);
             }
 
-            input:focus {
-              border-bottom-color: map-get($color-themes, $theme, $color, form-border-color);
-            }
-
-            button {
-              color: map-get($color-themes, $theme, $color, form-button-color);
-              border-color: map-get($color-themes, $theme, $color, form-button-color);
-              background: map-get($color-themes, $theme, $color, form-button-background);
+            .btn-container .btn {
+              border-color: map-get($color-themes, $theme, $color, project-button-border-color);
+              background-color: map-get($color-themes, $theme, $color, project-button-background-color);;
 
               &:hover {
-                color: map-get($color-themes, $theme, $color, form-button-hover-color);
-                background: map-get($color-themes, $theme, $color, form-button-hover-background);
+                background-color: map-get($color-themes, $theme, $color, project-button-background-hover-color);
+              }
+            }
+
+            &:hover {
+              background-color: map-get($color-themes, $theme, $color, project-background-hover-color);
+
+              .icon {
+                color: map-get($color-themes, $theme, $color, project-icon-hover-ink);
               }
             }
           }
-        }
 
+        }
       }
     }
   }

@@ -1,99 +1,11 @@
-- name: Rock Advisor
-  available: false
-  year: 2017
-  icon: graduation-cap
-  description: Univeristy dissertation project, a Digital Rock Climbing Guide Book.
-  tech: Full stack web app build with Laravel and AngularJS
-  github: https://github.com/phil-6/rockadvisor
-
-- name: Veeqo Developers
-  available: True
-  link: https://developer.veeqo.com
-  year: 2017
-  icon: code
-  description: Developer portal, providing easy access to resources
-  tech: Ruby on Rails app.
-  github: https://github.com/VeeqoAPI
-
-- name: Van Spots
-  available: True
-  link: https://vanspots.uk
-  year: 2018
-  icon: shuttle-van
-  description: Database of wild camping spots for campervans.
-  tech: Full stack Ruby on Rails app.
-  github: https://github.com/phil-6/van-spots
-
-- name: Mobilise Digital
-  available: False
-  year: 2019
-  icon: users
-  description: Web app for managing a network of contractors.
-  tech: Full stack Ruby on Rails app.
-  github: https://github.com/phil-6/van-spots
-
-- name: Savage Adventures
-  available: True
-  link: https://savage-adventures.com
-  year: 2019
-  icon: mountain
-  description: Serverless, zero-cost marketing website for an adventure company.
-  tech: Previously HTML + CSS, now Jekyll
-  github: https://github.com/phil-6/savage-adventures/tree/jekyll
-
-- name: Dashboard
+- name: The Summoner
   available: True
   link: https://summoner.purpleriver.dev
-  year: 2020
-  icon: chart-bar
-  description: "Simple serverless dashboard Note: Data is not live"
-  tech: Chart.JS
-  github: https://github.com/phil-6/summoner
-
-- name: Jade Gould Portfolio
-  available: True
-  link: https://jadegould.uk
-  year: 2020
-  icon: user-circle
-  description: Simple portfolio site for a friend
-  tech: HTML + CSS
-  github: https://github.com/phil-6/summoner
-
-- name: Postcards
-  available: True
-  link: https://postcards.purpleriver.dev
-  year: 2020
-  icon: address-card
-  description: Completed in 3 hours for interview for current role.
-  tech: Full stack Ruby on Rails app
-  github: https://github.com/phil-6/postcards
-
-- name: Directory of Expertise
-  available: True
-  link: https://directoryofexpertise.legaltech.wales/
-  year: 2020
-  icon: address-book
-  description: Project to collate areas of expertise from staff profiles.
-  tech: Python for web scraping.
-  github: https://github.com/Legal-Innovation-Lab-Wales/expertise-directory
-
-- name: Scenario Platform
-  available: True
-  link: https://scenario-platform.legaltech.wales/
-  year: 2020
-  icon: question-circle
-  description: A tool to create and attempt ranching non-linear scenarios with background variables.
-  tech: Full stack ruby on rails app
-  github: https://github.com/Legal-Innovation-Lab-Wales/scenario-platform
-
-- name: Include Journey
-  available: True
-  link: https://include-journey-demo.legaltech.wales/
   year: 2021
-  icon: road
-  description: A tool to help people on their journey towards desitance from offending.
-  tech: Full stack ruby on rails app
-  github: https://github.com/Legal-Innovation-Lab-Wales/include-journey
+  icon: route
+  description: Serverless web app that sends a text summoning someone to users location
+  tech: HTML, CSS, JS and Twilio
+  github: https://github.com/phil-6/summoner
 
 - name: LILW Dev Page
   available: True
@@ -104,12 +16,99 @@
   tech: Jekyll
   github: https://github.com/Legal-Innovation-Lab-Wales/dev-page
 
-- name: The Summoner
+- name: Include Journey
   available: True
-  link: https://summoner.purpleriver.dev
+  link: https://include-journey-demo.legaltech.wales/
   year: 2021
-  icon: route
-  description: Serverless web app that sends a text summoning someone to users location
-  tech: HTML, CSS, JS and Twilio
+  icon: road
+  description: A tool to help people on their journey towards desitance from offending.
+  tech: Full stack ruby on rails app
+  github: https://github.com/Legal-Innovation-Lab-Wales/include-journey
+
+- name: Scenario Platform
+  available: True
+  link: https://scenario-platform.legaltech.wales/
+  year: 2020
+  icon: question-circle
+  description: A tool to create and attempt branching non-linear scenarios with background variables.
+  tech: Full stack ruby on rails app
+  github: https://github.com/Legal-Innovation-Lab-Wales/scenario-platform
+
+- name: Directory of Expertise
+  available: True
+  link: https://directoryofexpertise.legaltech.wales/
+  year: 2020
+  icon: address-book
+  description: Project to collate areas of expertise from staff profiles.
+  tech: Python for web scraping.
+  github: https://github.com/Legal-Innovation-Lab-Wales/expertise-directory
+
+- name: Postcards
+  available: True
+  link: https://postcards.purpleriver.dev
+  year: 2020
+  icon: address-card
+  description: Completed in 3 hours for interview for current role.
+  tech: Full stack Ruby on Rails app
+  github: https://github.com/phil-6/postcards
+
+- name: Jade Gould Portfolio
+  available: True
+  link: https://jadegould.uk
+  year: 2020
+  icon: user-circle
+  description: Simple portfolio site for a friend
+  tech: HTML + CSS
   github: https://github.com/phil-6/summoner
 
+- name: Dashboard
+  available: True
+  link: https://summoner.purpleriver.dev
+  year: 2020
+  icon: chart-bar
+  description: "Simple serverless dashboard Note: Data is not live"
+  tech: Chart.JS
+  github: https://github.com/phil-6/summoner
+
+- name: Savage Adventures
+  available: True
+  link: https://savage-adventures.com
+  year: 2019
+  icon: mountain
+  description: Serverless, zero-cost marketing website for an adventure company.
+  tech: Previously HTML + CSS, now Jekyll
+  github: https://github.com/phil-6/savage-adventures/tree/jekyll
+
+- name: Mobilise Digital
+  available: False
+  year: 2019
+  icon: users
+  description: Web app for managing a network of contractors.
+  tech: Full stack Ruby on Rails app.
+  github: https://github.com/phil-6/van-spots
+
+- name: Van Spots
+  available: True
+  link: https://vanspots.uk
+  year: 2018
+  icon: shuttle-van
+  description: Database of wild camping spots for campervans.
+  tech: Full stack Ruby on Rails app.
+  github: https://github.com/phil-6/van-spots
+
+- name: Veeqo Developers
+  available: True
+  link: https://developer.veeqo.com
+  year: 2017
+  icon: code
+  description: Developer portal, providing easy access to resources
+  tech: Ruby on Rails app.
+  github: https://github.com/VeeqoAPI
+
+- name: Rock Advisor
+  available: false
+  year: 2017
+  icon: graduation-cap
+  description: Univeristy dissertation project, a Digital Rock Climbing Guide Book.
+  tech: Full stack web app build with Laravel and AngularJS
+  github: https://github.com/phil-6/rockadvisor
