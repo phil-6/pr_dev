@@ -1,3 +1,4 @@
+/* *** Variables *** */
 body {
   box-sizing: border-box;
   height: 100vh;
@@ -181,6 +182,54 @@ body main #projects .project-cards .project .btn-container .btn {
 }
 body main #projects .project-cards .project.available-false {
   opacity: 0.65;
+}
+body main #blog {
+  margin: auto;
+}
+@media (min-width: 768px) {
+  body main #blog {
+    width: 80%;
+    max-width: 42rem;
+  }
+}
+body main #blog .heading {
+  text-align: center;
+  font-family: "Josefin Sans", Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+body main #blog .blog-posts .blog {
+  text-decoration: none;
+}
+body main #blog .blog-posts .blog h2, body main #blog .blog-posts .blog h3 {
+  margin-bottom: 0.2rem;
+}
+body main #blog .blog-posts .blog .subheading {
+  margin: 0;
+  font-size: 1.2rem;
+}
+body main #blog .blog-posts .blog .date {
+  text-align: center;
+}
+body main #blog .blog-posts .blog .read-more {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+body main #blog .blog-posts .blog .read-more a {
+  padding: 0.4rem;
+  text-decoration: none;
+  border-radius: 1.2rem;
+  border: whitesmoke solid 0.5px;
+}
+body main #blog .blog-posts .blog .source a {
+  text-decoration: none;
+}
+body main #blog .blog-posts .blog:hover {
+  color: inherit;
+  border-radius: 1rem;
+  background-color: rgba(245, 245, 245, 0.1);
 }
 
 /*# sourceMappingURL=main.css.map */

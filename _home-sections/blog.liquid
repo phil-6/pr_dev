@@ -1,0 +1,22 @@
+<section id="blog">
+    <h2 class="heading">Blog</h2>
+
+    <div class="blog-posts">
+        {% for post in site.data.blog-posts %}
+            <div class="blog" >
+                <h2 class="title">{{ post.full-title }}</h2>
+                {% if post.sub-title %}
+                    <h3 class="subheading">{{ post.sub-title }}</h3>
+                {% endif %}
+                <p class="date">{{ post.publish-date }} {{ post.publish-year }}</p>
+                <p class="summary">{{ post.summary }}</p>
+                <div class="read-more">
+                    <a href="/blog/{{ post.publish-year }}/{{ post.short-title }}">Read More</a>
+                </div>
+                <p class="source">Originally posted at <a href="{{ post.link }}">{{ post.source }} <i class="fas fa-external-link-alt"></i></a></p>
+
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</section>

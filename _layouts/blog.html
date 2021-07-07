@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <!-- Font Family-->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Krub:200,400,700|" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/30fa2950fc.js"></script>
+    <link href="/assets/css/prism.css" rel="stylesheet">
+    <link href="/assets/css/blog.css" rel="stylesheet">
+    <title>{{ page.full-title }}</title>
+</head>
+<body class="blog">
+{% include blog-header.liquid %}
+
+<main>
+    <article>
+        {{ content }}
+    </article>
+</main>
+
+{% include blog-scripts.html %}
+</body>
+</html>

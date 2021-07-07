@@ -1,0 +1,209 @@
+---
+layout: blog
+short-title: theme-toggle
+full-title: Javascript Dark Mode Toggle
+file-type: html
+publish-date: May 20
+publish-year: 2021
+source: LILW
+link: 'https://developer.legaltech.wales/blog/phil/2021/theme-toggle.html'
+---
+
+<h1>Simple Javascript Theme Toggle </h1>
+<p class="subheading">This post is going to talk through setting up a theme toggle using plain JavaScript.</p>
+
+<p>Dark mode is becoming more and more common, its something that most operating systems now have as an option
+    and many individual pages now offer it as a preference too. However its not for everyone, and choice is
+    always a good thing.</p>
+
+<p>This code originally came from <a
+        href="https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/#combining-all-the-things">CSS
+    Tricks</a> however their implementation left a bit to be desired and just
+    didn’t work when I tried to implement it.</p>
+
+<p>With a few tweaks, we can improve their code and we have our own dark mode toggle. If you want to test this
+    out, click the sun or moon button at the top of these page!</p>
+
+<p>There’s a few considerations we need to have when building this script; does the user have a system
+    preference set? has the user visited our site before and set a preference here?</p>
+
+<p>We can check for system preferences using <code class="inline">window.matchMedia("(prefers-color-scheme:
+    dark)");</code> and we can get
+    any previous site preference from local storage <code class="inline">localStorage.getItem("theme");</code>.
+    So the first things we are
+    going to do in our script is assign these to variables, and create a variable for our toggle button.</p>
+<pre><code class="language-js">const btn = document.querySelector("#theme-toggle");
+// check to see if OS preferences for light or dark mode
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersLightScheme = window.matchMedia("(prefers-color-scheme: light)");
+
+// check to see if local storage has a theme preference
+let currentTheme = localStorage.getItem("theme");</code></pre>
+
+<p>We want to let the user overwrite their system preferences, but if they haven’t done that we want to listen
+    to take the system preference and set our site theme to match. We’re going to create a function called
+    <code class="inline">setTheme</code>, in this we inspect our <code class="inline">currentTheme</code>
+    variable. If it doesn’t exist we look at the system preference, set the
+    <code class="inline">currentTheme</code> variable and call the function again.</p>
+<p>With a <code class="inline">currentTheme</code> variable set, we can make sure that the class on the body
+    corresponds to our theme
+    variable.</p>
+
+<pre><code class="language-js">function setTheme() {
+    //if no local storage check against system preferences
+    if (currentTheme === null) {
+        if (prefersDarkScheme.matches) {
+            currentTheme = "dark"
+        } else if (prefersLightScheme.matches) {
+            currentTheme = "light"
+        } else {
+            // if no preferences, default to dark theme
+            currentTheme = "dark"
+        }
+        setTheme()
+    } else if (currentTheme === "dark") {
+        document.body.classList.remove("light-mode");
+        document.body.classList.add("dark-mode");
+    } else if (currentTheme === "light") {
+        document.body.classList.remove("dark-mode");
+        document.body.classList.add("light-mode");
+    }
+}</code></pre>
+
+<p>There’s two final bits to our script. First, handle a button press and toggle the theme. The button inspects
+    our <code class="inline">currentTheme</code> variable and swaps the value. It then stores the new value in
+    local storage. There is
+    probably a shorter way of writing this with a ternary operator but this is clean, simple and easily
+    understandable.</p>
+<pre><code class="language-js">btn.addEventListener("click", function () {
+    if (currentTheme === "dark") {
+        currentTheme = "light"
+        setTheme()
+    } else {
+        currentTheme = "dark";
+        setTheme()
+    }
+    localStorage.setItem("theme", currentTheme);
+});
+        </code></pre>
+
+<p>The final thing we want to do is call our <code class="inline">setTheme()</code> function at the bottom of
+    the page so it runs on page
+    load. The full script is at the end of this article.</p>
+
+<p>The next thing we need to do is set up the css to control our themes. With the way we’ve put this together
+    we’re not limited to just dark or light themes, we could implement a range of colours if we wanted. For now,
+    we’re just sticking with dark and light themes. These classes are applied to our html body. So any
+    additional styling we want just needs to use these as parents, the scss we use for this is here:</p>
+
+<pre><code class="language-scss">&.dark-mode {
+  background-color: $dark;
+  background: $dark-background;
+  color: $ink-light;
+
+  .dark {
+    display: block;
+  }
+
+  .light {
+    display: none;
+  }
+
+  nav {
+    a, button {
+      background: #ffffffe6;
+      color: $dark-gray;
+    }
+
+    a:hover {
+      color: $ink-dark;
+      background: #fff;
+    }
+
+    button:hover {
+      color: $ink-dark;
+      background: $light-background;
+    }
+  }
+
+  .author {
+    color: $medium-gray;
+  }
+
+  article {
+    a {
+      color: $dark-link;
+      text-decoration: none;
+
+      &:hover {
+        color: $dark-link-hover;
+      }
+    }
+
+    code.inline {
+      color: $medium-gray;
+    }
+  }
+}
+
+&.light-mode {
+  background-color: $gray;
+  background: $light-background;
+  color: $ink-dark;
+
+  .light {
+    display: block;
+  }
+
+  .dark {
+    display: none;
+  }
+
+  .lab-logo {
+    background-color: $dark;
+    background: $dark-background;
+    -webkit-box-shadow: 0 5px 10px 10px $dark;
+    box-shadow: 0 5px 10px 10px $dark;
+  }
+
+  nav {
+    a, button {
+      background: $dark-gray;
+      color: $ink-light;
+    }
+
+    a:hover {
+      color: $dark;
+    }
+
+    button:hover {
+      color: $ink-light;
+      background: $dark-background;
+    }
+  }
+
+  .author {
+    color: $dark-gray;
+  }
+
+  article {
+    a {
+      color: $light-link;
+      text-decoration: none;
+
+      &:hover {
+        color: $light-link-hover;
+      }
+    }
+
+    code.inline {
+      color: $dark-gray;
+    }
+  }
+}</code></pre>
+
+<p>You can also view this on <a
+        href="https://github.com/Legal-Innovation-Lab-Wales/developer-resources/blob/main/developer-page/assets/js/themeToggle.js">
+    GitHub <i aria-hidden="true" class="fab fa-github"></i>
+</a></p>
+<p>If you have any questions, thoughts or suggestions, please get in touch!</p>

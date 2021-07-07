@@ -1,7 +1,7 @@
 /* *** Variables *** */
 html {
   scroll-behavior: smooth;
-  font-family: sans-serif;
+  font-family: "Krub", Verdana, Geneva, sans-serif;
 }
 html body {
   margin: 0;
@@ -86,27 +86,6 @@ html body.light-mode article code.inline {
 html body header {
   text-align: center;
 }
-html body header img {
-  display: block;
-  margin: 0 auto;
-}
-html body header img.lab-logo {
-  width: 24rem;
-  max-width: 100vw;
-}
-html body header img.author {
-  border-radius: 100%;
-  height: 3rem;
-  width: 3rem;
-  margin: 0.2rem auto;
-}
-@media (min-width: 992px) {
-  html body header img.author {
-    height: 3.6rem;
-    width: 3.6rem;
-    margin: 1rem auto;
-  }
-}
 html body header nav {
   margin: 1.4rem 0;
 }
@@ -135,11 +114,12 @@ html body header nav a:hover, html body header nav button:hover {
   box-shadow: none;
   transition: all 0.3s;
 }
-html body header h2, html body header h3 {
+html body header h1, html body header h2, html body header h3 {
   margin: 0;
   font-weight: 400;
+  font-family: "Josefin Sans", Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
-html body header h2.author, html body header h3.author {
+html body header h1.author, html body header h2.author, html body header h3.author {
   text-transform: uppercase;
   letter-spacing: 0.25rem;
 }

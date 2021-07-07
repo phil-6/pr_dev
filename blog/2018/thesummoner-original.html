@@ -1,0 +1,207 @@
+---
+layout: blog
+short-title: thesummoner-original
+full-title: Building the Summoner on AWS
+sub-title: The Summoner has since been rebuilt from scratch.
+file-type: html
+publish-date: Nov 20
+publish-year: 2018
+source: Mobilise
+link: 'https://www.mobilise.cloud/how-to-build-a-simple-serverless-app-to-send-a-text-message/'
+---
+
+<h1>How to build a simple Serverless App to Send a Text Message</h1>
+<h3>The Summoner (<a href="https://summoner.purpleriver.dev">summoner.purpleriver.dev</a>) allows you to summon anyone to your location via text message. However at
+    its core it leverages several AWS services to send a text message from a website.</h3>
+<img src="/assets/images/old/the-summoner-screenshot.png">
+<p>The Summoner was built as a learning exercise, and while building it I found that there were no basic guides on
+    how to achieve this simple functionality end to end.</p>
+<p>This blog was written for and is originally hosted on <a href="https://www.mobilise.cloud/blog/how-to-send-a-text-message-from-a-website-using-aws">Mobilise Cloud</a></p>
+<p>This blog will guide you through the process of creating a button on a web page that will send a text message to
+    user inputted number with some custom data. There’s also a little bit of magic with html5 geolocation and Google
+    Maps in order to get your location and “summon” a person, but I don’t go into that in this guide. Apart from
+    buying a domain name, everything we do here is entirely free, as long as your site doesn’t send more than 100
+    text messages a month.</p>
+<p>I’ve tried to take a grass roots approach here so anyone with only a basic understanding can follow along. If you
+    feel I’ve missed anything out or if you want further explanation on anything then please let me know.</p>
+<p>You can view the website and lambda code <a href="https://github.com/phil-6/summoner">here on GitHub.</a></p>
+
+<h2>Contents:</h2>
+
+<ul class="contents">
+    <li><a href="#architecture">Architecture Diagram</a></li>
+    <li><a href="#sns-topic">SNS - Create Topic</a></li>
+    <li><a href="#sns-new-topic">Creating a new topic</a></li>
+    <li><a href="#iam">IAM - Create role for Lambda</a></li>
+    <li><a href="#lambda">Lambda</a></li>
+    <li><a href="#sns-subscription">SNS - Create Subscription</a></li>
+    <li><a href="#api">API Gateway</a></li>
+    <li><a href="#website">Static Website</a></li>
+    <li><a href="#dns">DNS with Cloudflare for free SSL</a></li>
+</ul>
+
+<h2 id="architecture">Architecture Diagram</h2>
+<p>So to get started here’s a basic diagram of the application structure</p>
+<img src="/assets/images/old/architecture.png">
+<p>It seems pretty straight forward set up when you break it down like that.</p>
+
+<h2 id="sns-topic">SNS - Create Topic</h2>
+<p>Starting from the end with setting up SNS. First of all you need to make sure that you’re working in a region
+    that supports sending SMS.</p>
+<img src="/assets/images/old/sns-supported-regions.png">
+<p>I used Ireland because it's the closest location to me geographically, but any region works fine for this.</p>
+<h3 id="sns-new-topic">Creating a new topic</h3>
+<p>On the in the AWS console, navigate to the SNS dashboard, the click on topics. From here you can create a new
+    topic and name it however you want.</p>
+<img src="/assets/images/old/sns-create-topic.png">
+<img src="/assets/images/old/sns-create-topic-1.png">
+
+<p>Make note of the ARN of your newly created topic, you’ll need to reference it later.</p>
+
+<h2 id="iam">IAM - Create role for Lambda</h2>
+<p>We’re going to need slightly more than the standard execution policy for our lambda. So head over to IAM and
+    create a new policy. We want to create a policy with the standard execution policy and then add a inline policy
+    to give full access to SNS.</p>
+<p>The gif below shows the process to create this role. You can (and should) be more specific with the permissions
+    you are giving this role but for testing purposes allowing all access to SNS is fine.</p>
+<img src="/assets/images/old/SNS-SMS-Lambda-Create-Role-Mod.gif">
+<p>This image shows detail of what your policy should end up looking like.</p>
+<img src="/assets/images/old/lambda-role-policy.png">
+
+<h2 id="lambda">Lambda</h2>
+<p>The next thing we need to do is set up our lambda function.
+    Create a function with the language you’re most comfortable with and the role you created earlier. I’m using
+    python 2.7.</p>
+<img src="/assets/images/old/create-lambda.png">
+<p>Our lambda is initially going to be triggered by API Gateway and send a request to SNS. Its then going to push
+    response from SNS and back though API Gateway.</p>
+<p> The triggers should look something like this:</p>
+<img src="/assets/images/old/create-lambda-triggers.png">
+<p>The actual lambda function is fairly simple, we take the body sent through API Gateway, extract the information
+    we need, form the message and send the text message. There is a lot more you can do with SNS but I’ve kept this
+    simple.</p>
+<img src="/assets/images/old/lambda-code.png">
+<p>This is also available on <a href="https://github.com/phil-6/summoner/blob/master/lambda.py">GitHub.</a></p>
+
+<h2 id="sns-subscription">SNS - Create Subscription</h2>
+<p>Once the Lambda is created we need to subscribe it to our SNS topic. Head back over to the SNS dashboard in the
+    console then <strong>Subscriptions > Create Subscription.</strong></p>
+<img src="/assets/images/old/sns-create-subscription.png">
+<p>The ARN is the topic you created earlier, the protocol is “AWS Lambda” and the endpoint is the lambda
+    function.</p>
+
+<h2 id="api">API Gateway</h2>
+<p>The next thing we need to do is set up our API. This is going to take HTTP requests from our website and pass
+    them to the lambda. It’s fulfilling a single purpose so remains quite simple.</p>
+<p>Head back to your Lambda function and your API gateway trigger should still say that it needs configuration.</p>
+<img src="/assets/images/old/api-config-required.png">
+<p>Click on <strong>“Configuration required”</strong> and it should open up a dialog below:</p>
+<img src="/assets/images/old/api-configure-triggers.png">
+<p>From the API Drop down select <strong>“Create a new API”</strong> with the following options.</p>
+<img src="/assets/images/old/create-api.png">
+<p>Click add and then <strong>save your Lambda</strong> via the button in the top right.</p>
+<p>That creates a lot of the default options in our API, some of which we want to change. Once you’ve created your
+    API via the lambda, click on its name which will take you to the API Gateway section of the console.
+    From the root of the API click on <strong>Actions > Create Method.</strong> Select <strong>“POST”</strong> from
+    the drop down and then hit the tick.</p>
+<img src="/assets/images/old/api-create-method.png">
+<img src="/assets/images/old/api-create-method-1.png">
+<p>You’ll then be directed to the method setup page:</p>
+<img src="/assets/images/old/api-POST-setup.png">
+<p>Enter the name of your lambda function and hit <strong>“Save”</strong> and then <strong>“OK”</strong> in the next
+    dialog to allow API Gateway to invoke your lambda.</p>
+<p>The next step is to click on <strong>“POST”</strong> in the resource tree, then <strong>Actions > Enable
+    CORS</strong></p>
+<img src="/assets/images/old/api-enable-cors.png">
+<p><strong>CORS</strong> stands for Cross Origin Resource Sharing and allows websites from any domain to access your
+    resources. Ideally this should be turned off or set to specifically allow cross origin requests from only your
+    domain. For testing, enabling it fully is fine.</p>
+<p>The Confirmation dialog should look like the image below.</p>
+<img src="/assets/images/old/api-cors-confirm.png">
+<p>Then you should see a confirmation like this:</p>
+<img src="/assets/images/old/api-cors-complete.png">
+<p>Almost there now! The last be of configuration is that we need the integration request to pass our JSON from the
+    post request through to the lambda. Click back on the post request and then on the <strong>“Integration
+        Request”</strong> header.</p>
+<img src="/assets/images/old/api-integration-request.png">
+<p>From the Integration Request page, scroll down and expand the <strong>“Mapping Templates”</strong> Section, then
+    click <strong>“Add mapping template”</strong></p>
+<img src="/assets/images/old/api-mapping-template-0.png">
+
+<p>We want to add a template for <strong>“application/json”</strong> which is the same as the placeholder. Enter
+    <strong>“application/json”</strong> and hit the tick.</p>
+<img src="/assets/images/old/api-mapping-template-1.png">
+<p>Confirm in the next dialog.</p>
+<img src="/assets/images/old/api-mapping-template-2.png">
+<p>The enter the following code and save.</p>
+<pre>
+        {
+            "body" : $input.json('$'),
+            "headers": {
+                #foreach($header in $input.params().header.keySet())
+                "$header": "$util.escapeJavaScript($input.params().header.get($header))" #if($foreach.hasNext),#end
+
+                #end
+            },
+            "method": "$context.httpMethod",
+            "params": {
+                #foreach($param in $input.params().path.keySet())
+                "$param": "$util.escapeJavaScript($input.params().path.get($param))" #if($foreach.hasNext),#end
+
+                #end
+            },
+            "query": {
+                #foreach($queryParam in $input.params().querystring.keySet())
+                "$queryParam": "$util.escapeJavaScript($input.params().querystring.get($queryParam))" #if($foreach.hasNext),#end
+
+                #end
+            }
+        }
+    </pre>
+
+<p>It should end up looking like this:</p>
+<img src="/assets/images/old/api-mapping-template-3.png">
+<p>Finally we need to deploy our API. Click on Actions > Deploy API. In the following stage set the deployment stage
+    to default and click “Deploy”</p>
+<img src="/assets/images/old/api-deploy.png">
+<p>This will give you an Invoke URL which is what we need for our next step.</p>
+
+<p><strong>Thats it, thats our API Gateway set up!</strong></p>
+
+<h2 id="website">Static Website</h2>
+<p>There are a couple of bits to the website. We have the HTML and CSS of course and then there are two javascript
+    functions.</p>
+<p>One short one which gets the user location from the browser - more on this later. The other which handles what
+    happens when the “Summon” button is clicked. The summon function does some basic validation which I won’t go
+    into here, but you can check it out on GitHub.</p>
+<p>Once the validation has passed, the “validSummon()” function is called. This calls a custom function to convert
+    the form data to a JSON string. We then use ajax to create a POST request with the data from our form.</p>
+<img src="/assets/images/old/ajax-post.png">
+<p>The website itself is simple to host in an S3 bucket.</p>
+<p>The one caveat with this is that in order to get the user’s location we need to be requesting it from a HTTPS
+    site. In order to do that I moved the domain to Cloudflare which offers a free flexible SSL service.</p>
+
+<h2 id="dns">DNS with Cloudflare for free SSL</h2>
+<p>The first step is to buy a domain from Route 53. This needs to exactly match the bucket name that you’re using
+    for the static hosting. For example https://thesummoner.uk has a bucket called thesummoner.uk, were as
+    https://www.thesummoner.uk would need a bucket called www.thesummoner.uk. Once you have purchased your domain
+    and the registration has completed, Route 53 will set up a hosted zone for you. Add an A record set that is an
+    alias and points to your bucket. This will take a bit of time to propagate. While it is, head over to Cloudflare
+    and set up an account, its all free.</p>
+
+<p>On Cloudflare you want to add a site, and as long as the DNS record has propagated from Amazon fully, Cloudflare
+    will pull across the record sets. If it hasn’t don’t worry we can add them manually.</p>
+
+<p>Once the site has created, copy the name servers from Cloudflare and head back over to Route 53. Firstly make a
+    note of the resource that the A-record is pointing to, then delete the hosted zone, as these are only free for a
+    short period of time. You’ll need to delete the record set you created before you can delete the overall zone.
+    Then in the Registered Domains section change the name servers from Amazon’s to Cloudflare’s.</p>
+
+<p>With route 53 these propagate fairly quickly, so head back on over to Cloudflare and refresh the page. Hopefully
+    everything has gone green. If Cloudflare couldn’t pick up on the DNS records before you transferred the domain,
+    add a CNAME record for the bucket. If there is no subdomain use “@” to indicate the root domain.</p>
+
+<p>The final step is to head over to the Crypto tab on Cloudflare and toggle “Always use HTTPS” to on and there you
+    have it!</p>
+<p></p>
+<p>Any questions drop me an <a href="mailto:hello@purpleriver.dev">email</a> or comment on the <a href="https://www.mobilise.cloud/blog/how-to-send-a-text-message-from-a-website-using-aws">Mobilise blog</a>.</p>

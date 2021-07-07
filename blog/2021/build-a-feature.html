@@ -1,0 +1,119 @@
+---
+layout: blog
+short-title: build-a-feature
+full-title: How To Build a Feature
+file-type: html
+publish-date: May 11
+publish-year: 2021
+source: LILW
+link: 'https://developer.legaltech.wales/blog/phil/2021/build-a-feature.html'
+---
+<h2 class="text-center"><span class="link-spacer"></span>How To Build a Feature
+    <button class="copyLink" onclick="copyText('#build-a-feature')"><i class="fas fa-link"></i></button>
+</h2>
+<p class="lead">A brief best-practice guide for how we build features at the Legal Innovation Lab
+    Wales</p>
+<p><em>Note: </em>This is a living guide. We follow these steps on a day-to-day basis. We will tweak and
+    update this guide as we go along and learn form our mistakes</p>
+
+<h4>Start on Jira</h4>
+
+<p>After a feature is outlined or described by stakeholders it will be added to the <em>Backlog</em>
+    column on Jira. When creating the ticket, as much detail as possible should be given. We won’t
+    always be able to provide a full user story, but give as much information as you can as early as you
+    can. The backlog column is roughly prioritised with the more urgent tasks appearing towards the top.
+</p>
+
+<p>When you come towards the end of the task you are working on, select a ticket from the top of the
+    <em>Backlog</em>, assign it to yourself and move it to <em>Next Up</em>.</p>
+
+<p>With the ticket in <em>Next Up</em>,there is the opportunity to refine and expand the feature
+    description. The aim is to fully describe the feature as well as we can and how it is going to look
+    when finished. You can ask for input from one or all of the rest of the team.</p>
+
+<p>When you are happy with the detail on the ticket, move the ticket to <em>In Progress</em>.</p>
+
+<h4>Move to GitHub</h4>
+
+<p><strong>Guides:</strong> <a href="https://guides.github.com/introduction/flow/">How and Why</a>, <a
+        href="https://guides.github.com/introduction/git-handbook/">Handbook</a></p>
+
+<p class="mb-0">Ensure your local branches are up to date then <em>create a new branch</em> for your
+    work. The branch
+    name should be prefixed with the type of ticket and then start with the ticket ID and the ticket
+    title.</p>
+
+<p class="mb-0"> Branch prefixes include: <code>feature/</code>, <code>bugfix/</code>,
+    <code>hotfix/</code>, <code>refactor/</code>
+    , <code>other/</code>.</p>
+
+<p> Examples: <code>feature/dt-124-how-to-build-features</code>,
+    <code>bugfix/sp-206-fix-broken-thing</code>, <code>hotfix/fix-for-this-issue</code></p>
+
+<p>When working on a ticket, <b>commit regularly</b>. Each commit should contain one discrete change /
+    improvement and should be made when the codebase is in a state which you want to remember. Each
+    commit which directly relates to the task should have the ticket ID at the start of it.</p>
+
+<p>As you are working on the feature, build it to the best of your ability, leveraging your experience,
+    creativity and ingenuity. If something comes up which you are uncertain about, or if you think of
+    something which could be a good addition to the feature, go back to the ticket on Jira and ask about
+    it there.</p>
+
+<p>When you’ve finished work on the ticket, push your code to GitHub and <b>create a pull request</b>
+    (PR). Your PR title should contain the ticket ID and a short title, probably similar to the ticket
+    title. The description of your PR should be an explanation of what you have done and how, including
+    screenshots if there is a front end / UI component. Then request a review from the rest of the team.
+    PRs are designed for the team to check your code makes sense, does everything its supposed to and
+    meets our standards.</p>
+
+<p><em>From the “How and Why” Guide:</em></p>
+<blockquote>
+    <p>Once a Pull Request has been opened, the person or team reviewing your changes may have questions
+        or
+        comments. Perhaps the coding style doesn't match project guidelines, the change is missing unit
+        tests, or maybe everything looks great and props are in order. Pull Requests are designed to
+        encourage and capture this type of conversation.</p>
+
+    <p>You can also continue to push to your branch in light of discussion and feedback about your
+        commits.
+        If someone comments that you forgot to do something or if there is a bug in the code, you can
+        fix it
+        in your branch and push up the change. GitHub will show your new commits and any additional
+        feedback
+        you may receive in the unified Pull Request view.”</p>
+</blockquote>
+<p>We strongly recommend reading the guides, if you have questions following that don't hesitate to get
+    in touch.</p>
+
+<h4>Back on Jira</h4>
+<p>When you code is up for PR, move the ticket to <em>Pending Review</em>. Now you should pick another
+    ticket
+    from the <em>Backlog</em> and move it to <em>Next Up</em>. You can also spend some time reviewing
+    any other
+    open PRs.
+<p>
+
+<h4>GitHub - Reviewing Code</h4>
+<p>When reviewing PRs we should do several things:</p>
+
+<ol>
+    <li>Go through all the code changes, leave comments
+        <ol type="a">
+            <li>anywhere there is something you don’t understand</li>
+
+            <li>anywhere that you think something could be improved</li>
+        </ol>
+    </li>
+    <li>Pull the branch and run it locally, double check everything works as intended.</li>
+    <li>Think about what has been built, if it works as intended, meets the requirements and if there
+        are any ways it could be improved. If you have any suggestions try and explain the How and Why
+        in as much detail as possible.
+    </li>
+</ol>
+
+<p>You can always get involved and collaborate. If there is a small bugfix, you can make the change and
+    push the code onto the branch. If there are design or feature changes you think could work better,
+    create another branch and an additional PR back to the feature branch.</p>
+<p>There’s no rule that says the person who raises the PR has to be the sole contributor to it. If there
+    is agreement about a feature change, it might make more sense for the person who has the vision for
+    the changes to write the code, not the person who started on the branch.</p>

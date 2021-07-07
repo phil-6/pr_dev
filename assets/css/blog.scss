@@ -6,6 +6,9 @@ $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 $breakpoint-xxl: 1400px;
 
+$heading-font: 'Josefin Sans', Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+$body-font: 'Krub', Verdana, Geneva, sans-serif;
+
 $dark: #0e182a;
 $ink-dark: #05285a;
 //$ink-dark: #212529;
@@ -31,7 +34,7 @@ $light-link-hover: #3700B3;
 
 html {
   scroll-behavior: smooth;
-  font-family: sans-serif;
+  font-family: $body-font;
 
   body {
     margin: 0;
@@ -145,27 +148,6 @@ html {
     header {
       text-align: center;
 
-      img {
-        display: block;
-        margin: 0 auto;
-
-        &.lab-logo {
-          width: 24rem;
-          max-width: 100vw;
-        }
-
-        &.author {
-          border-radius: 100%;
-          height: 3rem;
-          width: 3rem;
-          margin: 0.2rem auto;
-          @media (min-width: $breakpoint-lg) {
-            height: 3.6rem;
-            width: 3.6rem;
-            margin: 1rem auto;
-          }
-        }
-      }
 
       nav {
         margin: 1.4rem 0;
@@ -195,9 +177,10 @@ html {
 
       }
 
-      h2, h3 {
+      h1, h2, h3 {
         margin: 0;
         font-weight: 400;
+        font-family: $heading-font;
 
         &.author {
           text-transform: uppercase;

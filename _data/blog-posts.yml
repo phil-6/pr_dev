@@ -1,0 +1,81 @@
+- layout: blog
+  short-title: challenge
+  full-title: Technical Challenge
+  sub-title: (and updating the process)
+  summary: |
+    The interview processes for this role involved a fairly intense 3 hour challenge.
+    This post talks about how I completed that and how I updated the process to be a bit more representative of the way that we work in the lab.
+  file-type: html
+  publish-date: June 3
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/challenge.html'
+
+- layout: blog
+  short-title: theme-toggle
+  full-title: Javascript Dark Mode Toggle
+  summary: |
+    Dark mode is becoming more and more common, this post is going to talk through setting up a simple theme toggle using plain JavaScript.
+  file-type: html
+  publish-date: May 20
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/theme-toggle.html'
+
+- layout: blog
+  short-title: tooling
+  full-title: Tools We Use
+  summary: |
+    This aims to give an overview of the tools we use and the way we use them to build software in the Legal Innovation Lab Wales.
+  file-type: html
+  publish-date: May 18
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/tooling.html'
+
+- layout: blog
+  short-title: build-a-feature
+  full-title: How To Build a Feature
+  summary: |
+    A brief best-practice guide for how we build features at the Legal Innovation Lab Wales.
+  file-type: html
+  publish-date: May 11
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/build-a-feature.html'
+
+- layout: blog
+  short-title: directory-of-expertise
+  full-title: Directory of Expertise
+  summary: |
+    Short blog detailing the development of the web-scraping script and infrastructure around the School of Law’s staff directory of expertise.
+  file-type: html
+  publish-date: January 3
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/directory-of-expertise.html'
+
+- layout: blog
+  short-title: welcome
+  full-title: Welcome to the Blog
+  summary: |
+    A welcome post to the Legal Innovation Lab Wales' Developer Blog
+  file-type: html
+  publish-date: May 20
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/welcome.html'
+
+- layout: blog
+  short-title: thesummoner-original
+  full-title: Building the Summoner on AWS
+  summary: |
+    The original guide for building "The Summoner", a web page that can be used to share you location with someone via SMS. The Summoner has since been rebuilt froms scratch and a new guide will be coming soon.
+  file-type: html
+  publish-date: Nov 20
+  publish-year: 2018
+  source: Mobilise
+  link: 'https://www.mobilise.cloud/how-to-build-a-simple-serverless-app-to-send-a-text-message/'
+
+
+

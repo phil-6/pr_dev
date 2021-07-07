@@ -1,0 +1,12 @@
+<script src="/assets/js/blogThemeToggle.js"></script>
+<script>
+    function copyText(input) {
+        const text = document.createElement('textarea');
+        document.body.appendChild(text);
+        text.value = "https://developer.legaltech.wales" + input
+        text.select();
+        document.execCommand("copy");
+        document.body.removeChild(text);
+    }
+</script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49ce8a60f4f54c7091f9a52fee38ba86"}'></script><!-- End Cloudflare Web Analytics -->

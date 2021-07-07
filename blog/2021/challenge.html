@@ -1,0 +1,213 @@
+---
+layout: blog
+short-title: challenge
+full-title: Technical Challenge
+sub-title: (and updating the process)
+file-type: html
+publish-date: June 3
+publish-year: 2021
+source: LILW
+link: 'https://developer.legaltech.wales/blog/phil/2021/challenge.html'
+---
+
+<h1 id="My-Technical-Challenge">My Technical Challenge (and how I improved the process for additional
+    hires)</h1>
+<p class="subheading">Hopefully you’ve now read the two Technical Challenge posts by
+    <a href="https://developer.legaltech.wales/blog/ieuan/2021/challenge.html">Ieuan</a> and
+    <a href="https://developer.legaltech.wales/blog/gareth/2021/challenge.html">Gareth</a>. This post is going
+    to explain a bit more generally about the process which they went through and
+    how I evolved it from the assessment that Alex and I took to something that was a bit more
+    representative of the way that we work in the lab.</p>
+<p> This turned into quite a long post, so have some contents: </p>
+<ul>
+    <li><a href="#Introduction">Introduction</a></li>
+    <li><a href="#My-Approach">My Approach</a></li>
+    <li><a href="#Updating-the-Challenge">Updating the Challenge</a></li>
+    <li><a href="#Conclusion">Conclusion</a></li>
+    <li><a href="#Original-Assessment-Brief">Original Assessment Brief</a></li>
+    <li><a href="#New-Challenge-Brief">New Challenge Brief</a></li>
+</ul>
+<h2 id="Introduction">Introduction - The Original Technical Assessment</h2>
+<p>Alex and I interviewed for our roles in February 2020, as the project hadn’t got started yet, the
+    technical interview process was run by the University’s central software development team. They feel
+    that their process works well and reflects the style of work they often have to deal with, sometimes
+    they have to work under a lot of pressure with someone looking over their shoulder. </p>
+<p>The technical challenge they use is a 3hr in-person (pre-covid) coding
+    challenge with a very open brief, they want the candidate to build something of their choosing which
+    showcases their abilities, their creativity and ability to present and “sell” an idea. I’ll include this
+    <a href="#Original-Assessment-Brief">original brief</a> at the bottom of the page. </p>
+<h2 id="My-Approach">My Approach</h2>
+<p>3 hours is not very long to showcase your abilities and make a good
+    impression. </p>
+<p>I decided to try and spin up a full-stack Ruby on Rails application and
+    host it within the time frame. Spinning up a Rails app can be pretty quick. Rails has generators for
+    models, migrations and controllers. I’ve also built quite a few Rails apps from scratch, but three hours
+    was still a tough target. One of the other big challenges was working out what to build. An open scope
+    gives plenty of room to showcase creativity, but coming up with an idea is hard. I wanted something
+    which was a basic CRUD app with user authentication, what it actually did wasn’t too important.</p>
+<p>The idea I came up with was called Postcards from a Stranger. The “pitch”
+    was that new students often feel isolated and lonely. Postcards would allow them to send and receive
+    postcards from strangers which would hopefully help alleviate some of the isolation feeling. It was a
+    fairly basic idea, but had roots related to the University and was simple to explain and build.</p>
+<p>I knew three hours was going to be a challenge, so the first thing I did,
+    once I had an idea I was happy with, was build it - and keep track of the time. The first time through
+    it took a couple of hours to figure out the overall structure, the models and everything. Total build
+    time was around 10 hours. </p>
+<p>10 hours wasn’t great, but there was a lot of figuring out the shape of
+    the app in that. So I moved to a new folder and tried again. The second time took roughly half the time.
+    Which was a lot better, but still needed to be cut down. At this point I started writing myself a crib
+    sheet, documenting step by step all of the terminal commands and customisations I needed to make. You
+    can see this final version of this <a href="https://github.com/phil-6/postcards/blob/master/walkthrough.md"
+                                          title="https://github.com/phil-6/postcards/blob/master/walkthrough.md">
+        walkthrough here</a>. </p>
+<p>Building with the walkthrough took the time down to about 3.5 hours, which
+    was getting a lot closer to the target. One of the things that was taking me a lot of time still was
+    building the HTML and CSS for the app. HTML and CSS are markup and styling, they don’t really showcase
+    programming ability. So I decided to cheat, I could write these in advance and copy them into the new
+    directory. That way I could spend the time in the assessment on writing the application logic in ruby
+    and getting the infrastructure deployed. </p>
+<p>Another round of practice, with prebuilt HTML and CSS, took the build time
+    down to two hours. It was very rushed but it was manageable. I knew there would be quite a bit of extra
+    time on the day explaining what I was doing and talking about design choices. </p>
+<p>Suffice to say, everything went well on the day. You can see the <a
+        href="https://github.com/phil-6/postcards"
+        title="https://github.com/phil-6/postcards">code on GitHub</a> and the <a
+        href="https://postcards-purpleriver.herokuapp.com/"
+        title="https://postcards-purpleriver.herokuapp.com/">live version on Heroku</a>.</p>
+<h2 id="Updating-the-Challenge">Updating the Challenge</h2>
+<p>Building something in such a short period of time, with someone sat
+    watching over your shoulder was an interesting experience. I felt as though it definitely added
+    additional pressure which doesn’t necessarily facilitate the best performance. </p>
+<p>We were looking to hire two more developers and I was given the chance to
+    improve the process. Along with tweaking the job description, I felt it would be good to update the
+    technical portion of the process. The first thing was changing it from an “assessment” to a “challenge”
+    with the aim of making it less intimidating.</p>
+<p>We still wanted to get an insight into our candidates' technical
+    capabilities but change the format to better reflect the working environment within the team. I also
+    wanted it to be something that wasn’t a waste of candidates time. </p>
+<p>I decided to keep the open brief of the initial challenge because I wanted
+    candidates to build something which played on their strengths, as well as showing off a bit of their
+    creativity, but I also gave some examples and suggestions if they were really struggling. Hopefully with
+    this, candidates could build something which could form part of their portfolio for any future
+    applications.</p>
+<p>The biggest change was moving away from the short time frame, in-person
+    assessment. I wanted to give candidates enough time to do something they would be proud of. I also
+    wanted to ensure that they would be able to spend enough time to do the challenge justice. I settled on
+    a Thursday evening until a Tuesday morning, this should give a full weekend and three evenings
+    (presuming there were other work commitments). </p>
+<p>In order to ensure fairness (and that the work was their own) I mandated
+    the use of version control. By requiring them to use a version control system (e.g. git) we can see that
+    they have only worked in the specified period and they are not committing large chunks of code which is
+    not their own. At the end of the challenge, all they needed to do was send us a link to their code
+    repo.</p>
+<p>Following the challenge and before the formal interview, we’d have a
+    technical debrief. In this the candidate would be allowed 15 minutes to demonstrate their project then
+    15-30 minutes of technical questions about their codebase to assess their competency and ensure that
+    they understand what they have submitted. The final portion of time will be asking the candidate to make
+    a couple of minor changes to their project to watch them work through it and get it working.&nbsp;</p>
+<h4 id="Conclusion">Conclusion</h4>
+<p>This format allowed us to gain a strong insight into the candidates
+    technical ability, provide an interview task closer representing the working environment of the of the
+    lab and allow candidates to perform to the best of their ability. It seemed to work well for Gareth and
+    Ieuan! </p>
+<p>You can <a href="#New-Challenge-Brief">read the brief</a> which was sent to candidates below. If you’re job
+    seeking at the moment, why not give it a go. If you’re an employer who would like to use this format,
+    please ask first, but I’m not going to say no! If you have any questions or thoughts on how this could
+    be improved, or if you spot any mistakes, then please get in touch!</p>
+<hr>
+<h2 id="Original-Assessment-Brief">Original Assessment Brief</h2>
+<h4>Senior Developer Assessment</h4>
+<p>You will be given 2.5 hours to develop a piece of software that <strong>showcases your ability</strong> with
+    regards to the following criteria from the job specification:</p>
+<ul>
+    <li>Substantial programming skills and experience: .Net, Java, C#, PHP
+        or other.
+    </li>
+    <li>Experience of unit testing.</li>
+    <li>Practical experience of software design patterns.</li>
+</ul>
+<p>You can choose any kind of application you want (e.g. a web site, console
+    application, API, App, etc.) provided it enables you to easily <strong>demonstrate
+        your competency </strong>against each of the criteria in question.</p>
+<p>We will provide a laptop with Visual Studio 2019 installed. It is
+    important to us that you get the best opportunity to <strong>demonstrate what
+        you can do</strong>, so if you prefer a different development environment then please contact <em
+    >contact person</em> in advance of the assessment to discuss.</p>
+<p>You will have access to the Internet during the assessment. However, you
+    will be required to develop the solution from scratch on the day – no prebuilt solutions downloaded from
+    GitHub please!</p>
+<p>Prior to the day, please prepare a 5-minute pitch for what you intend to
+    build (no more than 5 minutes – you will be timed!). You will deliver the pitch, answer any questions
+    that the panel might have and then dive into the coding. The pitch will be assessed so use whatever
+    technique you<br>believe will be the most impactful in selling your idea.</p>
+<p>Following the assessment, the first part of the interview will consist of
+    technical questions about the solution you have developed and how you feel your choices <strong>demonstrate
+        competency</strong> against each of the criteria in
+    question.</p>
+<hr>
+<h2 id="New-Challenge-Brief">New Challenge Brief
+    <button class="copyLink" onclick="copyText('/blog/phil/2021/challenge#New-Challenge-Brief')"><i class="fas fa-2x fa-link"></i></button>
+</h2>
+<p>Congratulations on making our shortlist! We’re really excited to get to
+    know you a bit better and see what you can do. Our interview process is going to consist of three steps,
+    a technical challenge, a technical debrief of that challenge and then a more formal
+    interview.&nbsp;&nbsp;</p>
+<h4 id="The-Technical-Challenge">The Technical Challenge&nbsp;</h4>
+<p>Your technical challenge will start at Thursday at 16:00 and run until
+    Tuesday at 10:00. We would like you to build a piece of software that you feel showcases your abilities
+    and your competencies against as many of the requirements from the criteria in the job description as
+    possible. What you build, what language you use and how you build it is entirely up to you provided it
+    enables you to easily demonstrate your competency.&nbsp;</p>
+<p>We don’t need you to fit everything that your capable of into this one
+    project, we’re looking for you to really show off your working process, that you can write clean code
+    that’s easy to understand and that you try and follow best practices (such as <a
+            href="https://en.wikipedia.org/wiki/Single-responsibility_principle"
+            title="https://en.wikipedia.org/wiki/Single-responsibility_principle"><u>SRP</u></a>, <a
+            href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
+            title="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"><u>DRY</u></a> and <a
+            href="https://en.wikipedia.org/wiki/KISS_principle"
+            title="https://en.wikipedia.org/wiki/KISS_principle"><u>KISS</u></a>).&nbsp;</p>
+<p>Any time after the challenge starts, we want you to create an entirely new
+    code repository (our preference would be GitHub, but if you <em>really</em>
+    want to use something else then go for it). Then you can crack on with building your project. We’re keen
+    to emphasise that we will not accept <em>any </em>commits outside of the
+    challenge time frame.&nbsp;</p>
+<p>We would like you to follow git best practices and to be writing clean,
+    well documented code. You’re more than welcome to use a framework and libraries of your choice but don’t
+    just submit a pre-built solution. We’re looking to see the process that you go through as you build your
+    software. We would like to see a well structured ReadMe accompanying your repository (a <a
+            href="http://README.md" title="http://README.md">README.md</a> in the root folder is ideal).&nbsp;
+</p>
+<p>By the deadline on Tuesday, we want you to send us a public link to your
+    repo, fingers away from keyboards after this time, no commits or merges after this time
+    please!&nbsp;&nbsp;</p>
+<p>We appreciate that coming up with an idea to build something from scratch
+    is not easy. If you’re struggling for inspiration then here are a few examples of what we think you
+    could achieve during the time frame.&nbsp;</p>
+<p><a href="https://thesummoner.uk/"><u>The Summoner</u></a><a
+        href="https://www.mobilise.cloud/how-to-build-a-simple-serverless-app-to-send-a-text-message/"> </a>(Currently
+    broken as infrastructure has been turned off), <a
+            href="https://github.com/phil-6/summoner"><u>GitHub</u></a>&nbsp;, <a
+            href="https://www.mobilise.cloud/how-to-build-a-simple-serverless-app-to-send-a-text-message/"><u>Summoner
+        Blog</u></a>&nbsp;</p>
+<p><a href="https://directoryofexpertise.legaltech.wales/"><u>Expertise Directory</u></a>, <a
+        href="https://github.com/Legal-Innovation-Lab-Wales/expertise_directory"><u>GitHub</u></a>&nbsp;</p>
+<p><a href="https://postcards-purpleriver.herokuapp.com/"><u>Postcards from a Stranger</u></a>, <a
+        href="https://github.com/phil-6/postcards" title="https://github.com/phil-6/postcards"><u>GitHub</u></a>&nbsp;
+</p>
+<p>&nbsp;If you’re still looking for a bit more inspiration, <a
+        href="https://purelyfunctional.tv/guide/programming-projects-resume/#projects"><u>these</u></a> <a
+        href="https://medium.com/better-programming/10-great-programming-projects-to-improve-your-resume-and-learn-to-program-74b14d3e9e16"><u>two</u></a>
+    blog posts have a few reasonable ideas.&nbsp;</p>
+<h4 id="The-Technical-Debrief">The Technical Debrief&nbsp;</h4>
+<p>After we’ve had a chance to review your code, you’ll have a debrief call
+    with a couple of our developers.&nbsp;&nbsp;</p>
+<p>The first part of this call will be to demonstrate your project, show us
+    what you’ve built and talk us through your motivations behind your choices – both in what you built and
+    how you built it. You’ll have 15 minutes to show us everything you want to.&nbsp;</p>
+<p>Following your demo, they’ll be about half an hour to field questions
+    from our developers about your project.&nbsp;</p>
+<h4 id="The-Interview">The Interview&nbsp;</h4>
+<p>The interview will take place with a panel from our staff who’ll ask you
+    a range of questions, some technical, some not. This is also your chance to ask any questions you have
+    for us.&nbsp;</p>

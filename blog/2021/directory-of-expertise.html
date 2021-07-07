@@ -1,0 +1,370 @@
+---
+layout: blog
+short-title: directory-of-expertise
+full-title: Directory of Expertise
+file-type: html
+publish-date: January 3
+publish-year: 2021
+source: LILW
+link: 'https://developer.legaltech.wales/blog/phil/2021/directory-of-expertise.html'
+---
+
+<h1>One Day Build: Staff Directory of Expertise</h1>
+
+<p class="subheading">Short blog detailing the development of the web-scraping script and infrastructure around
+    the School of Law’s
+    staff directory of expertise.</p>
+
+<h3>Introduction</h3>
+
+<p>Previously, staff had areas of expertise listed on their individual staff profiles and nowhere else. There
+    was no way to search or find staff by these areas of expertise or find two staff with expertise in the same
+    area. The lab was asked to see if we could build something that would solve this problem.</p>
+
+<p>The solution was a web scraping script, while this isn’t a perfect solution, it was quick and easy to
+    implement. At some point, when the university changes the page structure, it will inevitably break, but for
+    now it’s proven to be a fantastic resource.</p>
+
+<h3>Starting Point</h3>
+
+<p>The starting point was to look where the areas of expertise were listed. Each staff profile page has an
+    identical format, with the staff name at the top, followed by their title and contact details. After the
+    header section there is normally and “about” section and “areas of expertise”. After that there are more
+    sections that we’re not really interested in. Looking at the HTML, the member of staff’s name has a fairly
+    unique class.</p>
+
+<code class="inline">&lt;h1 class="staff-profile-overview-honorific-prefix-and-full-name"&gt;</code>
+
+<p>We can quite easily point to this later on in our script. Fortunately, the areas of expertise are also
+    contained in a unique class.</p>
+
+<code class="inline">&lt;div class="staff-profile-areas-of-expertise"></code>
+
+<p>So actually getting this information should be fairly easy.</p>
+
+<h3>Scripting the information extraction</h3>
+
+<p>Now we know where the key information is stored on the website, we can look to automate the extraction.</p>
+
+<p>The first step here is to write a script that we can run locally which will output the expertise to our
+    command line, start small and build up from there. So picking on
+    <a href="https://www.swansea.ac.uk/staff/law/barazza-s/">Stefano Barazza</a> (who is the academic lead
+    of the Legal Innovation Lab), want to output his two AoEs.</p>
+
+<p>Python has a couple of helpful libraries, well, python has more than a couple but there are two that are
+    going to be key in this today. requests allows our script to make http requests and the wonderfully named
+    BeautifulSoup is a powerful HTML parser.</p>
+
+
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+
+URL = 'https://www.swansea.ac.uk/staff/law/barazza-s/'
+page = requests.get(URL)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+
+
+name = soup.find(class_='staff-profile-overview-honorific-prefix-and-full-name')
+aoe_list = soup.find(class_='staff-profile-areas-of-expertise')
+
+print ("name:\n", name, "\naoe_list:\n", aoe_list)</code></pre>
+
+<p>Which gives us an output:</p>
+
+<pre><code class="language-bash">name:
+&lt;h1 class="staff-profile-overview-honorific-prefix-and-full-name">Mr Stefano Barazza</h1>
+    aoe_list:
+&lt;div class="staff-profile-areas-of-expertise">
+&lt;h2>Areas Of Expertise&lt;/h2>
+&lt;ul>
+&lt;li>Intellectual Property Law&lt;/li>
+&lt;li>European Union Law&lt;/li>
+&lt;/ul>
+&lt;/div>
+</code></pre>
+
+<p>This is a good start, we can see that the information is there but it still has the html tags around it.
+    Thankfully this is easy to do, we've also wrapped our code in a function for good measure</p>
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+
+def get_name_and_aoe_list():
+
+	URL = 'https://www.swansea.ac.uk/staff/law/barazza-s/'
+	page = requests.get(URL)
+
+	soup = BeautifulSoup(page.content, 'html.parser')
+
+
+	name = soup.find(class_='staff-profile-overview-honorific-prefix-and-full-name')
+	aoe_list = soup.find(class_='staff-profile-areas-of-expertise')
+
+	print(name.text.strip())
+	print(aoe_list.ul.text.strip())
+
+get_name_and_aoe_list()</code></pre>
+
+<pre><code class="language-bash">Mr Stefano Barazza
+Intellectual Property Law
+European Union Law</code></pre>
+
+<p>Now we have the basics of getting the information we need for one staff member from the HTML, it should be
+    fairly simple to extract this into a function which can be called in a loop for each staff member. The URLs
+    of their pages are simple to extract in the same way from the index page.</p>
+
+<p>We’ve also added some if-statements to handle the staff members who don’t have any expertise listed. </p>
+
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+
+def get_law_staff():
+	college = 'law'
+	URL = 'https://www.swansea.ac.uk/staff/' + college
+	page = requests.get(URL)
+	soup = BeautifulSoup(page.content, 'html.parser')
+
+	staff_all = soup.find(class_='contextual-nav')
+	staff_in_list= staff_all.find_all('li')
+	for staff in staff_in_list:
+	 	staff_url = staff.find('a')['href']
+	 	print (staff_url)
+	 	get_name_and_aoe_list(staff_url)
+
+
+def get_name_and_aoe_list(staff_url):
+
+	URL = 'https://www.swansea.ac.uk/' + staff_url
+	page = requests.get(URL)
+	soup = BeautifulSoup(page.content, 'html.parser')
+
+	staff_member = {}
+	expertise = []
+
+	name = soup.find(class_='staff-profile-overview-honorific-prefix-and-full-name')
+	if name:
+		name = name.text.strip()
+		print(name)
+
+	aoe_list = soup.find(class_='staff-profile-areas-of-expertise')
+	if aoe_list:
+		# add to dict
+		staff_member['name'] = name
+		staff_member['url'] = URL
+
+		# remove html
+		aoe_list = aoe_list.ul.text.strip()
+		# remove line breaks
+		aoe_list = aoe_list.replace("\n", ", ").strip()
+
+		print(aoe_list)
+
+
+get_law_staff()</code></pre>
+
+<h3>Saving to JSON</h3>
+
+<p>Now we have an output with all of the information that we want to make more accessible, we need to wrap it up
+    into a single object so it can be used by our front end.</p>
+
+<p>For this we’re going to need a new a couple of extra python libraries, “json” and to add a timestamp to our
+    json file “datetime”.</p>
+
+<p>The extra code creates the objects, encodes it as json and saves the file.</p>
+
+<pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+import json
+from datetime import datetime
+import re
+
+def get_law_staff():
+	college = 'law'
+	URL = 'https://www.swansea.ac.uk/staff/' + college
+	page = requests.get(URL)
+	soup = BeautifulSoup(page.content, 'html.parser')
+
+	jsondata[college] = []
+
+	staff_all = soup.find(class_='contextual-nav')
+	staff_in_list= staff_all.find_all('li')
+	for staff in staff_in_list:
+	 	staff_url = staff.find('a')['href']
+	 	name_and_aoe_list = get_name_and_aoe_list(staff_url)
+
+	 	if name_and_aoe_list:
+	 		jsondata[college].append(name_and_aoe_list)
+
+
+def get_name_and_aoe_list(staff_url):
+
+	URL = 'https://www.swansea.ac.uk/' + staff_url
+	page = requests.get(URL)
+	soup = BeautifulSoup(page.content, 'html.parser')
+
+	staff_member = {}
+	expertise = []
+
+	name = soup.find(class_='staff-profile-overview-honorific-prefix-and-full-name')
+	if name:
+		name = name.text.strip()
+
+
+	aoe_list = soup.find(class_='staff-profile-areas-of-expertise')
+	if aoe_list:
+		# add to dict
+		staff_member['name'] = name
+		staff_member['url'] = URL
+
+		# remove html
+		aoe_list = aoe_list.ul.text.strip()
+		# remove line breaks
+		aoe_list = aoe_list.replace("\n", ", ").strip()
+
+		# add to dict
+		staff_member['expertise'] = aoe_list
+
+		return staff_member
+
+jsondata = {}
+
+jsondata['last_update'] = datetime.now().strftime("%H:%M %d-%m-%Y")
+print('Getting Staff Details')
+
+get_law_staff()
+
+print('Save Output File')
+with open('new-expertise.json','w', encoding='utf-8') as file:
+	json.dump(jsondata, file, ensure_ascii=False, indent=4)
+</code></pre>
+
+<h3>Automating the Script</h3>
+
+<p>Automating this information extraction is where this gets particularly interesting.</p>
+
+<p>We want our website to reflect any changes that staff make to their profiles, so we could run it manually
+    each day and upload the json by hand but that sounds a lot like hard work. Traditionally we would need an
+    always-on server to run something like this on a schedule however there are loads of serverless options out
+    there now. I decided to use a GitHub Action to run the script, which is easy to configure from the
+    repository home page.</p>
+
+<p>GitHub Actions can be used for CI/CD or to run scheduled scripts. They’re configured via a yaml file, which
+    sets up when it runs, what the dependencies are and what to do with the output.</p>
+
+<pre><code class="language-yaml"># This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+name: Python application
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest requests beautifulsoup4 datetime
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Get Data
+      run: |
+        python3 scrape-data.py
+        mv -r new-expertise.json ./expertise.json
+    - name: Commit files # commit the output folder
+      run: |
+        git config --local user.email "github@purpleriver.dev"
+        git config --local user.name "Phil-6"
+        git add ./expertise.json
+        git commit -m "Automated Update of Expertise"
+    - name: Push changes # push the output folder to your repo
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        force: true</code></pre>
+
+<h3>Front End</h3>
+
+<p>The front end is a static website hosted for zero cost on Netlify, with some JavaScript to decode the json
+    and a bit to enable a basic search function.</p>
+
+<p>This JS script has two methods. GetData() gets the data from the JSON file and passes in into the client’s
+    memory. ProcessData() takes the data and creates a table.</p>
+
+<pre><code class="language-javascript">/**
+ * Get data from expertise.json, perform some processing.
+ */
+
+/*
+Global Variables
+ */
+var data_location = 'expertise.json';
+var json_data;
+
+/*
+Get Data from json
+*/
+function getData () {
+
+    json_data = (function () {
+        json_data = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': data_location,
+            'dataType': "json",
+            'success': function (data) {
+                json_data = data;
+            }
+        });
+        return json_data;
+    })();
+}
+
+function processData () {
+
+    document.getElementById('last_updated').innerHTML = json_data.last_update;
+
+    if(json_data.law){
+        var len = json_data.law.length;
+        var txt = "";
+        if(len > 0){
+            for(var i=0;i&lt;len;i++){
+                txt += "&lt;tr>&lt;td>"+json_data.law[i].name +"&lt;/td>&lt;td>"+json_data.law[i].expertise+"&lt;/td>&lt;/tr>";
+            }
+            if(txt !== ""){
+                $("#table").append(txt).removeClass("hidden");
+            }
+        }
+    }
+}
+
+getData();
+processData();
+</code></pre>
+
+<p>And there we have it! </p>
+<p>You can view this live here: <a href="https://directoryofexpertise.legaltech.wales/">Directory of
+    Expertise</a>, and see all the code on
+    <a href="https://github.com/Legal-Innovation-Lab-Wales/expertise-directory">
+        GitHub <i aria-hidden="true" class="fab fa-github"></i></a></p>
+<p>There have been some further updates since this initial 1-day build which have grown the directory of
+    expertise from only looking at the School of Law to a wider scope as well as adding some extra
+    functionality.</p>
+
+<p>If you have any questions, please get in touch!</p>
+
