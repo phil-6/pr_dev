@@ -1,0 +1,48 @@
+body {
+font-family: 'Alegreya', serif;
+font-weight: 400;
+color: #000;
+text-decoration: none;
+width: 800px;
+height: 400px;
+border: 1px solid;
+margin-left:auto;
+margin-right:auto;
+}
+h1 {
+font-family: 'Tangerine', cursive;
+font-size: 36pt;
+font-weight: 700;
+text-align: center;
+margin: 15px 0px 0px 0px; 
+padding: 0;
+}
+h2 {
+font-family: 'Tangerine', cursive;
+font-size: 24pt;
+font-weight: 700;
+text-align: center;
+margin: 0; 
+padding: 0;
+}
+h3 {
+font-family: 'Alegreya', serif;
+font-weight: 700;
+font-style: italic;
+text-align: center;
+}
+h6 {
+
+}
+p {
+font-family: 'Alegreya', serif;
+text-align: justify;
+margin: 10px;
+padding: 0px;
+}
+.people {
+width: 400px;
+height: 400px;
+float: left;
+margin: 0px 10px 0px 0px; 
+}

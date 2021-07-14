@@ -1,0 +1,294 @@
+header {
+
+}
+body {
+font-family: 'Alegreya', serif;
+font-weight: 400;
+color: #000;
+text-decoration: none;
+}
+
+h1 {
+font-family: 'Tangerine', cursive;
+font-size: 32pt;
+font-weight: 700;
+text-align: center;
+margin-top: 75px;
+margin-bottom:0px;
+}
+h2 {
+font-family: 'Alegreya', serif;
+font-weight: 700;
+font-style: italic;
+text-align: center;
+font-size: 24pt;
+}
+h3 {
+font-family: 'Alegreya', serif;
+font-weight: 400;
+text-align: center;
+font-size:18pt;
+}
+h4 {
+font-family: 'Tangerine', cursive;
+font-weight: 400;
+text-align: center;
+font-size: 28pt;
+}
+h6 {
+
+}
+p {
+
+}
+a {
+text-decoration:none;
+color:black;
+}
+a:hover {
+text-decoration:none;
+color:blue;
+}
+aside {
+position: relative;
+margin-top: 75px;
+width: 120px
+}
+
+div#center{  /* Keeps the whole page centred*/
+min-height: 100%;
+/*height: auto !important; /*Should allow the footer to it at the bottom of the page*/
+/*height: 100%;*/
+margin: 0 auto -55px;
+width:95%;
+}
+section#logo {
+margin-left:auto;
+margin-right:auto;
+width:75%;
+padding: 5%;
+border-radius: 64%;
+font-family: 'Tangerine', cursive;
+color: #F90;
+font-weight: 700;
+font-size: 64pt;
+text-align: center;
+max-width:868px;
+min-width:240px;
+background-color: #600;
+background-image: -ms-radial-gradient(center, ellipse farthest-corner, #660000 60%, #FFFFFF 100%);
+background-image: -moz-radial-gradient(center, ellipse farthest-corner, #660000 60%, #FFFFFF 100%);
+background-image: -o-radial-gradient(center, ellipse farthest-corner, #660000 60%, #FFFFFF 100%); 
+background-image: -webkit-gradient(radial, center center, 0, center center, 413, color-stop(0, #660000), color-stop(1, #FFFFFF));
+background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #660000 60%, #FFFFFF 100%);
+background-image: radial-gradient(ellipse farthest-corner at center, #660000 60%, #FFFFFF 100%);
+}
+
+nav {
+width: 868px;
+margin-top: 10px;
+margin-left:auto;
+margin-right:auto;
+position: relative;
+}
+header a:link {
+background-color: #F90;
+color:#600;
+}
+header a:visited {
+background-color: #F90 ;
+color:#000;
+}
+header a:hover {
+background-color: #006 ;
+color:#06F;
+}
+header a:active {
+background-color: #FF0 ;
+color:#06F;
+}
+.navBox {
+width:120px;
+margin: 2px;
+font-family: 'Tangerine', cursive;
+font-size: 20pt;
+text-align:center;
+position: absolute;
+height: 28px;
+background-color: inherit;
+border-radius: 5px;
+}
+
+section#navHome {
+height: 60px;
+left: 0px;
+}
+section#navSoon {
+height: 60px;
+left: 124px;
+}
+section#navWho{
+left: 248px;
+}
+section#navWhat {
+left: 248px;
+top: 32px;
+}
+section#navPeople{
+left: 372px;
+}
+section#navEvents{
+left: 372px;
+top: 32px;
+}
+section#navHeritage {
+left: 496px;
+}
+section#navFunctions {
+left: 496px;
+top: 32px;
+}
+section#navLocation{
+left: 620px;
+}
+section#navReviews{
+left: 620px;
+top: 32px;
+}
+section#navContact {
+height: 60px;
+left: 744px;
+}
+
+section#intro {
+text-align: justify;
+margin-left:auto;
+margin-right:auto;
+width:90%;
+}
+section#frontBody{
+margin-left:auto;
+margin-right:auto;
+width: 800px;
+}
+section#frontNav{
+float: left;
+}
+#frontNav a:link {
+background-color: #F90;
+color:#600;
+}
+#frontNav  a:visited {
+background-color: #F90 ;
+color:#000;
+}
+#frontNav  a:hover {
+background-color: #006 ;
+color:#06F;
+}
+#frontNav  a:active {
+background-color: #FF0 ;
+color:#06F;
+}
+.linkBox {
+display:table;
+text-align:center;
+width:160px;
+height:160px;
+border-radius:25px;
+margin: 10px 5px ;
+font-family: 'Tangerine', cursive;
+font-size: 32pt;
+font-weight: 700;
+/*text-decoration: none;*/
+color: inherit;
+background-color: inherit;
+}
+
+#inner {
+display:table-cell; 
+vertical-align:middle;
+text-decoration: none;
+}
+
+.event {
+width:625px;
+height:425px;
+border-radius:25px;
+position: static;
+left: 172px;
+margin-right:auto;
+margin-left:auto;
+margin-top: 0px;
+margin-bottom:10px;
+}
+
+#nextEvent {
+
+}
+section#sideNav{
+float:left;
+height: 550px;
+}
+.sideLinkBox {
+display:table;
+text-align:center;
+width:120px;
+height:120px;
+border-radius:5px;
+margin: 5px 5px 10px 2px;
+font-family: 'Tangerine', cursive;
+font-size: 32pt;
+font-weight: 700;
+text-decoration: none;
+color: inherit;
+background-color: inherit;
+}
+#sideNav a:link {
+background-color: #F90;
+color:#600;
+}
+#sideNav  a:visited {
+background-color: #F90 ;
+color:#000;
+}
+#sideNav  a:hover {
+background-color: #006 ;
+color:#06F;
+}
+#sideNav  a:active {
+background-color: #FF0 ;
+color:#06F;
+}
+section#main {
+margin:auto;
+margin-top:75px;
+max-width:900px;
+}
+.people {
+width:825px;
+height:425px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+}
+.event {
+width:625px;
+height:425px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+}
+.footer {
+bottom: 0;
+position: static;
+text-align: center;
+width: 100%;
+}
+footer  {
+margin: 10px auto;
+border-top: 1px solid #F90 ;
+text-align: center;
+height: 55px;
+}
+
