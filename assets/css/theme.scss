@@ -19,11 +19,11 @@ body {
             background: map-get($color-themes, $theme, $color, background);
           }
 
-          header {
-            h1, h2 {
-              color: map-get($color-themes, $theme, $color, heading-ink);
-            }
+
+          h1, h2 {
+            color: map-get($color-themes, $theme, $color, heading-ink);
           }
+
 
           button, a {
             color: map-get($color-themes, $theme, $color, header-button-color);

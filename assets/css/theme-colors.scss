@@ -1,15 +1,22 @@
 // red
-$red: #DC042A;
-$red-light-2: #F9B3BF;
-$red-light-1: #EF5671;
-$red-dark-1: #9C001C;
-$red-dark-2: #42000C;
+$red: #FF2800;
+$red-light-2: #FFD7D0;
+$red-light-1: #FF745B;
+$red-dark-1: #A31900;
+$red-dark-2: #2B0700;
+$red-light-3: lighten($red-light-2, 20%);
 
-$red-secondary-1-0: #EB9304;
-$red-secondary-1-1: #FFE4B7;
-$red-secondary-1-2: #FFC15C;
-$red-secondary-1-3: #A66700;
-$red-secondary-1-4: #472C00;
+$red-secondary-1-0: #FFB400;
+$red-secondary-1-1: #FFF1D0;
+$red-secondary-1-2: #FFCF5B;
+$red-secondary-1-3: #A37300;
+$red-secondary-1-4: #2B1E00;
+
+$red-secondary-2-0: #8506A9;
+$red-secondary-2-1: #E6C4EF;
+$red-secondary-2-2: #A146BB;
+$red-secondary-2-3: #55036C;
+$red-secondary-2-4: #16001C;
 
 //orange
 $orange: #FF6C00;
@@ -78,7 +85,7 @@ $purple-dark-2: #0E0137;
 $color-themes: (
         "dark": (
                 "red": (
-                        ink: $red-light-2,
+                        ink: $red-light-3,
                         background: $red-dark-2,
                         background-grad: linear-gradient(185deg, $red-secondary-1-4, $red-dark-2, $purple-dark-2),
                         heading-ink: $red,
@@ -88,8 +95,8 @@ $color-themes: (
                         header-button-hover-color:$red-secondary-1-0,
                         header-button-hover-background: $purple-dark-2,
 
-                        project-ink:$purple-light-2,
-                        project-border-color: $purple-dark-2,
+                        project-ink:$red-secondary-2-1,
+                        project-border-color: $red-secondary-2-4,
                         project-background-color: $red-secondary-1-4,
                         project-background-hover-color: lighten($red-secondary-1-4, 5%),
                         project-hr-color: $purple,
