@@ -12,13 +12,13 @@ body {
           color: map-get($color-themes, $theme, $color, ink);
 
           &.grad {
+            background-color: map-get($color-themes, $theme, $color, background);
             background: map-get($color-themes, $theme, $color, background-grad);
           }
 
           &.no-grad {
             background: map-get($color-themes, $theme, $color, background);
           }
-
 
           h1, h2 {
             color: map-get($color-themes, $theme, $color, heading-ink);

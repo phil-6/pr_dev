@@ -2,6 +2,7 @@ body.dark.red {
   color: #fff5f4;
 }
 body.dark.red.grad {
+  background-color: #120300;
   background: linear-gradient(185deg, #2B1E00, #2B0700, #120300, #0E0137);
 }
 body.dark.red.no-grad {
@@ -68,7 +69,8 @@ body.dark.orange {
   color: #C2D2EF;
 }
 body.dark.orange.grad {
-  background: linear-gradient(178deg, #082C6C -20%, #010A1B 10%, #291100 90%, #A34500 120%);
+  background-color: #010A1B;
+  background: linear-gradient(172deg, #082C6C -20%, #010A1B 10%, #010A1B 60%, #A34500 130%);
 }
 body.dark.orange.no-grad {
   background: #010A1B;
@@ -77,8 +79,8 @@ body.dark.orange h1, body.dark.orange h2 {
   color: #FF6C00;
 }
 body.dark.orange button, body.dark.orange a {
-  color: #A34500;
-  border-color: #A34500;
+  color: #FF6C00;
+  border-color: #FF6C00;
 }
 body.dark.orange button:hover, body.dark.orange a:hover {
   color: #FFE0CA;
@@ -89,7 +91,7 @@ body.dark.orange button.btn, body.dark.orange a.btn {
 body.dark.orange button.btn:hover, body.dark.orange a.btn:hover {
   color: #FF6C00;
   border-color: #FF6C00;
-  background: #010A1B;
+  background: #082C6C;
 }
 body.dark.orange button.theme-button:hover, body.dark.orange a.theme-button:hover {
   color: #010A1B;
@@ -101,13 +103,13 @@ body.dark.orange button.color-button:hover, body.dark.orange a.color-button:hove
   border-color: #140008;
 }
 body.dark.orange .social a {
-  background-color: #A34500;
+  background-color: #FF6C00;
   color: #010A1B;
 }
 body.dark.orange .social a:hover {
   background-color: #010A1B;
-  border-color: #A34500;
-  color: #A34500;
+  border-color: #FF6C00;
+  color: #FF6C00;
 }
 body.dark.orange #projects .project {
   color: #4E75BC;
@@ -118,13 +120,14 @@ body.dark.orange #projects .project hr {
   border-color: #A34500;
 }
 body.dark.orange #projects .project .btn-container .btn {
+  color: #FF6C00;
   border-color: #FF6C00;
 }
 body.dark.orange #projects .project .btn-container .btn:hover {
-  background-color: #A34500;
+  background-color: #1047A9;
 }
 body.dark.orange #projects .project:hover {
-  background-color: #031c4c;
+  background-color: #021334;
 }
 body.dark.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -133,6 +136,7 @@ body.dark.yellow {
   color: #ACD9EE;
 }
 body.dark.yellow.grad {
+  background-color: #000A0F;
   background: linear-gradient(180deg, #000A0F, #181500 25%, #FADE0A 115%);
 }
 body.dark.yellow.no-grad {
@@ -198,6 +202,7 @@ body.dark.green {
   color: #FFD7D8;
 }
 body.dark.green.grad {
+  background-color: #032D01;
   background: linear-gradient(120deg, #050F25, #032D01 76%, #21851C 120%);
 }
 body.dark.green.no-grad {
@@ -263,6 +268,7 @@ body.dark.blue {
   color: #00d4ff;
 }
 body.dark.blue.grad {
+  background-color: #0a2540;
   background: linear-gradient(to bottom, #0a2540 70%, #00d4ff 120%);
 }
 body.dark.blue.no-grad {
@@ -329,6 +335,7 @@ body.dark.purple {
   color: #F5F3FB;
 }
 body.dark.purple.grad {
+  background-color: #0E0137;
   background: linear-gradient(to bottom, #0E0137, #A34500);
 }
 body.dark.purple.no-grad {
@@ -394,6 +401,7 @@ body.light.red {
   color: #A31900;
 }
 body.light.red.grad {
+  background-color: #fff5f4;
   background: linear-gradient(185deg, #FFF1D0, #FFD7D0, #7453D7);
 }
 body.light.red.no-grad {
@@ -460,6 +468,7 @@ body.light.orange {
   color: #010A1B;
 }
 body.light.orange.grad {
+  background-color: #FFE0CA;
   background: linear-gradient(182deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
 }
 body.light.orange.no-grad {
@@ -525,6 +534,7 @@ body.light.yellow {
   color: #140008;
 }
 body.light.yellow.grad {
+  background-color: #FFF6B5;
   background: linear-gradient(180deg, #ACD9EE, #F9B1CD, #FFF6B5, #FFF6B5, #FFEB58);
 }
 body.light.yellow.no-grad {
@@ -590,6 +600,7 @@ body.light.green {
   color: #032D01;
 }
 body.light.green.grad {
+  background-color: #5cdb95;
   background: linear-gradient(200deg, #5cdb95, #D7FCD5);
 }
 body.light.green.no-grad {
@@ -655,6 +666,7 @@ body.light.blue {
   color: #0a2540;
 }
 body.light.blue.grad {
+  background-color: #00d4ff;
   background: linear-gradient(to bottom, #00d4ff 60%, #0a2540 120%);
 }
 body.light.blue.no-grad {
@@ -721,6 +733,7 @@ body.light.purple {
   color: #210575;
 }
 body.light.purple.grad {
+  background-color: #F5F3FB;
   background: linear-gradient(to bottom, #3E0ECB -40%, #F5F3FB, #F5F3FB, #210575 125%);
 }
 body.light.purple.no-grad {
