@@ -15,6 +15,7 @@ body .center {
   text-align: center;
 }
 body nav {
+  position: fixed;
   text-align: center;
   margin: auto;
   width: 100%;
@@ -71,9 +72,10 @@ body main header {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 body main header .container {
-  margin-top: -80px;
+  margin-top: 60px;
 }
 body main header .container h1 {
   text-align: center;
@@ -108,6 +110,11 @@ body main header .container .subheading {
   font-size: 1.2rem;
   line-height: 1.2;
   letter-spacing: -0.02rem;
+  text-align: center;
+  padding: 0 15px;
+  max-width: 1200px;
+}
+body main header .container .subheading:nth-of-type(2) {
   text-align: justify;
 }
 @media (min-width: 768px) {
@@ -143,6 +150,7 @@ body main header .container .down-arrow {
   }
 }
 body main #projects {
+  padding-top: 80px;
   min-height: 100vh;
 }
 body main #projects .heading {
@@ -172,8 +180,7 @@ body main #projects .project-cards .project {
   padding: 1rem;
 }
 body main #projects .project-cards .project p, body main #projects .project-cards .project h3 {
-  margin: 0;
-  margin-bottom: 0.2rem;
+  margin: 0 0 0.2rem;
 }
 body main #projects .project-cards .project .year {
   font-size: 0.8rem;
@@ -220,6 +227,7 @@ body main #projects .project-cards .project.available-false {
   opacity: 0.65;
 }
 body main #blog {
+  padding-top: 80px;
   margin: auto;
 }
 @media (min-width: 768px) {

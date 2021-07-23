@@ -1,5 +1,5 @@
 body.dark.red {
-  color: white;
+  color: #fff5f4;
 }
 body.dark.red.grad {
   background: linear-gradient(185deg, #2B1E00, #2B0700, #120300, #0E0137);
@@ -44,7 +44,7 @@ body.dark.red .social a:hover {
   color: #FFB400;
 }
 body.dark.red #projects .project {
-  color: white;
+  color: #fff5f4;
   border-color: #55036C;
   background-color: #16001C;
 }
@@ -397,14 +397,14 @@ body.light.red.grad {
   background: linear-gradient(185deg, #FFF1D0, #FFD7D0, #7453D7);
 }
 body.light.red.no-grad {
-  background: #FFD7D0;
+  background: #fff5f4;
 }
 body.light.red h1, body.light.red h2 {
   color: #FF2800;
 }
 body.light.red button, body.light.red a {
-  color: #A37300;
-  border-color: #A37300;
+  color: #55036C;
+  border-color: #55036C;
 }
 body.light.red button:hover, body.light.red a:hover {
   color: #2B0700;
@@ -413,8 +413,8 @@ body.light.red button.btn, body.light.red a.btn {
   background: none;
 }
 body.light.red button.btn:hover, body.light.red a.btn:hover {
-  color: #FFF1D0;
-  border-color: #FFF1D0;
+  color: #E6C4EF;
+  border-color: #E6C4EF;
   background: #A31900;
 }
 body.light.red button.theme-button:hover, body.light.red a.theme-button:hover {
@@ -427,33 +427,34 @@ body.light.red button.color-button:hover, body.light.red a.color-button:hover {
   border-color: #FF6C00;
 }
 body.light.red .social a {
-  background-color: #A37300;
-  color: #FFD7D0;
+  background-color: #55036C;
+  color: #fff5f4;
 }
 body.light.red .social a:hover {
-  background-color: #FFD7D0;
-  border-color: #A37300;
-  color: #A37300;
+  background-color: #fff5f4;
+  border-color: #55036C;
+  color: #55036C;
 }
 body.light.red #projects .project {
-  color: #FFF1D0;
-  border-color: #7453D7;
-  background-color: #2B0700;
+  color: #55036C;
+  border-color: #FF745B;
+  background-color: rgba(230, 196, 239, 0.8);
 }
 body.light.red #projects .project hr {
-  border-color: #3E0ECB;
+  border-color: #8506A9;
 }
 body.light.red #projects .project .btn-container .btn {
-  border-color: #7453D7;
+  color: #A31900;
+  border-color: #A146BB;
 }
 body.light.red #projects .project .btn-container .btn:hover {
-  background-color: #2B0700;
+  background-color: #E6C4EF;
 }
 body.light.red #projects .project:hover {
-  background-color: #350900;
+  background-color: rgba(255, 215, 208, 0.8);
 }
 body.light.red #projects .project:hover .icon {
-  color: #FFB400;
+  color: #A31900;
 }
 body.light.orange {
   color: #010A1B;
