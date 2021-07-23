@@ -216,7 +216,7 @@ body.dark.green button, body.dark.green a {
   border-color: #21851C;
 }
 body.dark.green button:hover, body.dark.green a:hover {
-  color: #FE9194;
+  color: #7D95CA;
 }
 body.dark.green button.btn, body.dark.green a.btn {
   background: none;
@@ -250,13 +250,13 @@ body.dark.green #projects .project {
   background-color: #050F25;
 }
 body.dark.green #projects .project hr {
-  border-color: #3E0ECB;
+  border-color: #425E99;
 }
 body.dark.green #projects .project .btn-container .btn {
   border-color: #4AB944;
 }
 body.dark.green #projects .project .btn-container .btn:hover {
-  background-color: #425E99;
+  background-color: #21851C;
 }
 body.dark.green #projects .project:hover {
   background: #08183b;

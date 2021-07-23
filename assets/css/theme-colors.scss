@@ -182,12 +182,12 @@ $color-themes: (
                         project-border-color: $green-dark-1,
                         project-background-color: $green-secondary-1-4,
                         project-background-hover-color: lighten($green-secondary-1-4, 5%),
-                        project-hr-color: $purple,
+                        project-hr-color: $green-secondary-1-0,
                         project-icon-hover-ink: $green,
                         project-button-border-color: $green,
-                        project-button-background-hover-color: $green-secondary-1-0,
+                        project-button-background-hover-color: $green-dark-1,
 
-                        text-link-hover-ink: $green-complement-2,
+                        text-link-hover-ink: $green-secondary-1-2,
                         theme-button-ink: $green-dark-2,
                         theme-button-background: $green-light-1,
                         next-button-ink: $light-blue,
@@ -247,7 +247,7 @@ $color-themes: (
                         next-button-background: $red-dark-2,
                 ),
         ),
-        "light": (
+        "light":  (
                 "red": (
                         ink: $red-dark-1,
                         background: $red-light-3,
