@@ -5,6 +5,7 @@ $red-light-1: #FF745B;
 $red-dark-1: #A31900;
 $red-dark-2: #2B0700;
 $red-light-3: lighten($red-light-2, 20%);
+$red-dark-3: darken($red-dark-2, 5%);
 
 $red-secondary-1-0: #FFB400;
 $red-secondary-1-1: #FFF1D0;
@@ -86,25 +87,26 @@ $color-themes: (
         "dark": (
                 "red": (
                         ink: $red-light-3,
-                        background: $red-dark-2,
-                        background-grad: linear-gradient(185deg, $red-secondary-1-4, $red-dark-2, $purple-dark-2),
+                        background: $red-dark-3,
+                        background-grad: linear-gradient(185deg, $red-secondary-1-4, $red-dark-2, $red-dark-3, $purple-dark-2),
                         heading-ink: $red,
 
                         header-button-color: $red-secondary-1-0,
                         header-button-background: none,
                         header-button-hover-color:$red-secondary-1-0,
-                        header-button-hover-background: $purple-dark-2,
+                        header-button-hover-background: $red-secondary-2-4,
 
-                        project-ink:$red-secondary-2-1,
-                        project-border-color: $red-secondary-2-4,
-                        project-background-color: $red-secondary-1-4,
-                        project-background-hover-color: lighten($red-secondary-1-4, 5%),
-                        project-hr-color: $purple,
-                        project-icon-hover-ink: $red-secondary-1-2,
-                        project-button-border-color: $red-secondary-1-0,
-                        project-button-background-hover-color: $red-dark-2,
+                        project-ink:$red-light-3,
+                        project-border-color: $red-secondary-2-3,
+                        project-background-color: $red-secondary-2-4,
+                        project-background-hover-color: $red-dark-2,
+                        project-hr-color: $red,
+                        project-button-color: $red-light-1,
+                        project-button-border-color: $red-light-1,
+                        project-icon-hover-ink: $red-light-1,
+                        project-button-background-hover-color: $red-dark-3,
 
-                        text-link-hover-ink: $purple-light-1,
+                        text-link-hover-ink: $red,
                         theme-button-ink: $red-dark-1,
                         theme-button-background: $red-secondary-1-1,
                         next-button-ink: $orange,

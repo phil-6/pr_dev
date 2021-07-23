@@ -76,6 +76,7 @@ body {
             }
 
             .btn-container .btn {
+              color: map-get($color-themes, $theme, $color, project-button-color);
               border-color: map-get($color-themes, $theme, $color, project-button-border-color);
               background-color: map-get($color-themes, $theme, $color, project-button-background-color);;
 
