@@ -592,10 +592,10 @@ body.light.yellow #projects .project .btn-container .btn:hover {
   background-color: #FADE0A;
 }
 body.light.yellow #projects .project:hover {
-  background: #c1e3f2;
+  background: linear-gradient(160deg, #c1e3f2, rgba(255, 246, 181, 0.5));
 }
 body.light.yellow #projects .project:hover .icon {
-  color: #0E6F9E;
+  color: #FADE0A;
 }
 body.light.green {
   color: #032D01;
