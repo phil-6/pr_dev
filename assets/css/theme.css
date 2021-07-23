@@ -60,7 +60,7 @@ body.dark.red #projects .project .btn-container .btn:hover {
   background-color: #120300;
 }
 body.dark.red #projects .project:hover {
-  background-color: #2B0700;
+  background: #2B0700;
 }
 body.dark.red #projects .project:hover .icon {
   color: #FF745B;
@@ -127,7 +127,7 @@ body.dark.orange #projects .project .btn-container .btn:hover {
   background-color: #1047A9;
 }
 body.dark.orange #projects .project:hover {
-  background-color: #021334;
+  background: #021334;
 }
 body.dark.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -193,7 +193,7 @@ body.dark.yellow #projects .project .btn-container .btn:hover {
   background-color: #D80959;
 }
 body.dark.yellow #projects .project:hover {
-  background-color: #a99500;
+  background: #a99500;
 }
 body.dark.yellow #projects .project:hover .icon {
   color: #D80959;
@@ -259,7 +259,7 @@ body.dark.green #projects .project .btn-container .btn:hover {
   background-color: #425E99;
 }
 body.dark.green #projects .project:hover {
-  background-color: #08183b;
+  background: #08183b;
 }
 body.dark.green #projects .project:hover .icon {
   color: #4AB944;
@@ -326,7 +326,7 @@ body.dark.blue #projects .project .btn-container .btn:hover {
   background-color: #00d4ff;
 }
 body.dark.blue #projects .project:hover {
-  background-color: #1ad8ff;
+  background: #1ad8ff;
 }
 body.dark.blue #projects .project:hover .icon {
   color: #0a2540;
@@ -392,7 +392,7 @@ body.dark.purple #projects .project .btn-container .btn:hover {
   background-color: #291100;
 }
 body.dark.purple #projects .project:hover {
-  background-color: #110141;
+  background: #110141;
 }
 body.dark.purple #projects .project:hover .icon {
   color: #FF6C00;
@@ -446,7 +446,7 @@ body.light.red .social a:hover {
 body.light.red #projects .project {
   color: #55036C;
   border-color: #FF745B;
-  background-color: rgba(230, 196, 239, 0.8);
+  background-color: rgba(230, 196, 239, 0.2);
 }
 body.light.red #projects .project hr {
   border-color: #8506A9;
@@ -459,7 +459,7 @@ body.light.red #projects .project .btn-container .btn:hover {
   background-color: #E6C4EF;
 }
 body.light.red #projects .project:hover {
-  background-color: rgba(255, 215, 208, 0.8);
+  background: rgba(255, 215, 208, 0.2);
 }
 body.light.red #projects .project:hover .icon {
   color: #A31900;
@@ -468,21 +468,21 @@ body.light.orange {
   color: #010A1B;
 }
 body.light.orange.grad {
-  background-color: #FFE0CA;
-  background: linear-gradient(182deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
+  background-color: #fff2e9;
+  background: linear-gradient(184deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
 }
 body.light.orange.no-grad {
-  background: #FFE0CA;
+  background: #fff2e9;
 }
 body.light.orange h1, body.light.orange h2 {
-  color: #A34500;
+  color: #FF6C00;
 }
 body.light.orange button, body.light.orange a {
   color: #4E75BC;
   border-color: #4E75BC;
 }
 body.light.orange button:hover, body.light.orange a:hover {
-  color: #291100;
+  color: #A34500;
 }
 body.light.orange button.btn, body.light.orange a.btn {
   background: none;
@@ -503,29 +503,30 @@ body.light.orange button.color-button:hover, body.light.orange a.color-button:ho
 }
 body.light.orange .social a {
   background-color: #4E75BC;
-  color: #FFE0CA;
+  color: #fff2e9;
 }
 body.light.orange .social a:hover {
-  background-color: #FFE0CA;
+  background-color: #fff2e9;
   border-color: #4E75BC;
   color: #4E75BC;
 }
 body.light.orange #projects .project {
   color: #082C6C;
-  border-color: #A34500;
-  background-color: #FFE0CA;
+  border-color: #FF6C00;
+  background-color: #fff2e9;
 }
 body.light.orange #projects .project hr {
   border-color: #FFA059;
 }
 body.light.orange #projects .project .btn-container .btn {
+  color: #A31900;
   border-color: #C2D2EF;
 }
 body.light.orange #projects .project .btn-container .btn:hover {
-  background-color: #A34500;
+  background-color: #C2D2EF;
 }
 body.light.orange #projects .project:hover {
-  background-color: #ffdac0;
+  background: linear-gradient(160deg, #fff2e9, rgba(255, 224, 202, 0.5));
 }
 body.light.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -591,7 +592,7 @@ body.light.yellow #projects .project .btn-container .btn:hover {
   background-color: #FADE0A;
 }
 body.light.yellow #projects .project:hover {
-  background-color: #c1e3f2;
+  background: #c1e3f2;
 }
 body.light.yellow #projects .project:hover .icon {
   color: #0E6F9E;
@@ -657,7 +658,7 @@ body.light.green #projects .project .btn-container .btn:hover {
   background-color: #D7E2F9;
 }
 body.light.green #projects .project:hover {
-  background-color: #5cdb95;
+  background: #5cdb95;
 }
 body.light.green #projects .project:hover .icon {
   color: #E25357;
@@ -724,7 +725,7 @@ body.light.blue #projects .project .btn-container .btn:hover {
   background-color: #0a2540;
 }
 body.light.blue #projects .project:hover {
-  background-color: #0d3256;
+  background: #0d3256;
 }
 body.light.blue #projects .project:hover .icon {
   color: #00d4ff;
@@ -790,7 +791,7 @@ body.light.purple #projects .project .btn-container .btn:hover {
   background-color: #3E0ECB;
 }
 body.light.purple #projects .project:hover {
-  background-color: #e9e4f9;
+  background: #e9e4f9;
 }
 body.light.purple #projects .project:hover .icon {
   color: #3E0ECB;

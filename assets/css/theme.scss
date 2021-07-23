@@ -86,7 +86,7 @@ body {
             }
 
             &:hover {
-              background-color: map-get($color-themes, $theme, $color, project-background-hover-color);
+              background: map-get($color-themes, $theme, $color, project-background-hover-color);
 
               .icon {
                 color: map-get($color-themes, $theme, $color, project-icon-hover-ink);
