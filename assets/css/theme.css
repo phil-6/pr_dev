@@ -137,7 +137,7 @@ body.dark.yellow {
 }
 body.dark.yellow.grad {
   background-color: #000A0F;
-  background: linear-gradient(180deg, #000A0F, #181500 25%, #FADE0A 115%);
+  background: linear-gradient(182deg, #181500, #000A0F 80%, #FADE0A 160%);
 }
 body.dark.yellow.no-grad {
   background: #000A0F;
@@ -150,7 +150,7 @@ body.dark.yellow button, body.dark.yellow a {
   border-color: #FADE0A;
 }
 body.dark.yellow button:hover, body.dark.yellow a:hover {
-  color: #FFF6B5;
+  color: #0E6F9E;
 }
 body.dark.yellow button.btn, body.dark.yellow a.btn {
   background: none;
@@ -181,22 +181,22 @@ body.dark.yellow .social a:hover {
 body.dark.yellow #projects .project {
   color: #FFF6B5;
   border-color: #0E6F9E;
-  background-color: #9F8C00;
+  background-color: #000A0F;
 }
 body.dark.yellow #projects .project hr {
   border-color: #FADE0A;
 }
 body.dark.yellow #projects .project .btn-container .btn {
-  border-color: #E54F89;
+  border-color: #0E6F9E;
 }
 body.dark.yellow #projects .project .btn-container .btn:hover {
-  background-color: #D80959;
+  background-color: #054565;
 }
 body.dark.yellow #projects .project:hover {
-  background: #a99500;
+  background: #001119;
 }
 body.dark.yellow #projects .project:hover .icon {
-  color: #D80959;
+  color: #FADE0A;
 }
 body.dark.green {
   color: #FFD7D8;

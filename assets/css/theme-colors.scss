@@ -144,7 +144,7 @@ $color-themes: (
                 "yellow":(
                         ink: $yellow-secondary-2-1,
                         background: $yellow-secondary-2-4,
-                        background-grad: linear-gradient(180deg, $yellow-secondary-2-4, $yellow-dark-2 25%, $yellow 115%),
+                        background-grad: linear-gradient(182deg, $yellow-dark-2, $yellow-secondary-2-4 80%, $yellow 160%),
                         heading-ink: $yellow,
 
                         header-button-color: $yellow,
@@ -154,14 +154,14 @@ $color-themes: (
 
                         project-ink:$yellow-light-2,
                         project-border-color: $yellow-secondary-2-0,
-                        project-background-color: $yellow-dark-1,
-                        project-background-hover-color: lighten($yellow-dark-1, 2%),
+                        project-background-color: $yellow-secondary-2-4,
+                        project-background-hover-color: lighten($yellow-secondary-2-4 , 2%),
                         project-hr-color: $yellow,
-                        project-icon-hover-ink: $yellow-secondary-1-0,
-                        project-button-border-color: $yellow-secondary-1-2,
-                        project-button-background-hover-color: $yellow-secondary-1-0,
+                        project-icon-hover-ink: $yellow,
+                        project-button-border-color: $yellow-secondary-2-0,
+                        project-button-background-hover-color: $yellow-secondary-2-3,
 
-                        text-link-hover-ink: $yellow-light-2,
+                        text-link-hover-ink: $yellow-secondary-2-0,
                         theme-button-ink: $yellow-secondary-1-4,
                         theme-button-background: $yellow-light-2,
                         next-button-ink: $green-secondary-1-4,
