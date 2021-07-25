@@ -330,9 +330,9 @@ $color-themes: (
                 ),
                 "green":(
                         ink: $green-dark-2,
-                        background: $green-light-1,
-                        background-grad: linear-gradient(200deg, $green-light-1, $green-light-2),
-                        heading-ink: $green-dark-1,
+                        background: $green-light-2,
+                        background-grad: linear-gradient(200deg, $green-complement-1 -20%,  $green-light-2, $green-light-1 90%, $green-secondary-1-1 120%),
+                        heading-ink: $green,
 
                         header-button-color: $green-dark-2,
                         header-button-background: none,
@@ -342,10 +342,10 @@ $color-themes: (
                         project-ink:$green-dark-2,
                         project-border-color: $green,
                         project-background-color: $green-light-2,
-                        project-background-hover-color: $green-light-1,
+                        project-background-hover-color: linear-gradient( 160deg, transparentize($green-light-1, 0.6), $green-secondary-1-2),
                         project-hr-color: $green,
-                        project-icon-hover-ink: $green-complement-0,
-                        project-button-border-color: $green-complement-0,
+                        project-icon-hover-ink: $green,
+                        project-button-border-color: $green,
                         project-button-background-hover-color: $green-secondary-1-1,
 
                         text-link-hover-ink: $green-dark-1,
