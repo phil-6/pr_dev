@@ -1,33 +1,34 @@
 body.dark.red {
-  color: #F9B3BF;
+  color: #fff5f4;
 }
 body.dark.red.grad {
-  background: linear-gradient(185deg, #472C00, #42000C, #0E0137);
+  background-color: #120300;
+  background: linear-gradient(185deg, #2B1E00, #2B0700, #120300, #0E0137);
 }
 body.dark.red.no-grad {
-  background: #42000C;
+  background: #120300;
 }
-body.dark.red header h1, body.dark.red header h2 {
-  color: #DC042A;
+body.dark.red h1, body.dark.red h2 {
+  color: #FF2800;
 }
 body.dark.red button, body.dark.red a {
-  color: #EB9304;
-  border-color: #EB9304;
+  color: #FFB400;
+  border-color: #FFB400;
 }
 body.dark.red button:hover, body.dark.red a:hover {
-  color: #7453D7;
+  color: #FF2800;
 }
 body.dark.red button.btn, body.dark.red a.btn {
   background: none;
 }
 body.dark.red button.btn:hover, body.dark.red a.btn:hover {
-  color: #EB9304;
-  border-color: #EB9304;
-  background: #0E0137;
+  color: #FFB400;
+  border-color: #FFB400;
+  background: #16001C;
 }
 body.dark.red button.theme-button:hover, body.dark.red a.theme-button:hover {
-  color: #9C001C;
-  background-color: #FFE4B7;
+  color: #A31900;
+  background-color: #FFF1D0;
 }
 body.dark.red button.color-button:hover, body.dark.red a.color-button:hover {
   color: #FF6C00;
@@ -35,49 +36,51 @@ body.dark.red button.color-button:hover, body.dark.red a.color-button:hover {
   border-color: #FF6C00;
 }
 body.dark.red .social a {
-  background-color: #EB9304;
-  color: #42000C;
+  background-color: #FFB400;
+  color: #120300;
 }
 body.dark.red .social a:hover {
-  background-color: #42000C;
-  border-color: #EB9304;
-  color: #EB9304;
+  background-color: #120300;
+  border-color: #FFB400;
+  color: #FFB400;
 }
 body.dark.red #projects .project {
-  color: #F5F3FB;
-  border-color: #0E0137;
-  background-color: #472C00;
+  color: #fff5f4;
+  border-color: #55036C;
+  background-color: #16001C;
 }
 body.dark.red #projects .project hr {
-  border-color: #3E0ECB;
+  border-color: #FF2800;
 }
 body.dark.red #projects .project .btn-container .btn {
-  border-color: #EB9304;
+  color: #FF745B;
+  border-color: #FF745B;
 }
 body.dark.red #projects .project .btn-container .btn:hover {
-  background-color: #42000C;
+  background-color: #120300;
 }
 body.dark.red #projects .project:hover {
-  background-color: #613c00;
+  background: #2B0700;
 }
 body.dark.red #projects .project:hover .icon {
-  color: #FFC15C;
+  color: #FF745B;
 }
 body.dark.orange {
   color: #C2D2EF;
 }
 body.dark.orange.grad {
-  background: linear-gradient(178deg, #082C6C -20%, #010A1B 10%, #291100 90%, #A34500 120%);
+  background-color: #010A1B;
+  background: linear-gradient(172deg, #082C6C -20%, #010A1B 10%, #010A1B 60%, #A34500 130%);
 }
 body.dark.orange.no-grad {
   background: #010A1B;
 }
-body.dark.orange header h1, body.dark.orange header h2 {
+body.dark.orange h1, body.dark.orange h2 {
   color: #FF6C00;
 }
 body.dark.orange button, body.dark.orange a {
-  color: #A34500;
-  border-color: #A34500;
+  color: #FF6C00;
+  border-color: #FF6C00;
 }
 body.dark.orange button:hover, body.dark.orange a:hover {
   color: #FFE0CA;
@@ -88,7 +91,7 @@ body.dark.orange button.btn, body.dark.orange a.btn {
 body.dark.orange button.btn:hover, body.dark.orange a.btn:hover {
   color: #FF6C00;
   border-color: #FF6C00;
-  background: #010A1B;
+  background: #082C6C;
 }
 body.dark.orange button.theme-button:hover, body.dark.orange a.theme-button:hover {
   color: #010A1B;
@@ -100,13 +103,13 @@ body.dark.orange button.color-button:hover, body.dark.orange a.color-button:hove
   border-color: #140008;
 }
 body.dark.orange .social a {
-  background-color: #A34500;
+  background-color: #FF6C00;
   color: #010A1B;
 }
 body.dark.orange .social a:hover {
   background-color: #010A1B;
-  border-color: #A34500;
-  color: #A34500;
+  border-color: #FF6C00;
+  color: #FF6C00;
 }
 body.dark.orange #projects .project {
   color: #4E75BC;
@@ -117,13 +120,14 @@ body.dark.orange #projects .project hr {
   border-color: #A34500;
 }
 body.dark.orange #projects .project .btn-container .btn {
+  color: #FF6C00;
   border-color: #FF6C00;
 }
 body.dark.orange #projects .project .btn-container .btn:hover {
-  background-color: #A34500;
+  background-color: #1047A9;
 }
 body.dark.orange #projects .project:hover {
-  background-color: #031c4c;
+  background: #021334;
 }
 body.dark.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -132,12 +136,13 @@ body.dark.yellow {
   color: #ACD9EE;
 }
 body.dark.yellow.grad {
-  background: linear-gradient(180deg, #000A0F, #181500 25%, #FADE0A 115%);
+  background-color: #000A0F;
+  background: linear-gradient(182deg, #181500, #000A0F 80%, #FADE0A 160%);
 }
 body.dark.yellow.no-grad {
   background: #000A0F;
 }
-body.dark.yellow header h1, body.dark.yellow header h2 {
+body.dark.yellow h1, body.dark.yellow h2 {
   color: #FADE0A;
 }
 body.dark.yellow button, body.dark.yellow a {
@@ -145,7 +150,7 @@ body.dark.yellow button, body.dark.yellow a {
   border-color: #FADE0A;
 }
 body.dark.yellow button:hover, body.dark.yellow a:hover {
-  color: #FFF6B5;
+  color: #0E6F9E;
 }
 body.dark.yellow button.btn, body.dark.yellow a.btn {
   background: none;
@@ -176,33 +181,34 @@ body.dark.yellow .social a:hover {
 body.dark.yellow #projects .project {
   color: #FFF6B5;
   border-color: #0E6F9E;
-  background-color: #9F8C00;
+  background-color: #000A0F;
 }
 body.dark.yellow #projects .project hr {
   border-color: #FADE0A;
 }
 body.dark.yellow #projects .project .btn-container .btn {
-  border-color: #E54F89;
+  border-color: #0E6F9E;
 }
 body.dark.yellow #projects .project .btn-container .btn:hover {
-  background-color: #D80959;
+  background-color: #054565;
 }
 body.dark.yellow #projects .project:hover {
-  background-color: #a99500;
+  background: #001119;
 }
 body.dark.yellow #projects .project:hover .icon {
-  color: #D80959;
+  color: #FADE0A;
 }
 body.dark.green {
   color: #FFD7D8;
 }
 body.dark.green.grad {
+  background-color: #032D01;
   background: linear-gradient(120deg, #050F25, #032D01 76%, #21851C 120%);
 }
 body.dark.green.no-grad {
   background: #032D01;
 }
-body.dark.green header h1, body.dark.green header h2 {
+body.dark.green h1, body.dark.green h2 {
   color: #21851C;
 }
 body.dark.green button, body.dark.green a {
@@ -210,7 +216,7 @@ body.dark.green button, body.dark.green a {
   border-color: #21851C;
 }
 body.dark.green button:hover, body.dark.green a:hover {
-  color: #FE9194;
+  color: #7D95CA;
 }
 body.dark.green button.btn, body.dark.green a.btn {
   background: none;
@@ -244,16 +250,16 @@ body.dark.green #projects .project {
   background-color: #050F25;
 }
 body.dark.green #projects .project hr {
-  border-color: #3E0ECB;
+  border-color: #425E99;
 }
 body.dark.green #projects .project .btn-container .btn {
   border-color: #4AB944;
 }
 body.dark.green #projects .project .btn-container .btn:hover {
-  background-color: #425E99;
+  background-color: #21851C;
 }
 body.dark.green #projects .project:hover {
-  background-color: #08183b;
+  background: #08183b;
 }
 body.dark.green #projects .project:hover .icon {
   color: #4AB944;
@@ -262,12 +268,13 @@ body.dark.blue {
   color: #00d4ff;
 }
 body.dark.blue.grad {
+  background-color: #0a2540;
   background: linear-gradient(to bottom, #0a2540 70%, #00d4ff 120%);
 }
 body.dark.blue.no-grad {
   background: #0a2540;
 }
-body.dark.blue header h1, body.dark.blue header h2 {
+body.dark.blue h1, body.dark.blue h2 {
   color: #00d4ff;
 }
 body.dark.blue button, body.dark.blue a {
@@ -319,7 +326,7 @@ body.dark.blue #projects .project .btn-container .btn:hover {
   background-color: #00d4ff;
 }
 body.dark.blue #projects .project:hover {
-  background-color: #1ad8ff;
+  background: #1ad8ff;
 }
 body.dark.blue #projects .project:hover .icon {
   color: #0a2540;
@@ -328,12 +335,13 @@ body.dark.purple {
   color: #F5F3FB;
 }
 body.dark.purple.grad {
+  background-color: #0E0137;
   background: linear-gradient(to bottom, #0E0137, #A34500);
 }
 body.dark.purple.no-grad {
   background: #0E0137;
 }
-body.dark.purple header h1, body.dark.purple header h2 {
+body.dark.purple h1, body.dark.purple h2 {
   color: #7453D7;
 }
 body.dark.purple button, body.dark.purple a {
@@ -356,9 +364,9 @@ body.dark.purple button.theme-button:hover, body.dark.purple a.theme-button:hove
   background-color: #7453D7;
 }
 body.dark.purple button.color-button:hover, body.dark.purple a.color-button:hover {
-  color: #F9B3BF;
-  background-color: #42000C;
-  border-color: #F9B3BF;
+  color: #FFD7D0;
+  background-color: #2B0700;
+  border-color: #FFD7D0;
 }
 body.dark.purple .social a {
   background-color: #F5F3FB;
@@ -384,41 +392,42 @@ body.dark.purple #projects .project .btn-container .btn:hover {
   background-color: #291100;
 }
 body.dark.purple #projects .project:hover {
-  background-color: #110141;
+  background: #110141;
 }
 body.dark.purple #projects .project:hover .icon {
   color: #FF6C00;
 }
 body.light.red {
-  color: #9C001C;
+  color: #A31900;
 }
 body.light.red.grad {
-  background: linear-gradient(185deg, #FFE4B7, #F9B3BF, #7453D7);
+  background-color: #fff5f4;
+  background: linear-gradient(185deg, #FFF1D0, #FFD7D0, #7453D7);
 }
 body.light.red.no-grad {
-  background: #F9B3BF;
+  background: #fff5f4;
 }
-body.light.red header h1, body.light.red header h2 {
-  color: #DC042A;
+body.light.red h1, body.light.red h2 {
+  color: #FF2800;
 }
 body.light.red button, body.light.red a {
-  color: #A66700;
-  border-color: #A66700;
+  color: #55036C;
+  border-color: #55036C;
 }
 body.light.red button:hover, body.light.red a:hover {
-  color: #42000C;
+  color: #2B0700;
 }
 body.light.red button.btn, body.light.red a.btn {
   background: none;
 }
 body.light.red button.btn:hover, body.light.red a.btn:hover {
-  color: #FFE4B7;
-  border-color: #FFE4B7;
-  background: #9C001C;
+  color: #E6C4EF;
+  border-color: #E6C4EF;
+  background: #A31900;
 }
 body.light.red button.theme-button:hover, body.light.red a.theme-button:hover {
-  color: #F9B3BF;
-  background-color: #42000C;
+  color: #FFD7D0;
+  background-color: #2B0700;
 }
 body.light.red button.color-button:hover, body.light.red a.color-button:hover {
   color: #FF6C00;
@@ -426,52 +435,54 @@ body.light.red button.color-button:hover, body.light.red a.color-button:hover {
   border-color: #FF6C00;
 }
 body.light.red .social a {
-  background-color: #A66700;
-  color: #F9B3BF;
+  background-color: #55036C;
+  color: #fff5f4;
 }
 body.light.red .social a:hover {
-  background-color: #F9B3BF;
-  border-color: #A66700;
-  color: #A66700;
+  background-color: #fff5f4;
+  border-color: #55036C;
+  color: #55036C;
 }
 body.light.red #projects .project {
-  color: #FFE4B7;
-  border-color: #7453D7;
-  background-color: #42000C;
+  color: #55036C;
+  border-color: #FF745B;
+  background-color: rgba(230, 196, 239, 0.2);
 }
 body.light.red #projects .project hr {
-  border-color: #3E0ECB;
+  border-color: #8506A9;
 }
 body.light.red #projects .project .btn-container .btn {
-  border-color: #7453D7;
+  color: #A31900;
+  border-color: #A146BB;
 }
 body.light.red #projects .project .btn-container .btn:hover {
-  background-color: #42000C;
+  background-color: #E6C4EF;
 }
 body.light.red #projects .project:hover {
-  background-color: #4c000e;
+  background: rgba(255, 215, 208, 0.2);
 }
 body.light.red #projects .project:hover .icon {
-  color: #EB9304;
+  color: #A31900;
 }
 body.light.orange {
   color: #010A1B;
 }
 body.light.orange.grad {
-  background: linear-gradient(182deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
+  background-color: #fff2e9;
+  background: linear-gradient(184deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
 }
 body.light.orange.no-grad {
-  background: #FFE0CA;
+  background: #fff2e9;
 }
-body.light.orange header h1, body.light.orange header h2 {
-  color: #A34500;
+body.light.orange h1, body.light.orange h2 {
+  color: #FF6C00;
 }
 body.light.orange button, body.light.orange a {
   color: #4E75BC;
   border-color: #4E75BC;
 }
 body.light.orange button:hover, body.light.orange a:hover {
-  color: #291100;
+  color: #A34500;
 }
 body.light.orange button.btn, body.light.orange a.btn {
   background: none;
@@ -492,29 +503,30 @@ body.light.orange button.color-button:hover, body.light.orange a.color-button:ho
 }
 body.light.orange .social a {
   background-color: #4E75BC;
-  color: #FFE0CA;
+  color: #fff2e9;
 }
 body.light.orange .social a:hover {
-  background-color: #FFE0CA;
+  background-color: #fff2e9;
   border-color: #4E75BC;
   color: #4E75BC;
 }
 body.light.orange #projects .project {
   color: #082C6C;
-  border-color: #A34500;
-  background-color: #FFE0CA;
+  border-color: #FF6C00;
+  background-color: #fff2e9;
 }
 body.light.orange #projects .project hr {
   border-color: #FFA059;
 }
 body.light.orange #projects .project .btn-container .btn {
+  color: #A31900;
   border-color: #C2D2EF;
 }
 body.light.orange #projects .project .btn-container .btn:hover {
-  background-color: #A34500;
+  background-color: #C2D2EF;
 }
 body.light.orange #projects .project:hover {
-  background-color: #ffdac0;
+  background: linear-gradient(160deg, #fff2e9, rgba(255, 224, 202, 0.5));
 }
 body.light.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -523,12 +535,13 @@ body.light.yellow {
   color: #140008;
 }
 body.light.yellow.grad {
+  background-color: #FFF6B5;
   background: linear-gradient(180deg, #ACD9EE, #F9B1CD, #FFF6B5, #FFF6B5, #FFEB58);
 }
 body.light.yellow.no-grad {
   background: #FFF6B5;
 }
-body.light.yellow header h1, body.light.yellow header h2 {
+body.light.yellow h1, body.light.yellow h2 {
   color: #181500;
 }
 body.light.yellow button, body.light.yellow a {
@@ -579,22 +592,23 @@ body.light.yellow #projects .project .btn-container .btn:hover {
   background-color: #FADE0A;
 }
 body.light.yellow #projects .project:hover {
-  background-color: #c1e3f2;
+  background: linear-gradient(160deg, #c1e3f2, rgba(255, 246, 181, 0.5));
 }
 body.light.yellow #projects .project:hover .icon {
-  color: #0E6F9E;
+  color: #FADE0A;
 }
 body.light.green {
   color: #032D01;
 }
 body.light.green.grad {
-  background: linear-gradient(200deg, #5cdb95, #D7FCD5);
+  background-color: #D7FCD5;
+  background: linear-gradient(200deg, #FFD7D8 -20%, #D7FCD5, #5cdb95 90%, #D7E2F9 120%);
 }
 body.light.green.no-grad {
-  background: #5cdb95;
+  background: #D7FCD5;
 }
-body.light.green header h1, body.light.green header h2 {
-  color: #21851C;
+body.light.green h1, body.light.green h2 {
+  color: #4AB944;
 }
 body.light.green button, body.light.green a {
   color: #032D01;
@@ -622,10 +636,10 @@ body.light.green button.color-button:hover, body.light.green a.color-button:hove
 }
 body.light.green .social a {
   background-color: #032D01;
-  color: #5cdb95;
+  color: #D7FCD5;
 }
 body.light.green .social a:hover {
-  background-color: #5cdb95;
+  background-color: #D7FCD5;
   border-color: #032D01;
   color: #032D01;
 }
@@ -638,27 +652,28 @@ body.light.green #projects .project hr {
   border-color: #4AB944;
 }
 body.light.green #projects .project .btn-container .btn {
-  border-color: #E25357;
+  border-color: #4AB944;
 }
 body.light.green #projects .project .btn-container .btn:hover {
   background-color: #D7E2F9;
 }
 body.light.green #projects .project:hover {
-  background-color: #5cdb95;
+  background: linear-gradient(160deg, rgba(92, 219, 149, 0.4), #7D95CA);
 }
 body.light.green #projects .project:hover .icon {
-  color: #E25357;
+  color: #4AB944;
 }
 body.light.blue {
   color: #0a2540;
 }
 body.light.blue.grad {
+  background-color: #00d4ff;
   background: linear-gradient(to bottom, #00d4ff 60%, #0a2540 120%);
 }
 body.light.blue.no-grad {
   background: #00d4ff;
 }
-body.light.blue header h1, body.light.blue header h2 {
+body.light.blue h1, body.light.blue h2 {
   color: #0a2540;
 }
 body.light.blue button, body.light.blue a {
@@ -710,7 +725,7 @@ body.light.blue #projects .project .btn-container .btn:hover {
   background-color: #0a2540;
 }
 body.light.blue #projects .project:hover {
-  background-color: #0d3256;
+  background: #0d3256;
 }
 body.light.blue #projects .project:hover .icon {
   color: #00d4ff;
@@ -719,12 +734,13 @@ body.light.purple {
   color: #210575;
 }
 body.light.purple.grad {
+  background-color: #F5F3FB;
   background: linear-gradient(to bottom, #3E0ECB -40%, #F5F3FB, #F5F3FB, #210575 125%);
 }
 body.light.purple.no-grad {
   background: #F5F3FB;
 }
-body.light.purple header h1, body.light.purple header h2 {
+body.light.purple h1, body.light.purple h2 {
   color: #210575;
 }
 body.light.purple button, body.light.purple a {
@@ -747,9 +763,9 @@ body.light.purple button.theme-button:hover, body.light.purple a.theme-button:ho
   background-color: #0E0137;
 }
 body.light.purple button.color-button:hover, body.light.purple a.color-button:hover {
-  color: #9C001C;
-  background-color: #FFE4B7;
-  border-color: #9C001C;
+  color: #A31900;
+  background-color: #FFF1D0;
+  border-color: #A31900;
 }
 body.light.purple .social a {
   background-color: #210575;
@@ -775,7 +791,7 @@ body.light.purple #projects .project .btn-container .btn:hover {
   background-color: #3E0ECB;
 }
 body.light.purple #projects .project:hover {
-  background-color: #e9e4f9;
+  background: #e9e4f9;
 }
 body.light.purple #projects .project:hover .icon {
   color: #3E0ECB;

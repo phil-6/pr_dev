@@ -12,6 +12,7 @@ body {
           color: map-get($color-themes, $theme, $color, ink);
 
           &.grad {
+            background-color: map-get($color-themes, $theme, $color, background);
             background: map-get($color-themes, $theme, $color, background-grad);
           }
 
@@ -19,11 +20,10 @@ body {
             background: map-get($color-themes, $theme, $color, background);
           }
 
-          header {
-            h1, h2 {
-              color: map-get($color-themes, $theme, $color, heading-ink);
-            }
+          h1, h2 {
+            color: map-get($color-themes, $theme, $color, heading-ink);
           }
+
 
           button, a {
             color: map-get($color-themes, $theme, $color, header-button-color);
@@ -76,6 +76,7 @@ body {
             }
 
             .btn-container .btn {
+              color: map-get($color-themes, $theme, $color, project-button-color);
               border-color: map-get($color-themes, $theme, $color, project-button-border-color);
               background-color: map-get($color-themes, $theme, $color, project-button-background-color);;
 
@@ -85,7 +86,7 @@ body {
             }
 
             &:hover {
-              background-color: map-get($color-themes, $theme, $color, project-background-hover-color);
+              background: map-get($color-themes, $theme, $color, project-background-hover-color);
 
               .icon {
                 color: map-get($color-themes, $theme, $color, project-icon-hover-ink);

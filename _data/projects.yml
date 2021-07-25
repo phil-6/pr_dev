@@ -52,6 +52,15 @@
   tech: Full stack Ruby on Rails app
   github: https://github.com/phil-6/postcards
 
+- name: Original Portfolio
+  available: True
+  link: https://2020.purpleriver.dev
+  year: 2020
+  icon: history
+  description: The old version of this website
+  tech: HTML + CSS
+  github: https://github.com/phil-6/purpleriver
+
 - name: Jade Gould Portfolio
   available: True
   link: https://jadegould.uk

@@ -5,7 +5,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 
     <!-- Font Family-->
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Krub:200,400,700|" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
 
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/30fa2950fc.js"></script>
     <link href="/assets/css/main.css" rel="stylesheet">
@@ -16,31 +18,9 @@
 </head>
 
 <body class="dark purple grad">
-<header>
-    <nav>
-        <div class="justify-start">
-            <button class="btn theme-button" id="theme-toggle">Theme</button>
-            <button class="btn color-button" id="color-switch">Colour</button>
-            <button class="btn grad-button" id="grad-toggle">Toggle Gradient</button>
-        </div>
-        <div class="social">
-            <a href="mailto:hello@purpleriver.dev" class="btn" data-toggle="tooltip" data-placement="top" title="Contact">
-                <i class="fas fa-envelope"></i></a>
-            <a href="https://www.linkedin.com/in/Phil6" class="btn" data-toggle="tooltip" data-placement="top" title="LinkedIn">
-                <i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/phil-6/" class="btn" data-toggle="tooltip" data-placement="top" title="GitHub">
-                <i class="fab fa-github"></i></a>
-            <a href="https://twitter.com/PurpleRiver_Dev" class="btn" data-toggle="tooltip" data-placement="top" title="Twitter">
-                <i class="fab fa-twitter"></i></a>
-            <a href="https://www.polywork.com/philreynolds" class="btn" data-toggle="tooltip" data-placement="top" title="Polywork">
-                <i class="fas fa-puzzle-piece"></i></a>
-            <a href="/assets/files/PhilReynolds-CV_2020-02.pdf" class="btn" data-toggle="tooltip" data-placement="top" title="Download CV">
-                <i class="fas fa-file-download"></i></a>
-        </div>
-        <div class="justify-end">
-        </div>
-    </nav>
-</header>
+
+{% include main-nav.html %}
+
 <main>
     {{ content }}
 </main>
