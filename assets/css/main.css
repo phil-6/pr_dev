@@ -34,6 +34,7 @@ nav button, nav .btn {
   padding: 0.6rem;
   margin: 0.2rem 0;
   font-size: 0.8rem;
+  text-transform: capitalize;
 }
 nav .btn {
   text-decoration: none;
@@ -186,7 +187,7 @@ main #projects .project-cards .project {
   background-clip: border-box;
   border-radius: 0.25rem;
   padding: 1rem;
-  transition: 2.5s;
+  transition: 0.8s;
 }
 main #projects .project-cards .project p, main #projects .project-cards .project h3 {
   margin: 0 0 0.2rem;
