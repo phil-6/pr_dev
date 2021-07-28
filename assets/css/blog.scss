@@ -244,6 +244,7 @@ html {
         p {
           font-size: 1.1rem;
           margin-top: 0;
+          padding: 0 1rem;
 
           &.subheading {
             font-size: 1.2rem;
@@ -276,6 +277,9 @@ html {
               font-weight: 200;
             }
           }
+          .center {
+            text-align: center;
+          }
         }
 
         pre {
@@ -292,6 +296,3 @@ html {
   }
 }
 
-.center {
-  text-align: center;
-}
