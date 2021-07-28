@@ -731,11 +731,11 @@ body.light.blue #projects .project:hover .icon {
   color: #00d4ff;
 }
 body.light.purple {
-  color: #210575;
+  color: #0E0137;
 }
 body.light.purple.grad {
   background-color: #F5F3FB;
-  background: linear-gradient(to bottom, #3E0ECB -40%, #F5F3FB, #F5F3FB, #210575 125%);
+  background: linear-gradient(100deg, #3E0ECB -40%, #F5F3FB, #F5F3FB, #210575 125%);
 }
 body.light.purple.no-grad {
   background: #F5F3FB;
@@ -791,7 +791,7 @@ body.light.purple #projects .project .btn-container .btn:hover {
   background-color: #3E0ECB;
 }
 body.light.purple #projects .project:hover {
-  background: #e9e4f9;
+  background: rgba(216, 207, 244, 0.7);
 }
 body.light.purple #projects .project:hover .icon {
   color: #3E0ECB;
