@@ -1,6 +1,9 @@
 const btn = document.querySelector("#blog-theme-toggle");
 // check to see if local storage has a theme preference
 let blogTheme = localStorage.getItem("theme");
+// check to see if OS preferences for light or dark mode
+const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersLightScheme = window.matchMedia("(prefers-color-scheme: light)");
 
 function setTheme() {
     //if no local storage check against system preferences
