@@ -14,10 +14,7 @@ html {
 }
 
 body {
-
-
   box-sizing: border-box;
-  //height: 100vh;
   font-family: $body-font;
   margin: 0;
   background-repeat: no-repeat !important;
@@ -28,7 +25,6 @@ body {
     text-align: center;
   }
 }
-
 
 nav {
   position: fixed;
@@ -47,6 +43,7 @@ nav {
     padding: 0.6rem;
     margin: 0.2rem 0;
     font-size: 0.8rem;
+    text-transform: capitalize;
   }
 
   .btn {
@@ -162,7 +159,6 @@ main {
         }
       }
 
-
       .down-arrow {
         text-align: center;
         opacity: 30%;
@@ -191,7 +187,6 @@ main {
       flex-flow: row wrap;
       justify-content: center;
 
-
       .project {
         display: flex;
         flex-direction: column;
@@ -207,7 +202,6 @@ main {
         border-radius: .25rem;
         padding: 1rem;
         transition: 0.8s;
-
 
         p, h3 {
           margin: 0 0 0.2rem;
@@ -243,7 +237,6 @@ main {
         }
 
         .tech {
-
         }
 
         .btn-container {
