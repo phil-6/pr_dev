@@ -37,14 +37,10 @@ function nextColor() {
     return colors[nextColorIndex]
 }
 
-function setColor(color) {
-    if (!color) {
-        color = "orange";
-        currentColor = color;
-    }
+function setColor() {
     document.body.classList.remove(...colors);
-    document.body.classList.add(color);
-    colorBtn.innerHTML = `Colour: ${color}`;
+    document.body.classList.add(currentColor);
+    colorBtn.innerHTML = `Colour: ${currentColor}`;
 
     console.log("Color Set!\n", currentTheme, currentColor, currentGrad)
     localStorage.setItem("color", currentColor);
@@ -90,7 +86,7 @@ themeBtn.addEventListener("mouseleave", function () {
 
 colorBtn.addEventListener("click", function () {
     currentColor = nextColor()
-    setColor(currentColor)
+    setColor()
 });
 
 colorBtn.addEventListener('mouseover', () => { colorBtn.innerHTML = `Colour ➟ ${nextColor()}` })
@@ -106,5 +102,5 @@ gradBtn.addEventListener("click", function () {
     }
 });
 
-setColor(currentColor)
+if (!currentColor) currentColor = "orange";
 setTheme()
