@@ -33,9 +33,7 @@ function setTheme() {
 
 function nextColor() {
     let nextColorIndex = colors.indexOf(currentColor) + 1
-    if (nextColorIndex === colors.length) {
-        nextColorIndex = 0
-    }
+    if (nextColorIndex === colors.length) nextColorIndex = 0
     return colors[nextColorIndex]
 }
 
@@ -95,13 +93,8 @@ colorBtn.addEventListener("click", function () {
     setColor(currentColor)
 });
 
-colorBtn.addEventListener("mouseover", function () {
-    colorBtn.innerHTML = `Colour ➟ ${nextColor()}`
-});
-
-colorBtn.addEventListener("mouseout", function () {
-    colorBtn.innerHTML = `Colour: ${currentColor}`
-});
+colorBtn.addEventListener('mouseover', () => { colorBtn.innerHTML = `Colour ➟ ${nextColor()}` })
+colorBtn.addEventListener('mouseout', () => { colorBtn.innerHTML = `Colour: ${currentColor}` })
 
 gradBtn.addEventListener("click", function () {
     if (currentGrad === "no-grad") {
