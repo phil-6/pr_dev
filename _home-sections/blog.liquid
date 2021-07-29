@@ -11,9 +11,11 @@
                 <p class="date">{{ post.publish-date }} {{ post.publish-year }}</p>
                 <p class="summary">{{ post.summary }}</p>
                 <div class="read-more">
-                    <a href="/blog/{{ post.publish-year }}/{{ post.short-title }}">Read More</a>
+                    <a href="/posts/{{ post.publish-year }}/{{ post.short-title }}">Read More</a>
                 </div>
-                <p class="source">Originally posted at <a href="{{ post.link }}">{{ post.source }} <i class="fas fa-external-link-alt"></i></a></p>
+                {% if post.source %}
+                    <p class="source">Originally posted at <a href="{{ post.link }}">{{ post.source }} <i class="fas fa-external-link-alt"></i></a></p>
+                {% endif %}
 
             </div>
             <hr>
