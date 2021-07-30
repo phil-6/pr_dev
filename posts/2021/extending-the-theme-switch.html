@@ -1,0 +1,141 @@
+---
+layout: blog
+short-title: extended-theme-toggle
+full-title: Extending the Theme Switch
+file-type: html
+publish-date: August 2
+publish-year: 2021
+source: LILW
+link: 'https://developer.legaltech.wales/blog/phil/2021/extending-the-theme-switch.html'
+---
+
+<h1>Extending the Theme Switch </h1>
+<p class="subheading">This is a follow on from <a href="/posts/2021/theme-toggle.html">my previous article</a> about building a vanilla JavaScript dark mode toggle.</p>
+
+<p>I started my last post by saying that dark mode is becoming more and more common. This is true, but I think we’re
+    probably a bit past that. At I/O this year Google announced the next generation of their material design language,
+    <a href="https://material.io/blog/announcing-material-you">Material You</a>. One of the features which grabbed my
+    attention most here was the ability for Android 12 to set the
+    <a href="https://www.xda-developers.com/android-12-wallpaper-theme/">UX color based on your wallpaper</a>.</p>
+
+<p>Why should users be limited to just a light mode or dark mode? Why not give them some more choice?</p>
+
+<p>So by taking the original dark mode switch and extending it, we can give our users a load more choice! And more
+    choice is always better, right?</p>
+
+<h2>Previously</h2>
+
+<p>We have a script which checks to see if the user has previously selected a preference, then checks to see whether
+    they have an OS theme set, then sets either light or dark theme accordingly. We then have a button which swaps the
+    theme and saves the user’s preference.</p>
+
+<p>This is exactly what happens when you hit the theme button on this page (sun or moon symbol at thet top).</p>
+
+<p>You can make it simpler (<a href="http://tylerpotts.co.uk/">Tyler Potts' personal site</a> has 7 lines for his night
+    mode toggle) but I like the additionality and reliability of my solution.</p>
+
+<p>Tyler’s Solution:</p>
+
+<pre><code class="language-js">window.onload = () => {
+    const night_toggle = document.querySelector('.night-toggle');
+
+    night_toggle.addEventListener('click', () => {
+        document.querySelector('body').classList.toggle('night');
+    });
+}</code></pre>
+
+<h2>Expansion</h2>
+
+<p>Moving forward, the main thing I wanted to add was different colour schemes for light and dark mode. This was
+    partially inspired by the lovely theme swapper on <a href="https://jonas.do/">Jonas Downey’s site</a>. Although
+    Jonas made the (in hindsight, extremely smart) decision to only change the top bar of his site.</p>
+
+<p>Getting the colour swapper functionality working was actually fairly straight forward. Using the same idea as
+    previously, using JS to change a css class on the body element. I decided I was going to do most of the rainbow, so
+    created a list: <code>let colors = ["red", "orange", "yellow", "green", "blue", "purple"]</code></p>
+
+<p>Then when the colour button was pressed it would get the next colour from the list then call a function to set that
+    colour in the html.</p>
+
+<pre><code class="language-js">colorBtn.addEventListener("click", function () {
+    currentColor = nextColor()
+    setColor(currentColor)
+});</code></pre>
+
+<pre><code class="language-js">function nextColor() {
+    let nextColorIndex = colors.indexOf(currentColor) + 1
+    if (nextColorIndex === colors.length) nextColorIndex = 0
+    return colors[nextColorIndex]
+}</code></pre>
+
+<pre><code class="language-js">function setColor() {
+    document.body.classList.remove(...colors);
+    document.body.classList.add(currentColor);
+    colorBtn.innerHTML = `Colour: ${currentColor}`;
+
+    console.log("Color Set!\n", currentTheme, currentColor, currentGrad)
+    localStorage.setItem("color", currentColor);
+}</code></pre>
+
+<p>There’s a bit to unpick here. First of all, I was really surprised that JavaScript in 2021 has no built-in way of
+    handling expected index out of bounds errors. Thankfully the one liner which checks to see if the next index is at
+    the end of the list and then sets the value to zero is enough to handle that error. As we’re only incrementing by
+    one we don’t need to worry about if the index ends up greater than that value.</p>
+
+<p>As an aside, I’m British, the amount of times I’ve written “color” in these three functions is troubling!</p>
+
+<p>The final function removes any values which exist in the <code>colors</code> list from the body class list. We then add the new
+    colour back into the class list and update the button to indicate the current colour. Finally, we store
+    <code>currentColor</code> in local storage for subsequent user visits.</p>
+
+<p>On page load, if <code>currentColor</code> isn’t set, we set it to orange which is also the default set in the HTML
+    (and my favourite theme), so the <code>nextColor()</code> function knows where to move to in the colour list.</p>
+
+<p>That's the meat of the added functionality. I also added a toggle for the gradient background, which toggle a css
+    class between <code>grad</code> and <code>no-grad</code>. This is one area where I could improve the page and just
+    toggle grad into the class list and update the to look for <code>grad</code> or nothing.</p>
+
+<p>You can see the current full version of the
+    <a href="https://github.com/phil-6/pr_dev/blob/main/assets/js/themeToggle.js">code here</a>.</p>
+
+<h2>The CSS</h2>
+
+<p>The JavaScript updates were fairly straight forward. The same could not be said for the css. We can simplify it by
+    using SCSS. My personal site uses Jekyll which will compile it do CSS on build, for other usages thankfully
+    JetBrains' IDEs have a file watcher plugin which will recompile it on save.</p>
+
+<p>This still doesn't make it especially simple!</p>
+
+<p>We have a lot of colours to manage. I’ve split the files into three, one which looks after the layout and two for the
+    colours.</p>
+
+<p>The <a href="https://github.com/phil-6/pr_dev/blob/main/assets/css/theme-colors.scss">first</a> of which sets up the
+    colour variables. I use <a href="https://paletton.com/">Paletton</a> to help generate shades of the primary colours.
+    Then these variables get added to a fairly meaty Sass Map which we can reference in the second file.</p>
+
+<p>The <a href="https://github.com/phil-6/pr_dev/blob/main/assets/css/theme.scss">second</a> file, is a series of nested
+    loops. First looping through the theme’s and then through each of the colours. Then it sets all the colours for
+    different areas of our page. This loop means our 100-line Scss file ends up as an 800-line CSS file! </p>
+<p>The loop looks like this:</p>
+
+<pre><code class="language-scss">body {
+    @each $theme in $themes {
+        &.#{$theme} {
+            @each $color in $colors {
+                &.#{$color} {
+</code></pre>
+
+<p><code>$themes</code> and <code>$colors</code> are simple lists. It would be nice to not need these, as they’re a bit
+    “magic”, I think you might be able to do this with map-deep-get but although its slightly less maintainable should
+    we wish to add more themes, I feel as though it is quite a bit simpler!</p>
+
+<h3>Conclusion</h3>
+
+<p>So, there we have it. We’ve gone from a dark-mode toggle to a more complex theme swapper. Without any shadow of a
+    doubt, building the css and tweaking the colour themes was the most time intensive part of this project. I’m really
+    happy with the end result and although I’m not certain any stakeholder is ever going to want the full thing, I'm
+    sure having a range of colours themes ready to go will be helpful!</p>
+
+<p>You can play with the full theme swapper on my <a href="https://philreynolds.dev">personal site</a></p>
+
+<p>Let me know if this was interesting, helpful or terrible!</p>
