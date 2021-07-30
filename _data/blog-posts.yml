@@ -1,4 +1,16 @@
 - layout: blog
+  short-title: extended-theme-toggle
+  full-title: Extending the Theme Switch
+  summary: |
+    Why should users be limited to just a light mode or dark mode? Why not give them some more choice?
+    This is a follow on from my previous article about building a vanilla JavaScript dark mode toggle.
+  file-type: html
+  publish-date: August 2
+  publish-year: 2021
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2021/extending-the-theme-switch.html'
+
+- layout: blog
   short-title: challenge
   full-title: Technical Challenge
   sub-title: (and updating the process)
