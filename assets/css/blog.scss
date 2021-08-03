@@ -35,9 +35,11 @@ $light-link-hover: #3700B3;
 html {
   scroll-behavior: smooth;
   font-family: $body-font;
+  min-height: 100vh;
 
   body {
     margin: 0;
+    height: 100%;
 
     &.dark-mode {
       background-color: $dark;
@@ -100,13 +102,6 @@ html {
 
       .dark {
         display: none;
-      }
-
-      .lab-logo {
-        background-color: $dark;
-        background: $dark-background;
-        -webkit-box-shadow: 0 5px 10px 10px $dark;
-        box-shadow: 0 5px 10px 10px $dark;
       }
 
       nav {

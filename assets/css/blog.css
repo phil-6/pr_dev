@@ -2,9 +2,11 @@
 html {
   scroll-behavior: smooth;
   font-family: "Krub", Verdana, Geneva, sans-serif;
+  min-height: 100vh;
 }
 html body {
   margin: 0;
+  height: 100%;
 }
 html body.dark-mode {
   background-color: #0e182a;
@@ -52,12 +54,6 @@ html body.light-mode .light {
 }
 html body.light-mode .dark {
   display: none;
-}
-html body.light-mode .lab-logo {
-  background-color: #0e182a;
-  background: linear-gradient(100deg, #0e182a, #210047);
-  -webkit-box-shadow: 0 5px 10px 10px #0e182a;
-  box-shadow: 0 5px 10px 10px #0e182a;
 }
 html body.light-mode nav a, html body.light-mode nav button {
   background: #495087;
