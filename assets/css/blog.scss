@@ -32,6 +32,8 @@ $dark-link-hover: #03DAC6bb;
 $light-link: #6200EEbb;
 $light-link-hover: #3700B3;
 
+$transition-collapse: height .35s ease;
+
 html {
   scroll-behavior: smooth;
   font-family: $body-font;
@@ -85,6 +87,11 @@ html {
 
         code.inline {
           color: $medium-gray;
+        }
+        blockquote {
+          color: $gray;
+          border-left: 0.2rem solid $gray;
+          padding-left: 0.5rem;
         }
       }
     }
@@ -142,12 +149,16 @@ html {
         code.inline {
           color: $dark-gray;
         }
+        blockquote {
+          color: $dark-gray;
+          border-left: 0.2rem solid $dark-gray;
+          padding-left: 0.5rem;
+        }
       }
     }
 
     header {
       text-align: center;
-
 
       nav {
         margin: 1.4rem 0;
@@ -180,7 +191,6 @@ html {
       h1, h2, h3 {
         margin: 0;
         font-weight: 400;
-        font-family: $heading-font;
 
         &.author {
           text-transform: uppercase;
@@ -214,10 +224,8 @@ html {
 
         h2 {
           font-size: 1.4rem;
-          text-align: center;
-
-          .link-spacer {
-            margin-left: 45px;
+          &.text-center {
+            text-align: center;
           }
 
           button {
@@ -242,15 +250,21 @@ html {
           font-size: 1.1rem;
         }
 
+        h5 {
+          font-size: 1rem;
+        }
+
         p {
           font-size: 1.1rem;
           margin-top: 0;
-          padding: 0 1rem;
 
           &.subheading {
             font-size: 1.2rem;
             font-weight: 200;
           }
+        }
+        img {
+          max-width: 100%;
         }
 
         @media (min-width: $breakpoint-lg) {
@@ -259,7 +273,14 @@ html {
             font-size: 2.8rem;
           }
           h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            &.text-center {
+              text-align: center;
+              font-size: 2.2rem;
+            }
+            .link-spacer {
+              margin-left: 45px;
+            }
           }
 
           h3 {
@@ -269,6 +290,9 @@ html {
           h4 {
             font-size: 1.4rem;
           }
+          h5 {
+            font-size: 1.2rem;
+          }
 
           p {
             margin-top: 0;
@@ -277,24 +301,60 @@ html {
               font-size: 1.4rem;
               font-weight: 200;
             }
-          }
-          .center {
-            text-align: center;
+            &.lead {
+              font-size: 1.3rem;
+              font-weight: 200;
+            }
+            code {
+              color:#e2777a;
+            }
           }
         }
 
-        pre {
+        pre{
           max-height: 36rem;
         }
 
-        blockquote {
-          color: $gray;
-          border-left: 0.2rem solid $gray;
-          padding-left: 0.5rem;
+
+        .hideable {
+          max-height: 0;
+          overflow: hidden;
+          transition: all .5s cubic-bezier(0, 1, 0, 1);
+          &.reveal {
+            max-height: 20rem;
+            transition: all .5s ease-in-out;
+          }
         }
+
+        .flex {
+          display: flex;
+          gap: 0.2rem;
+          max-width: 100%;
+        }
+
       }
     }
 
+    footer {
+      margin-top: 5rem;
+
+      .logos {
+        padding: 20px 0;
+        background-color: $white;
+        text-align: center;
+        margin: 0 auto;
+
+        img {
+          max-width: 160px;
+          vertical-align: middle;
+
+          &.erdf {
+            @media (min-width: $breakpoint-md) {
+              margin-left: 48px;
+            }
+          }
+        }
+      }
+    }
   }
 }
-

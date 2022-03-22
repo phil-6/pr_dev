@@ -42,6 +42,11 @@ html body.dark-mode article a:hover {
 html body.dark-mode article code.inline {
   color: #c8bedc;
 }
+html body.dark-mode article blockquote {
+  color: #dfecf1;
+  border-left: 0.2rem solid #dfecf1;
+  padding-left: 0.5rem;
+}
 html body.light-mode {
   background-color: #dfecf1;
   background: linear-gradient(-45deg, #dfecf1, #f6f8f9);
@@ -83,6 +88,11 @@ html body.light-mode article a:hover {
 html body.light-mode article code.inline {
   color: #495087;
 }
+html body.light-mode article blockquote {
+  color: #495087;
+  border-left: 0.2rem solid #495087;
+  padding-left: 0.5rem;
+}
 html body header {
   text-align: center;
 }
@@ -117,7 +127,6 @@ html body header nav a:hover, html body header nav button:hover {
 html body header h1, html body header h2, html body header h3 {
   margin: 0;
   font-weight: 400;
-  font-family: "Josefin Sans", Century Gothic, CenturyGothic, AppleGothic, sans-serif;
 }
 html body header h1.author, html body header h2.author, html body header h3.author {
   text-transform: uppercase;
@@ -140,10 +149,9 @@ html body main article h2, html body main article h3, html body main article h4,
 }
 html body main article h2 {
   font-size: 1.4rem;
-  text-align: center;
 }
-html body main article h2 .link-spacer {
-  margin-left: 45px;
+html body main article h2.text-center {
+  text-align: center;
 }
 html body main article h2 button {
   visibility: hidden;
@@ -160,14 +168,19 @@ html body main article h3 {
 html body main article h4 {
   font-size: 1.1rem;
 }
+html body main article h5 {
+  font-size: 1rem;
+}
 html body main article p {
   font-size: 1.1rem;
   margin-top: 0;
-  padding: 0 1rem;
 }
 html body main article p.subheading {
   font-size: 1.2rem;
   font-weight: 200;
+}
+html body main article img {
+  max-width: 100%;
 }
 @media (min-width: 992px) {
   html body main article {
@@ -177,13 +190,23 @@ html body main article p.subheading {
     font-size: 2.8rem;
   }
   html body main article h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+  }
+  html body main article h2.text-center {
+    text-align: center;
+    font-size: 2.2rem;
+  }
+  html body main article h2 .link-spacer {
+    margin-left: 45px;
   }
   html body main article h3 {
     font-size: 1.6rem;
   }
   html body main article h4 {
     font-size: 1.4rem;
+  }
+  html body main article h5 {
+    font-size: 1.2rem;
   }
   html body main article p {
     margin-top: 0;
@@ -192,17 +215,48 @@ html body main article p.subheading {
     font-size: 1.4rem;
     font-weight: 200;
   }
-  html body main article .center {
-    text-align: center;
+  html body main article p.lead {
+    font-size: 1.3rem;
+    font-weight: 200;
+  }
+  html body main article p code {
+    color: #e2777a;
   }
 }
 html body main article pre {
   max-height: 36rem;
 }
-html body main article blockquote {
-  color: #dfecf1;
-  border-left: 0.2rem solid #dfecf1;
-  padding-left: 0.5rem;
+html body main article .hideable {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+html body main article .hideable.reveal {
+  max-height: 20rem;
+  transition: all 0.5s ease-in-out;
+}
+html body main article .flex {
+  display: flex;
+  gap: 0.2rem;
+  max-width: 100%;
+}
+html body footer {
+  margin-top: 5rem;
+}
+html body footer .logos {
+  padding: 20px 0;
+  background-color: #f6f8f9;
+  text-align: center;
+  margin: 0 auto;
+}
+html body footer .logos img {
+  max-width: 160px;
+  vertical-align: middle;
+}
+@media (min-width: 768px) {
+  html body footer .logos img.erdf {
+    margin-left: 48px;
+  }
 }
 
 /*# sourceMappingURL=blog.css.map */
