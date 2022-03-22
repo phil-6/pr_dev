@@ -1,7 +1,7 @@
 @import 'theme-colors';
 
-$themes: ("dark", "light");
-$colors: ("red", "orange", "yellow", "green", "blue", "purple");
+$themes: "dark", "light";
+$colors: "red", "orange", "yellow", "green", "blue", "purple";
 
 body {
   @each $theme in $themes {
