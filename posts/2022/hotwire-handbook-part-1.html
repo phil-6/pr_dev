@@ -1,0 +1,343 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: hotwire-handbook-part-1
+full-title: Hotwire Handbook Part 1
+file-type: html
+publish-date: March 22
+publish-year: 2022
+card-color: orange
+---
+<h1>Hotwire Handbook - Part 1</h1>
+<p class="lead">Recently I’ve been playing with Rails 7 and Hotwire.</p>
+<p class="lead">This post is going to be published in stages and updated fairly regularly to complement the
+    official Turbo Handbook and the other great examples out there. Many of which are linked in the “Sources”
+    Section.</p>
+
+<h2>What can Hotwire do?</h2>
+<p>Hotwire allows for advanced interactivity, normally reserved for JavaScript SPAs, but with faster first-load times
+    and a drastically simpler, more productive and happier developer experience.</p>
+<p>Hotwire can do a lot, advanced interactivity and content updates without page updates. This handbook is going to
+    touch the surface of its capabilities. We’re going to look at:</p>
+
+<ul>
+    <li><a href="#toggle_buttons">Toggle buttons</a></li>
+    <li><a href="#content_updates">Content Updates</a></li>
+    <li><a href="#live_counters">Live Counters</a></li>
+    <li>Global Counters</li>
+    <li>Global Live Content Updates</li>
+    <li>Pagination</li>
+    <li>Inline Editing</li>
+    <li>Tabbed Content</li>
+    <li>Modals</li>
+</ul>
+
+<h2>What is Turbo</h2>
+<p><a href="https://turbo.hotwired.dev/">Turbo</a> is part of <a href="https://hotwired.dev/">Hotwire</a>. Hotwire is
+    HTML-over-the-wire, a modern approach to building web app which sends HTML instead of JSON to the browser. Why? Less
+    JavaScript, smaller packet sizes, faster page load times and better developer experience (in my opinion). You can
+    read more of the why on hotwired.dev</p>
+
+<p>Turbo is the spiritual successor to Turbolinks. <a href="http://Hotwired.dev">Hotwired.dev</a> says:</p>
+
+<blockquote>The heart of Hotwire is Turbo. A set of complementary techniques for speeding up page changes and form
+    submissions,
+    dividing complex pages into components, and stream partial page updates over WebSocket. All without writing any
+    JavaScript at all. And designed from the start to integrate perfectly with native hybrid applications for iOS and
+    Android.
+</blockquote>
+
+<h2>Prerequisites, Presumptions and how this handbook is laid out</h2>
+
+<p>This handbook presumes that you have a familiarity with Ruby on Rails, MVC web app frameworks and have installed
+    turbo-rails following the <a href="https://github.com/hotwired/turbo-rails#installation">steps here</a>.</p>
+
+<p>Each section of this handbook has a brief introduction, it will then give all the relevant code for context. I’ll
+    then dig into the key bits of each code sample. The code can all be viewed with full context in the DailyBrew GitHub
+    repo below.</p>
+
+<h2>Sources, References and Research</h2>
+
+<p>Official Docs: <a href="https://hotwired.dev/">https://hotwired.dev/</a></p>
+
+<p>Community: <a href="https://discuss.hotwired.dev/">https://discuss.hotwired.dev/</a></p>
+
+<p>David Colby: <a href="https://www.colby.so/">https://www.colby.so/</a></p>
+
+<p>Sean P Doyle, Thoughtbot Hotwire Example: <a href="https://github.com/thoughtbot/hotwire-example-template">https://github.com/thoughtbot/hotwire-example-template</a>
+</p>
+
+<p>All the code examples here are part of the Daily Brew project and can be viewed in context here: <a
+        href="https://github.com/phil-6/dailybrew">https://github.com/phil-6/dailybrew</a></p>
+
+
+<h2 id="toggle_buttons">Toggle Buttons</h2>
+<p>(as Turbo Streams)</p>
+<p>The user clicks a button, which updates something in our database, and we want this to be reflected on the front end.
+    (Without using JavaScript)</p>
+
+<p>This is used in a few places in Daily Brew. The subscription page and favourites toggles are the ones we’re going to
+    look at in this handbook. The simpler example is the subscription toggle.</p>
+
+<p><strong>Core Concept:</strong> Controller responds to Turbo Stream request format, and re-renders the partial which
+    contains the
+    button. The button has an erb conditional based on the value which has been updated.</p>
+
+<img src="/assets/images/hh-sub-toggle.gif" alt="gif of toggling subscription button">
+
+<h3>Code</h3>
+
+<h4>Parent View</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/pages/subscription.html.erb">app/views/pages/subscription.html.erb</a>
+</p>
+<pre><code class="language-erb"><%= render 'subscription_interest_toggle' %></code></pre>
+
+<h4>Button Partial</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/pages/_subscription_interest_toggle.html.erb">app/views/pages/_subscription_interest_toggle.html.erb</a>
+</p>
+<pre><code class="language-erb">&lt;div id="subscription_interest_toggle">
+  <% if current_user&.subscription_interest %>
+    <%= button_to update_subscription_interest_path,
+                  method: :patch,
+                  params: {user: { subscription_interest: false }},
+                  class: "btn btn-complementary" do %>
+      I'm not interested anymore
+    <% end %>
+  <% else %>
+    <%= button_to update_subscription_interest_path,
+                  method: :patch,
+                  params: {user: { subscription_interest: true }},
+                  class: "btn btn-complementary" do %>
+      I'm In!
+    <% end %>
+  <% end %>
+&lt;/div>
+</code></pre>
+
+<h4>Controller (excerpt)</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/controllers/registrations_controller.erb">app/controllers/registrations_controller.erb</a>
+</p>
+<pre><code class="language-ruby"># app/controllers/registrations_controller.rb
+class RegistrationsController < Devise::RegistrationsController
+  def update_subscription_interest
+    current_user.update!(subscription_interest_params)
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          'subscription_interest_toggle',
+          partial: 'pages/subscription_interest_toggle'
+        )
+      end
+    end
+  end
+end
+</code></pre>
+
+<h3>Key Bits</h3>
+<p>The key part here are the in the turbo stream response, which renders a turbo stream. </p>
+<pre><code class="language-ruby">turbo_stream.replace(
+          'subscription_interest_toggle',
+          partial: 'pages/subscription_interest_toggle'
+        )</code></pre>
+
+<p>“replace” is the <a href="https://turbo.hotwired.dev/handbook/streams#stream-messages-and-actions">action</a>. The
+    partial in the response will replace the existing element with the target DOM ID. <code>'subscription_interest_toggle'</code>
+    is the HTML ID which the stream is targeting and the partial is what the target is going to be replaced with.</p>
+
+<p>You could move the conditional to the controller, which would remove some logic from the view, however by doing it
+    this way the response doesn’t have to worry which view to render, as it just reloads the button partial.</p>
+
+
+<h2 id="content_updates">Content Updates</h2>
+
+<p>The way the favourites toggle works is very similar to the subscription toggle. The differences are that it's a
+    create / destroy action instead of an update, and the turbo stream is extracted to and erb partial.</p>
+
+<p>There are quite a few partials here. This structure is broken down more than it needs to be as we reuse the coffee
+    partial in quite a few different places throughout the app. I’ll explain the key code snippets in more details below
+    the larger examples which are included for additional context.</p>
+
+<h3>Code</h3>
+
+<h4>Toggle Button Partial</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/favourites/_favourite_toggle.html.erb">app/views/favourites/_favourite_toggle.html.erb</a>
+</p>
+<pre><code class="language-erb">&lt;div id="favourite_toggle_<%= dom_id(coffee) %>">
+  <% if current_user&.favourites.find_by(coffee: coffee) %>
+    <%= button_to delete_favourite_path(coffee), method: :delete, class: 'link link-primary link-icon icon-line-1-4' do %>
+      &lt;span class="tooltip-parent">
+            &lt;i class="icon-basic-heart-1">&lt;/i>
+        &lt;span class="tooltip-content right delay-slow">Remove from your favourites&lt;/span>
+      &lt;/span>
+    <% end %>
+  <% else %>
+    <%= button_to create_favourite_path(coffee), method: :post, class: 'link link-primary link-icon icon-line-1-4' do %>
+      &lt;span class="tooltip-parent">
+            &lt;i class="icon-basic-heart">&lt;/i>
+    &lt;span class="tooltip-content right delay-slow">Add to your favourites&lt;/span>
+      &lt;/span>
+    <% end %>
+  <% end %>
+&lt;/div></code></pre>
+
+<h4>Parent View</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/dashboard/index.html.erb">app/views/dashboard/index.html.erb</a>
+</p>
+<pre><code class="language-erb">&lt;section class="header">
+    &lt;div class="row stats">
+        &lt;span id="favourites_count"><%= current_user.favourites.count %>&lt;/span> favourites
+    &lt;/div>
+&lt;/section>
+&lt;section class="favourites">
+    &lt;h2><%= link_to 'Your Favourites', favourites_path, class: 'link link-white link-title' %>&lt;/h2>
+    &lt;div id="dashboard_favourites" class="shelf row">
+      <% @favourites.each do |coffee| %>
+        <%= render 'favourites/favourite', coffee: coffee %>
+      <% end %>
+    &lt;/div>
+&lt;/section></code></pre>
+
+<h4>Favourite Partial</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/favourites/_favourite.html.erb">app/views/favourites/_favourite.html.erb</a>
+</p>
+<pre><code class="language-erb">&lt;div id="dashboard_favourites_<%= dom_id(coffee) %>" class="favourite">
+  <%= render partial: 'coffees/coffee', locals: { coffee: coffee } %>
+&lt;/div></code></pre>
+
+<h4>Coffee Partial</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/coffees/_coffee.html.erb">app/views/coffees/_coffee.html.erb</a>
+</p>
+
+<h4>Controller</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/controllers/favourites_controller.rb">app/controllers/favourites_controller.rb</a>
+</p>
+<pre><code class="language-ruby">class FavouritesController < ApplicationController
+  def index
+    @favourites = current_user.favourite_coffees
+  end
+
+  def create
+    @favourite = Favourite.create(user: current_user, coffee_id: params[:coffee_id])
+    @coffee = @favourite.coffee
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
+  def destroy
+    @favourite = Favourite.find_by(user: current_user, coffee_id: params[:coffee_id])
+    @coffee = @favourite.coffee
+    @favourite.destroy
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+end</code></pre>
+
+<h4>Create Turbo Stream</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/favourites/create.turbo_stream.erb">app/views/favourites/create.turbo_stream.erb</a>
+</p>
+<pre><code class="language-erb"><%= turbo_stream.replace(
+      "favourite_toggle_#{dom_id(@coffee)}",
+      partial: 'favourite_toggle',
+      locals: { coffee: @coffee }) %>
+
+<%= turbo_stream.update(
+      "favourites_count",
+      html: %(#{current_user.favourites.count}) )%>
+
+<%= turbo_stream.prepend(
+      'dashboard_favourites',
+      partial: 'favourite',
+      locals: { coffee: @coffee }) %></code></pre>
+
+<h4>Destroy Turbo Stream</h4>
+<p><a href="https://github.com/phil-6/dailybrew/blob/main/app/views/favourites/destroy.turbo_stream.erb">app/views/favourites/destroy.turbo_stream.erb</a>
+</p>
+<pre><code class="language-erb"><%= turbo_stream.remove("dashboard_favourites_#{dom_id(@coffee)}") %>
+
+<%= turbo_stream.replace(
+      "favourite_toggle_#{dom_id(@coffee)}",
+      partial: "favourite_toggle",
+      locals: { coffee: @coffee }) %>
+
+<%= turbo_stream.update(
+      "favourites_count",
+      html: %(#{current_user.favourites.count}) ) %></code></pre>
+
+<h3>Explanation</h3>
+
+<p>We can see that the controller just responds with a turbo stream <code>format.turbo_stream</code>. It then looks for
+    a turbo stream with a matching name in the correct view folder.</p>
+<pre><code class="language-ruby">respond_to do |format|
+    format.turbo_stream
+end</code></pre>
+<p>These responses do several actions. While you can respond with multiple streams directly from the controller, it’s considered better practice to move these multi response streams to a partial. </p>
+
+<h4>Toggle Buttons Again</h4>
+<p>These responses do several actions. While you can respond with multiple streams directly from the controller, it’s considered better practice to move these multi response streams to a partial. </p>
+
+<pre><code class="language-erb"><%= turbo_stream.replace(
+      "favourite_toggle_#{dom_id(@coffee)}",
+      partial: "favourite_toggle",
+      locals: { coffee: @coffee }) %></code></pre>
+<div class="flex">
+    <div><img src="/assets/images/hh-fav-toggle.gif" alt="gif toggle favourite button"></div>
+    <div><img src="/assets/images/hh-shelf-toggle.gif" alt="gif toggle shelf button"></div>
+</div>
+
+<p>The next thing that these responses do is a prepend or remove action. So this either adds a partial or removes it from the DOM.</p>
+
+<h4>Content Updates</h4>
+
+<p>Looking at the create action first; this targets the <code>dashboard_favourites</code> ID. The <code>favourite</code>
+    partial is prepended (added inside the target element before the rest of the HTML), and the
+    <code>@coffee</code> local variable is passed through to that partial.</p>
+
+<p>Turbo Stream</p>
+
+<pre><code class="language-erb"><%= turbo_stream.prepend(
+      'dashboard_favourites',
+      partial: 'favourite',
+      locals: { coffee: @coffee }) %></code></pre>
+
+<p>Target Element</p>
+<pre><code class="language-erb">&lt;div id="dashboard_favourites" class="shelf row">
+    <%# New partial is inserted here %>
+    <% @favourites.each do |coffee| %>
+        <%= render 'favourites/favourite', coffee: coffee %>
+    <% end %>
+&lt;/div></code></pre>
+
+<img src="/assets/images/hh-content-updates.gif" alt="gif showing content being added and removed with turbo streams">
+
+<p>The destroy content update is simple, it looks for the first element in the DOM with the specified ID, in this case
+    <code>dashboard_favourites_#{dom_id(@coffee)}</code>, and removes it. </p>
+
+<img src="/assets/images/hh-content-remove.gif" alt="gif showing content being removed with turbo streams">
+
+<p>The final thing that these responses do is update live counters</p>
+
+<h2 id="live_counters">Live Counters</h2>
+<p>As part of the Turbo Stream response from the controller we have an “update” action.</p>
+
+<pre><code class="language-erb"><%= turbo_stream.update(
+      "favourites_count",
+      html: %(#{current_user.favourites.count}) ) %></code></pre>
+
+<p>The “Replace” action, as per the <a href="https://turbo.hotwired.dev/handbook/streams#stream-messages-and-actions">Turbo
+    Handbook</a>:</p>
+
+<blockquote>The contents of this template will replace the contents of the element with ID "unread_count" by setting innerHtml to "" and then switching in the template contents. Any handlers bound to the element "unread_count" would be retained. This is to be contrasted with the "replace"  action above, where that action would necessitate the rebuilding of handlers.</blockquote>
+
+<p>So it targets the element with ID <code>favourites_count</code> and swaps the HTML. </p>
+
+<pre><code class="language-erb">&lt;span id="favourites_count"><%= current_user.favourites.count %>&lt;/span></code></pre>
+
+<p>The new HTML is the same as the old, but by reloading it the erb is executed again and the counter is updated.</p>
+
+<p class="subheading">That's it for now. More coming soon. Feedback, thoughts and corrections <a href="mailto:hotwirehandbook@philreynolds.email">get in touch</a></p>

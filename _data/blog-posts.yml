@@ -1,4 +1,17 @@
 - layout: blog
+  short-title: hotwire-handbook-part-1
+  full-title: Hotwire Handbook
+  sub-title: Part 1
+  summary: |
+    Recently I’ve been playing with Rails 7 and Hotwire.
+    This is the first post in a series to complement the official Turbo Handbook and the other great hotwire examples to provide examples to others, and future me, on how to implement cool bits of Hotwire.
+  file-type: html
+  publish-date: March
+  publish-year: 2022
+  source: LILW
+  link: 'https://developer.legaltech.wales/blog/phil/2022/hotwire-handbook-part-1'
+
+- layout: blog
   short-title: challenge
   full-title: Technical Challenge
   sub-title: (and updating the process)
