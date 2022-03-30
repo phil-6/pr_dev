@@ -237,8 +237,12 @@ main #projects .project-cards .project .btn-container .btn {
   margin: 0.2rem auto;
   opacity: 1 !important;
 }
+main #projects .project-cards .project:hover {
+  cursor: pointer;
+}
 main #projects .project-cards .project.available-false {
   opacity: 0.65;
+  cursor: not-allowed;
 }
 main #blog {
   padding-top: 80px;
@@ -293,6 +297,7 @@ main #blog .blog-posts .blog .source a {
 main #blog .blog-posts .blog:hover {
   color: inherit;
   border-radius: 1rem;
+  cursor: pointer;
 }
 body.dark main #blog .blog-posts .blog:hover {
   background-color: rgba(245, 245, 245, 0.1);
