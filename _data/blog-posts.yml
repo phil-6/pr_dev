@@ -1,4 +1,26 @@
 - layout: blog
+  author: Shona
+  full-name: Shona Day
+  short-title: eilean-shona-3
+  full-title: Eilean Shona Adventures
+  sub-title: Monday - Written by Shona
+  summary: Day Three of our Island Adventure on Shona Island. Shona's Birthday! Shona has taken the reigns and written about today.
+  file-type: html
+  publish-date: March 28
+  publish-year: 2022
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
+  short-title: eilean-shona-2
+  full-title: Eilean Shona Adventures
+  sub-title: Sunday
+  summary: Day Two of our Island Adventure on Shona Island.
+  file-type: html
+  publish-date: March 27
+  publish-year: 2022
+
+- layout: blog
   author: Phil
   full-name: Phil Reynolds
   short-title: eilean-shona-1
