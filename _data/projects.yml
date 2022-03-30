@@ -1,3 +1,20 @@
+- name: Daily Brew
+  available: True
+  link: https://dailybrew.club/
+  year: 2022
+  icon: code
+  description: A web app which lets specicality coffee lovers track their home brews.
+  tech: Ruby on Rails with Hotwire
+  github: https://github.com/phil-6/dailybrew
+
+- name: Dragon Shield
+  available: False
+  link: https://dragon-shield.legaltech.wales
+  year: 2022
+  icon: route
+  description: Bespoke online training tool to educate professions about online grooming
+  tech: Ruby on Rails with Vue JS
+
 - name: The Summoner
   available: True
   link: https://summoner.purpleriver.dev
