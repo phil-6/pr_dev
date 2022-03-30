@@ -17,7 +17,11 @@
                     {% else %}
                         <p class="unavailable">Project no longer available</p>
                     {% endif %}
-                    <a class="btn" href="{{ project.github }}">View Code <i class="fab fa-github"></i></a>
+                    {% if project.github %}
+                        <a class="btn" href="{{ project.github }}">View Code <i class="fab fa-github"></i></a>
+                    {% else %}
+                        <p class="unavailable">Code is not open source.</p>
+                    {% endif %}
                 </div>
 
             </div>

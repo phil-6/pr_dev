@@ -234,11 +234,8 @@ main #projects .project-cards .project .btn-container .btn {
   border: 1px solid;
   border-radius: 100px;
   padding: 0.6rem;
-  margin: 0.2rem auto;
+  margin: 0.2rem;
   opacity: 1 !important;
-}
-main #projects .project-cards .project:hover {
-  cursor: pointer;
 }
 main #projects .project-cards .project.available-false {
   opacity: 0.65;
