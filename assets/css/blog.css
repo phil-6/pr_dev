@@ -41,6 +41,13 @@ html body.dark-mode article a {
 html body.dark-mode article a:hover {
   color: #03DAC6bb;
 }
+html body.dark-mode article a.next-button {
+  border-color: #03DAC6;
+}
+html body.dark-mode article a.next-button:hover {
+  background-color: #03DAC6bb;
+  color: #05285a;
+}
 html body.dark-mode article code.inline {
   color: #c8bedc;
 }
@@ -80,6 +87,13 @@ html body.light-mode article a {
 }
 html body.light-mode article a:hover {
   color: #3700B3;
+}
+html body.light-mode article a.next-button {
+  border-color: #6200EEbb;
+}
+html body.light-mode article a.next-button:hover {
+  background-color: #3700B3;
+  color: #ece9e6;
 }
 html body.light-mode article code.inline {
   color: #495087;
@@ -181,6 +195,19 @@ html body main article p.lead {
 }
 html body main article img {
   max-width: 100%;
+}
+html body main article .button-container {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+html body main article .button-container a.next-button {
+  border: 1px solid;
+  border-radius: 100px;
+  padding: 0.6rem;
+  margin: 0.2rem;
+  transition: all 0.5s;
 }
 @media (min-width: 992px) {
   html body main article {

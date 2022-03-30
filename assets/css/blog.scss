@@ -85,6 +85,13 @@ html {
           &:hover {
             color: $dark-link-hover;
           }
+          &.next-button {
+            border-color:$dark-link;
+            &:hover {
+              background-color:$dark-link-hover;
+              color: $ink-dark;
+            }
+          }
         }
 
         code.inline {
@@ -138,6 +145,13 @@ html {
 
           &:hover {
             color: $light-link-hover;
+          }
+          &.next-button {
+            border-color:$light-link;
+            &:hover {
+              background-color:$light-link-hover;
+              color: $ink-light;
+            }
           }
         }
 
@@ -264,6 +278,19 @@ html {
         }
         img {
           max-width: 100%;
+        }
+        .button-container {
+          display: flex;
+          justify-content: end;
+          width: 100%;
+          margin-bottom: 1rem;
+          a.next-button {
+            border: 1px solid;
+            border-radius: 100px;
+            padding: 0.6rem;
+            margin: 0.2rem;
+            transition: all 0.5s;
+          }
         }
 
         @media (min-width: $breakpoint-lg) {
