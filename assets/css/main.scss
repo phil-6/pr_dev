@@ -95,6 +95,9 @@ main {
     justify-content: center;
 
     .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin-top: 60px;
 
       h1 {
@@ -125,6 +128,7 @@ main {
 
       p {
         text-align: center;
+        max-width: 1200px;
         @media (min-width: $breakpoint-md) {
           font-size: 1.2rem;
         }
@@ -138,7 +142,6 @@ main {
         letter-spacing: -0.02rem;
         text-align: center;
         padding: 0 15px;
-        max-width: 1200px;
 
         &:nth-of-type(2) {
           text-align: justify;

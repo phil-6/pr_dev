@@ -78,6 +78,9 @@ main header {
   justify-content: center;
 }
 main header .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 60px;
 }
 main header .container h1 {
@@ -109,6 +112,7 @@ main header .container h3 {
 }
 main header .container p {
   text-align: center;
+  max-width: 1200px;
 }
 @media (min-width: 768px) {
   main header .container p {
@@ -123,7 +127,6 @@ main header .container .subheading {
   letter-spacing: -0.02rem;
   text-align: center;
   padding: 0 15px;
-  max-width: 1200px;
 }
 main header .container .subheading:nth-of-type(2) {
   text-align: justify;
