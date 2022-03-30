@@ -468,11 +468,11 @@ body.light.orange {
   color: #010A1B;
 }
 body.light.orange.grad {
-  background-color: #fff2e9;
-  background: linear-gradient(184deg, #C2D2EF, #FFE0CA, #FFE0CA, #BCEDE8);
+  background-color: #fff5e6;
+  background: linear-gradient(184deg, #fff5e6 60%, #FFE0CA 95%, #FFA059);
 }
 body.light.orange.no-grad {
-  background: #fff2e9;
+  background: #fff5e6;
 }
 body.light.orange h1, body.light.orange h2 {
   color: #FF6C00;
@@ -503,17 +503,17 @@ body.light.orange button.color-button:hover, body.light.orange a.color-button:ho
 }
 body.light.orange .social a {
   background-color: #4E75BC;
-  color: #fff2e9;
+  color: #fff5e6;
 }
 body.light.orange .social a:hover {
-  background-color: #fff2e9;
+  background-color: #fff5e6;
   border-color: #4E75BC;
   color: #4E75BC;
 }
 body.light.orange #projects .project {
   color: #082C6C;
   border-color: #FF6C00;
-  background-color: #fff2e9;
+  background-color: #fff5e6;
 }
 body.light.orange #projects .project hr {
   border-color: #FFA059;
@@ -526,7 +526,7 @@ body.light.orange #projects .project .btn-container .btn:hover {
   background-color: #C2D2EF;
 }
 body.light.orange #projects .project:hover {
-  background: linear-gradient(160deg, #fff2e9, rgba(255, 224, 202, 0.5));
+  background: linear-gradient(160deg, #fff5e6, rgba(255, 224, 202, 0.5));
 }
 body.light.orange #projects .project:hover .icon {
   color: #FF6C00;
