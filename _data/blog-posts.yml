@@ -1,4 +1,17 @@
 - layout: blog
+  author: Phil
+  full-name: Phil Reynolds
+  short-title: eilean-shona-1
+  full-title: Eilean Shona Adventures
+  sub-title: Introduction and Saturday
+  summary: |
+    Shona and I went away for a week to Eilean Shona. A small island on the West Coast of Scotland. 
+    There was a lovely guest book in our cottage which encouraged users to share their vists, as well as writing in there I thought I would preseve them in a slightly more accessible location, here!
+  file-type: html
+  publish-date: March 26
+  publish-year: 2022
+
+- layout: blog
   short-title: hotwire-handbook-part-1
   full-title: Hotwire Handbook
   sub-title: Part 1

@@ -257,6 +257,10 @@ html {
             font-size: 1.2rem;
             font-weight: 200;
           }
+          &.lead {
+            font-size: 1.3rem;
+            font-weight: 200;
+          }
         }
         img {
           max-width: 100%;
@@ -294,11 +298,7 @@ html {
 
             &.subheading {
               font-size: 1.4rem;
-              font-weight: 200;
-            }
-            &.lead {
-              font-size: 1.3rem;
-              font-weight: 200;
+              font-weight: 100;
             }
             code {
               color:#e2777a;

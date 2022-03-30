@@ -175,6 +175,10 @@ html body main article p.subheading {
   font-size: 1.2rem;
   font-weight: 200;
 }
+html body main article p.lead {
+  font-size: 1.3rem;
+  font-weight: 200;
+}
 html body main article img {
   max-width: 100%;
 }
@@ -209,11 +213,7 @@ html body main article img {
   }
   html body main article p.subheading {
     font-size: 1.4rem;
-    font-weight: 200;
-  }
-  html body main article p.lead {
-    font-size: 1.3rem;
-    font-weight: 200;
+    font-weight: 100;
   }
   html body main article p code {
     color: #e2777a;

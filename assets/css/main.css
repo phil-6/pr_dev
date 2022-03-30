@@ -294,7 +294,6 @@ main #blog .blog-posts .blog .source a {
 main #blog .blog-posts .blog:hover {
   color: inherit;
   border-radius: 1rem;
-  cursor: pointer;
 }
 body.dark main #blog .blog-posts .blog:hover {
   background-color: rgba(245, 245, 245, 0.1);
