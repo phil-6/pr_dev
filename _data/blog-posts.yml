@@ -1,4 +1,26 @@
 - layout: blog
+  author: Phil
+  full-name: Phil Reynolds
+  short-title: eilean-shona-5
+  full-title: Eilean Shona Adventures
+  sub-title: Friday - Our Final Day
+  summary: Our final day of a perfect week on the incredible Shona Island
+  file-type: html
+  publish-date: March 31
+  publish-year: 2022
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
+  short-title: eilean-shona-4
+  full-title: Eilean Shona Adventures
+  sub-title: Tuesday, Wednesday and Thursday
+  summary: The middle of our week spent exploring the island.
+  file-type: html
+  publish-date: March 31
+  publish-year: 2022
+
+- layout: blog
   author: Shona
   full-name: Shona Day
   short-title: eilean-shona-3
