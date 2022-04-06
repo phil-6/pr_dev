@@ -1,0 +1,42 @@
+/* carter-one-regular - latin */
+@font-face {
+  font-family: "Carter One";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.eot");
+  /* IE9 Compat Modes */
+  src: local(""), url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.woff2") format("woff2"), url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.woff") format("woff"), url("/assets/fonts/Carter_One/CarterOne-Regular.ttf") format("truetype"), url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.ttf") format("truetype"), url("/assets/fonts/Carter_One/carter-one-v15-latin-regular.svg#CarterOne") format("svg");
+  /* Legacy iOS */
+}
+/* oxygen-300 - latin */
+@font-face {
+  font-family: "Oxygen";
+  font-style: normal;
+  font-weight: 300;
+  src: url("/assets/fonts/Oxygen/oxygen-v14-latin-300.eot");
+  /* IE9 Compat Modes */
+  src: local(""), url("/assets/fonts/Oxygen/oxygen-v14-latin-300.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-300.woff2") format("woff2"), url("/assets/fonts/Oxygen/oxygen-v14-latin-300.woff") format("woff"), url("/assets/fonts/Oxygen/Oxygen-Light.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-300.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-300.svg#Oxygen") format("svg");
+  /* Legacy iOS */
+}
+/* oxygen-regular - latin */
+@font-face {
+  font-family: "Oxygen";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.eot");
+  /* IE9 Compat Modes */
+  src: local(""), url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.woff2") format("woff2"), url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.woff") format("woff"), url("/assets/fonts/Oxygen/Oxygen-Regular.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-regular.svg#Oxygen") format("svg");
+  /* Legacy iOS */
+}
+/* oxygen-700 - latin */
+@font-face {
+  font-family: "Oxygen";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/assets/fonts/Oxygen/oxygen-v14-latin-700.eot");
+  /* IE9 Compat Modes */
+  src: local(""), url("/assets/fonts/Oxygen/oxygen-v14-latin-700.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-700.woff2") format("woff2"), url("/assets/fonts/Oxygen/oxygen-v14-latin-700.woff") format("woff"), url("/assets/fonts/Oxygen/Oxygen-Bold.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-700.ttf") format("truetype"), url("/assets/fonts/Oxygen/oxygen-v14-latin-700.svg#Oxygen") format("svg");
+  /* Legacy iOS */
+}
+
+/*# sourceMappingURL=main-fonts.css.map */
