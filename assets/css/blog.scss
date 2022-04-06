@@ -266,6 +266,10 @@ html {
         p {
           font-size: 1.1rem;
           margin-top: 0;
+          &.caption {
+            font-size:0.8rem;
+            text-align: center;
+          }
 
           &.subheading {
             font-size: 1.2rem;
@@ -279,6 +283,16 @@ html {
         img {
           max-width: 100%;
         }
+        .text-center {
+          text-align: center;
+        }
+
+        .map-container {
+          display:flex;
+          justify-content: center;
+          max-width: 100%;
+        }
+
         .button-container {
           display: flex;
           justify-content: end;
