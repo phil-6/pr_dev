@@ -2,10 +2,11 @@
   author: Phil
   full-name: Phil Reynolds
   short-title: hotwire-handbook-part-2
-  full-title: Hotwire Handbook Part 2
+  full-title: Hotwire Handbook
   sub-title: Part 2
   summary: |
-    Pagination with Hotwire. Based on a fantastic guide by David Colby.
+    Pagination with Hotwire. Based on a fantastic guide by David Colby. 
+    With a few extra bits including multiple paginated sections on one page and reverse pagination.
   file-type: html
   publish-date: June 27
   publish-year: 2022
