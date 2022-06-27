@@ -1,0 +1,285 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: hotwire-handbook-part-2
+full-title: Hotwire Handbook Part 2
+sub-title: Part 2
+file-type: html
+publish-date: June 27
+publish-year: 2022
+card-color: orange
+---
+
+<h1>Hotwire Handbook - Part 2 - Pagination</h1>
+<p class="lead">Welcome to Part 2, I&#39;m breaking pagination out into its own part, because there are quite a few
+    moving parts that come with pagination.</p>
+<p class="lead">This particular section would not be possible without this excellent guide by <a
+        href='https://www.colby.so/posts/pagination-and-infinite-scrolling-with-hotwire'>David Colby</a>. I&#39;m going
+    to cover quite a lot of the same ground that David does, but in a slightly different way.</p>
+<p class="lead"> I&#39;m also going to presume that you&#39;re comfortable with pagination in general and the
+    <a href='https://github.com/ddnexus/pagy'>Pagy Ruby Gem</a>. The Pagy Gem has brilliant documentation, so go give
+    that a quick spin first if you haven&#39;t used it before.</p>
+<p>This is part 2 of my Hotwire Handbook, the aim of this is to complement the official Turbo Handbook and
+    other great sources out there and also for my own information and recollection! Part 1 covers toggle buttons,
+    content updates and live counters. You can find <a
+            href='https://purpleriver.dev/posts/2022/hotwire-handbook-part-1'>Part 1 here</a></p>
+
+<h2 id='contents'>Contents</h2>
+<ul>
+    <li><a href="#paginating-an-index-page">Part 1 - Pagination on an index page with a button to Load More</a></li>
+    <li><a href="#infinite-scrolling-and-auto-clicking">Part 2 - Infinite Scrolling and Auto Clicking</a></li>
+    <li><a href="#multiple-paginated-sections-on-one-page">Part 3 - Multiple paginated sections on one page</a></li>
+    <li><a href="#paginating-a-chat">Part 4 - Pagination but backwards - for chats</a></li>
+</ul>
+<h2 id='paginating-an-index-page'>Paginating an index page</h2>
+<p>For this example we&#39;re going to use Daily Brew as an example. <a href='https://dailybrew.club/'>Daily Brew</a> is
+    an <a href='https://github.com/phil-6/dailybrew'>open-source</a> coffee logging app, built with Rails 7 and Hotwire.
+    Part of Daily Brew is a big list of UK coffee roasters, we&#39;re mainly looking at the Roasters Index page in this
+    example. </p>
+<p>The first thing we want to do is a fairly normal Pagy set up. </p>
+<p>Our controller&#39;s index action returns a paginated list of roasters.</p>
+<pre><code class='language-ruby' lang='ruby'># app/controllers/roasters_controller.rb
+class RoastersController &lt; ApplicationController
+  def index
+    @roasters_count = Roaster.all.count
+    @pagy, @roasters = pagy(Roaster.all.order(&#39;available_coffees_count DESC, name ASC&#39;), items: 10)
+  end
+end
+</code></pre>
+<p>Then our index page renders our collection of roasters. This uses some snazzy Rails shorthand for rendering a
+    collection. You can learn more about this shorthand in the <a
+            href='https://guides.rubyonrails.org/layouts_and_rendering.html#rendering-collections'>Rails Docs</a>, or
+    this guide from <a href='https://thoughtbot.com/blog/rendering-collections-in-rails'>Thoughtbot</a>. You can see we
+    have a couple of extra bits around our collection. </p>
+<pre><code class='language-erb' lang='erb'>&lt;%# app/views/roasters/index.html.erb %&gt;
+&lt;%= turbo_frame_tag &#39;page_handler&#39; %&gt;
+&lt;div id=&quot;roasters&quot; class=&quot;card-collection row&quot;&gt;
+  &lt;%= render @roasters %&gt;
+&lt;/div&gt;
+&lt;%= render &#39;shared/index_pager&#39;, pagy: @pagy %&gt;
+</code></pre>
+<p>To look a the three key sections of our index page:</p>
+<p>The page handler is an empty turbo frame that we are going to use as a target later on for our Turbo Stream content
+    from the server.</p>
+<p>We then render each of our roasters in the <a
+        href='https://github.com/phil-6/dailybrew/blob/main/app/views/roasters/_roaster.html.erb'>_roaster partial</a>.
+</p>
+<p>Finally we render our index-pager, this is our partial for the pagination controllers. We have a few extra bits in
+    this, we&#39;re leveraging the <code>controller_name</code> helper to construct an ID and class for the html. We do
+    this as we share this pager across several views from different controllers.</p>
+<pre><code class='language-erb' lang='erb'>&lt;%# app/views/shared/_index_pager.html.erb %&gt;
+&lt;div id=&quot;&lt;%= controller_name %&gt;_pager&quot; class=&quot;pager &lt;%= controller_name %&gt;-pager row&quot;&gt;
+  &lt;% if pagy.next %&gt;
+    &lt;%= link_to(
+          &#39;Load More&#39;,
+          &quot;#{controller_name}?query=#{params[:query]}&amp;page=#{pagy.next}&quot;,
+          data: {
+            turbo_frame: &#39;page_handler&#39;,
+            controller: &#39;autoclick&#39;
+          },
+          class: &#39;btn btn-primary&#39;
+        ) %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+<p>If pagy returns a next page, we render a link to that next page. We&#39;re using the <code>controller_name</code>
+    helper again here, to programmatically construct the link. This link is targeting the <code>page_hander</code> Turbo
+    Frame. This informs Turbo that the response from this link should replace the content of the
+    <code>page_handler</code> frame only. We need to explicitly declare this as our link is not nested within that turbo
+    frame.</p>
+<p>We then use a Turbo Frame <a href='https://guides.rubyonrails.org/layouts_and_rendering.html#the-variants-option'>render
+    variant</a> for the response. This means that when our controller responds to our Turbo Frame request, instead of
+    re-rendering the <code>index.html.erb</code> file it looks for <code>index.html+turbo_frame.erb</code> and renders
+    that instead. (This is worth remembering for something quite a bit later on!)</p>
+<p>Our Turbo Frame variant content is wrapped in a <code>page_handler</code> Turbo Frame, as our link is looking to
+    target that Turbo Frame. Inside this turbo frame is where things get interesting. Instead of rendering HTML content
+    we render two Turbo Streams. </p>
+<pre><code class='language-erb' lang='erb'>&lt;%# app/views/roasters/index.html+turbo_frame.erb %&gt;
+&lt;%= turbo_frame_tag &quot;page_handler&quot; do %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;append&quot;,
+        target: &quot;roasters&quot;,
+        template: %(#{render @roasters})
+      ) %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;replace&quot;,
+        target: &quot;roasters_pager&quot;,
+        template: %(#{render &quot;shared/index_pager&quot;, pagy: @pagy})
+      ) %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>The first of appends @roasters to the existing list of roasters, using the ID of the parent element. </p>
+<p>The second replaces the pager with an updated version. So if we were on &quot;page 2&quot;, the link would point to
+    &quot;page 3&quot;. We click the link, more roasters are rendered and the link is replaced so it points to &quot;page
+    4&quot;</p>
+<p>There is one more bit we need to add to wire this up. We need to tell our application to respond to the turbo frame
+    request variant. Simply add the before_action filter below to our application controller</p>
+<pre><code class='language-ruby' lang='ruby'># app/controllers/application_controller.rb
+class ApplicationController &lt; ActionController::Base
+  include Pagy::Backend
+  before_action :turbo_frame_request_variant
+
+  protected
+  def turbo_frame_request_variant
+    request.variant = :turbo_frame if turbo_frame_request?
+  end
+end
+</code></pre>
+<p>With all that plumbed in, when the &quot;Load More&quot; link is clicked, a Turbo Frame request is made to the
+    /roasters end point. The controller responds to that request with the <code>index.html+turbo_frame.erb</code>
+    partial. Turbo processes the two turbo streams in the <code>page_handler</code> turbo frame. </p>
+<p>This is a fairly elegant solution that lets the user press the button when they want to load more onto our index. But
+    we can do better than that. With 16 lines of JavaScript!</p>
+
+<h2 id='infinite-scrolling-and-auto-clicking'>Infinite Scrolling and Auto Clicking</h2>
+<p>In order for our page to allow a seamless scrolling experience we don&#39;t need to do much more. We&#39;re going to
+    leverage <a href='https://github.com/stimulus-use/stimulus-use'>stimulus-use</a> which is a small extension to
+    stimulus. First we need to add this to our import map. Add the following line to
+    <code>app/config/importmap.rb</code></p>
+<pre><code class='language-ruby' lang='ruby'># app/config/importmap.rb
+pin &quot;stimulus-use&quot;, to: &quot;https://ga.jspm.io/npm:stimulus-use@0.50.0-2/dist/index.js&quot;
+
+</code></pre>
+<p>Note: If you&#39;re not using import maps then refer to the docs for how to install the stimulus-use library.</p>
+<p>Next we need to create a new controller in our <code>javascript</code> folder, and add in our 16 lines of javascript.
+</p>
+<pre><code class='language-javascript' lang='javascript'>// app/javascript/controllers/autoclick_controller.js
+
+import {Controller} from &quot;@hotwired/stimulus&quot;
+import {useIntersection} from &#39;stimulus-use&#39;
+
+export default class extends Controller {
+
+    options = {
+        threshold: 0.5
+    }
+
+    connect() {
+        useIntersection(this, this.options)
+    }
+
+    appear(entry) {
+        this.element.click()
+    }
+}
+</code></pre>
+<p>Finally we need to add this controller to our &quot;Load More&quot; button. If you&#39;ve been C&amp;Ping the code so
+    far, you already have this. If not, ensure you index_pager has:</p>
+<pre><code class='language-ruby' lang='ruby'>data: {
+    turbo_frame: &#39;page_handler&#39;,
+    controller: &#39;autoclick&#39;
+    },
+</code></pre>
+<p>Stimulus-Use handles all the complicated viewport intersection logic and we just say what to do when the button
+    appears. </p>
+<p>When the &quot;Load More&quot; element appears into view, it gets programmatically clicked. </p>
+
+<h2 id='multiple-paginated-sections-on-one-page'>Multiple Paginated Sections on one Page</h2>
+<p>We&#39;ve done the bulk of the work now, getting pagination with an infinite scrolling setup, but there are a few
+    extras we need to do if we want to consider multiple different paginated sections on one page. </p>
+<p>For this, the main focus we need to have is clear naming conventions. The Daily Brew <a
+        href='https://github.com/phil-6/dailybrew/tree/main/app/views/admin'>admin dashboard</a> has three paginated
+    tables. Each table has its own <code>page_hander</code> and specific ID in the HTML, as well as partials for the
+    table and table pager.</p>
+<p>We use a <a href='https://github.com/phil-6/dailybrew/blob/main/app/views/admin/dashboard.html%2Bturbo_frame.erb'>shared
+    Turbo Frame response variant</a> that contains the Turbo Streams for each of the tables. Depending on which table is
+    being scrolled, the response will render the correct turbo stream. </p>
+<p>A nice straight forward extension to a single paginated section.</p>
+
+<h2 id='paginating-a-chat'>Paginating a Chat</h2>
+<p>Switching example app, we&#39;re going to look at a section of the Ryalto V4 Prototype. We&#39;re building chat
+    functionality using hotwire.</p>
+<p>One of the quirks about Chat is that the expected behaviour is to start at the bottom of the conversation and be able
+    to scroll up to older messages. In order to implement this we need to reverse our pagination. </p>
+<p>In our <code>messages_controller</code> we set <code>@messages</code> to <code>@chat.messages.order(&#39;created_at
+    DESC&#39;)</code></p>
+<pre><code class='language-ruby' lang='ruby'>    # app/controllers/chats/messages_controller.rb
+	before_action :chat, only: %i[index new create update]
+
+    # GET /chats/:id/messages/
+    def index
+      @pagy, @messages = pagy(@chat.messages.order(&#39;created_at DESC&#39;), items: 10)
+    end
+</code></pre>
+<p>So the newest messages appear at the bottom. Great! But that&#39;s not our problem solved.</p>
+<p><img src="/assets/images/hh-2/image-20220627122146275.png" referrerpolicy="no-referrer"
+        alt="image-20220627122146275"></p>
+<p>By default, the web browser will set the scroll position to the top of a container. Which isn&#39;t what we
+    want. </p>
+<p><img src="/assets/images/hh-2/image-20220627122226886.png" referrerpolicy="no-referrer"
+        alt="image-20220627122226886"></p>
+<p>There is a fairly simple way to get around this. If we set the <code>flex-direction</code> to
+    <code>column-reverse</code> then each element within that flex container is rendered in the reverse order, and the
+    scroll bar defaults to the bottom. </p>
+<p><img src="/assets/images/hh-2/image-20220627122407205.png" referrerpolicy="no-referrer"
+        alt="image-20220627122407205"></p>
+<p>But now our messages are in the wrong order! To get around this, when our erb renders the messages, we can just
+    reverse this direction <code>&lt;%= render @messages.reverse %&gt;</code> in our index.html.erb file</p>
+<p><img src="/assets/images/hh-2/image-20220627122619479.png" referrerpolicy="no-referrer"
+        alt="image-20220627122619479"></p>
+<p>But there&#39;s something funky going on here. When we hit our pagination, the direction is reversed.</p>
+<p>We also need to reverse the directions in our index&#39;s Turbo Frame response variant</p>
+<pre><code class='language-erb' lang='erb'># index.html+turbo_frame.erb
+&lt;%= turbo_frame_tag &quot;page_handler&quot; do %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;prepend&quot;,
+        target: &quot;messages&quot;,
+        template: %(#{render @messages.reverse})
+      ) %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;replace&quot;,
+        target: &quot;messages_pager&quot;,
+        template: %(#{render &quot;chats/messages/pager&quot;, pagy: @pagy})
+      ) %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p><img src="/assets/images/hh-2/chatscrolling.gif" referrerpolicy="no-referrer"
+        alt="Screencast from 27-06-22 12_29_09"></p>
+<p>There we go! </p>
+<p>There&#39;s one other &quot;gotcha&quot; that I came across while implementing this, because the messages index is
+    already a Turbo Frame that is loaded inside a chat partial, we need to be aware of the type of requests that we are
+    sending. </p>
+<p>Our chat messages are rendered by the following lazy loaded turbo frame</p>
+<pre><code class='language-erb' lang='erb'>&lt;%= turbo_frame_tag &quot;chat_messages&quot;,
+    src: chat_messages_path(chat),
+    target: &quot;_top&quot; do %&gt;
+    &lt;p&gt;Loading...&lt;/p&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Because this is a turbo frame request to the index path, the response will use the Turbo Frame render variant. </p>
+<p>In order to get around this, and preserve our functionality, we can move our index view to a partial and render it
+    inside the Turbo Frame request variant, but <em>outside</em> of the <code>page_handler</code> turbo frame.</p>
+<pre><code class='language-erb' lang='erb'>&lt;%# app/views/chats/messages/index.html+turbo_frame.erb %&gt;
+&lt;%= turbo_frame_tag &quot;page_handler&quot; do %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;prepend&quot;,
+        target: &quot;messages&quot;,
+        template: %(#{render @messages.reverse})
+      ) %&gt;
+  &lt;%= turbo_stream_action_tag(
+        &quot;replace&quot;,
+        target: &quot;messages_pager&quot;,
+        template: %(#{render &quot;chats/messages/pager&quot;, pagy: @pagy})
+      ) %&gt;
+&lt;% end %&gt;
+
+&lt;%= render &quot;chats/messages/index&quot; %&gt;
+</code></pre>
+<pre><code class='language-erb' lang='erb'>&lt;%# app/views/chats/messages/_index.html.erb %&gt;
+&lt;%= turbo_frame_tag :chat_messages, target: &quot;_top&quot; do %&gt;
+  &lt;%= turbo_frame_tag &#39;page_handler&#39; %&gt;
+  &lt;div id=&quot;messages_container&quot;&gt;
+    &lt;div id=&quot;messages&quot;&gt;
+      &lt;%= render @messages.reverse %&gt;
+    &lt;/div&gt;
+    &lt;%= render &#39;chats/messages/pager&#39;, pagy: @pagy %&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>The inital Turbo Frame request is from the &quot;chat_messages&quot; frame and Turbo knows to only render the content
+    with that Turbo Frame tag. The paginated requests are looking for the &quot;page_handler&quot; Turbo Frame and so
+    Turbo ignores the content in the &quot;chat_messages&quot; frame.</p>
+<p>Damn, I really enjoy Turbo!</p>
+<p>As always, let me know if there are any questions about this, if I have anything wrong or if there is anything that
+    could do with more explanation. </p>
