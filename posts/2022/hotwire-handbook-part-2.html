@@ -182,9 +182,100 @@ export default class extends Controller {
         href='https://github.com/phil-6/dailybrew/tree/main/app/views/admin'>admin dashboard</a> has three paginated
     tables. Each table has its own <code>page_hander</code> and specific ID in the HTML, as well as partials for the
     table and table pager.</p>
+<p>We also need to ensure that the variables and param values are unique in our controller and the pager partials.</p>
+<pre><code class='language-ruby' lang='ruby'># app/controllers/admin_controller.rb
+class AdminController < ApplicationController
+      # GET /admin/
+  def index
+    @pagy_users, @users = pagy(User.all.order('created_at DESC'), items: 20, page_param: :page_users)
+    @pagy_roasters, @roasters = pagy(Roaster.all.order('last_coffee_fetch ASC'), items: 20, page_param: :page_roasters)
+    @pagy_coffees, @coffees = pagy(Coffee.all.order('updated_at DESC').includes(:roaster), items: 20, page_param: :page_coffees)
+    render 'dashboard'
+  end
+end
+</code></pre>
+<pre><code class='language-ruby' lang='erb'># app/views/admin/dashboard.html.erb
+# exerpt. Same structure is used for all three tables.
+    &lt;section class="roaster-container">
+      &lt;h2>Roasters&lt;/h2>
+      &lt;%= turbo_frame_tag "roasters_handler" %>
+      &lt;div class="table-container">
+        &lt;table id="roasters_table" class="roasters-table">
+          &lt;tr>
+            &lt;th>Name&lt;/th>
+            &lt;th>Coffees&lt;/th>
+            &lt;th>Available&lt;/th>
+            &lt;th>Last Coffee Fetch&lt;/th>
+          &lt;/tr>
+          &lt;%= render "roasters_table", roasters: @roasters %>
+        &lt;/table>
+      &lt;/div>
+      &lt;%= render "roasters_table_pager", pagy_roasters: @pagy_roasters %>
+    &lt;/section>
+</code></pre>
+
+<p>The key difference between the different pager partials is the admin path is referencing the specific page value set in our controller.</p>
+<pre><code class='language-erb' lang='erb'># app/views/admin/_roasters_table_pager.html.erb
+&lt;div id=&quot;roasters_table_pager&quot; class=&quot;roasters_table_pager&quot;&gt;
+  &lt;div&gt;
+    &lt;% if pagy_roasters.next %&gt;
+      &lt;%= link_to(
+            &quot;Load more&quot;,
+            admin_path(page_roasters: pagy_roasters.next),
+            class: &quot;&quot;,
+            data: {
+              turbo_frame: &quot;roasters_handler&quot;
+            }
+          ) %&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>&nbsp;</p>
+
 <p>We use a <a href='https://github.com/phil-6/dailybrew/blob/main/app/views/admin/dashboard.html%2Bturbo_frame.erb'>shared
     Turbo Frame response variant</a> that contains the Turbo Streams for each of the tables. Depending on which table is
     being scrolled, the response will render the correct turbo stream. </p>
+<pre><code class='language-ruby' lang='erb'># app/views/admin/dashboard.html+turbo_frame.erb
+<%= turbo_frame_tag "users_handler" do %>
+  <%= turbo_stream_action_tag(
+        "append",
+        target: "users_table",
+        template: %(#{render 'users_table', users: @users})
+      ) %>
+  <%= turbo_stream_action_tag(
+        "replace",
+        target: "users_table_pager",
+        template: %(#{render "users_table_pager", pagy_users: @pagy_users})
+      ) %>
+<% end %>
+
+<%= turbo_frame_tag "roasters_handler" do %>
+  <%= turbo_stream_action_tag(
+        "append",
+        target: "roasters_table",
+        template: %(#{render 'roasters_table', roasters: @roasters})
+      ) %>
+  <%= turbo_stream_action_tag(
+        "replace",
+        target: "roasters_table_pager",
+        template: %(#{render "roasters_table_pager", pagy_roasters: @pagy_roasters})
+      ) %>
+<% end %>
+
+<%= turbo_frame_tag "coffees_handler" do %>
+  <%= turbo_stream_action_tag(
+        "append",
+        target: "coffees_table",
+        template: %(#{render 'coffees_table', coffees: @coffees})
+      ) %>
+  <%= turbo_stream_action_tag(
+        "replace",
+        target: "coffees_table_pager",
+        template: %(#{render "coffees_table_pager", pagy_coffees: @pagy_coffees})
+      ) %>
+<% end %>
+</code></pre>
 <p>A nice straight forward extension to a single paginated section.</p>
 
 <h2 id='paginating-a-chat'>Paginating a Chat</h2>
