@@ -85,10 +85,12 @@ html {
           &:hover {
             color: $dark-link-hover;
           }
+
           &.next-button {
-            border-color:$dark-link;
+            border-color: $dark-link;
+
             &:hover {
-              background-color:$dark-link-hover;
+              background-color: $dark-link-hover;
               color: $ink-dark;
             }
           }
@@ -97,6 +99,7 @@ html {
         code.inline {
           color: $medium-gray;
         }
+
         blockquote {
           color: $gray;
           border-left: 0.2rem solid $gray;
@@ -146,10 +149,12 @@ html {
           &:hover {
             color: $light-link-hover;
           }
+
           &.next-button {
-            border-color:$light-link;
+            border-color: $light-link;
+
             &:hover {
-              background-color:$light-link-hover;
+              background-color: $light-link-hover;
               color: $ink-light;
             }
           }
@@ -158,6 +163,7 @@ html {
         code.inline {
           color: $dark-gray;
         }
+
         blockquote {
           color: $dark-gray;
           border-left: 0.2rem solid $dark-gray;
@@ -233,6 +239,7 @@ html {
 
         h2 {
           font-size: 1.4rem;
+
           &.text-center {
             text-align: center;
           }
@@ -266,8 +273,9 @@ html {
         p {
           font-size: 1.1rem;
           margin-top: 0;
+
           &.caption {
-            font-size:0.8rem;
+            font-size: 0.8rem;
             text-align: center;
           }
 
@@ -275,20 +283,39 @@ html {
             font-size: 1.2rem;
             font-weight: 200;
           }
+
           &.lead {
             font-size: 1.3rem;
             font-weight: 200;
           }
         }
+
         img {
           max-width: 100%;
         }
+
+        .gif {
+          text-align: center;
+          margin: auto 0;
+          width: 100%;
+          position: relative;
+        }
+
+        .video {
+          text-align: center;
+          margin: auto 0;
+        }
+
+        .small {
+          font-size: 80%;
+        }
+
         .text-center {
           text-align: center;
         }
 
         .map-container {
-          display:flex;
+          display: flex;
           justify-content: center;
           max-width: 100%;
         }
@@ -298,6 +325,7 @@ html {
           justify-content: end;
           width: 100%;
           margin-bottom: 1rem;
+
           a.next-button {
             border: 1px solid;
             border-radius: 100px;
@@ -314,10 +342,12 @@ html {
           }
           h2 {
             font-size: 2rem;
+
             &.text-center {
               text-align: center;
               font-size: 2.2rem;
             }
+
             .link-spacer {
               margin-left: 45px;
             }
@@ -341,13 +371,14 @@ html {
               font-size: 1.4rem;
               font-weight: 100;
             }
+
             code {
-              color:#e2777a;
+              color: #e2777a;
             }
           }
         }
 
-        pre{
+        pre {
           max-height: 36rem;
         }
 
@@ -356,6 +387,7 @@ html {
           max-height: 0;
           overflow: hidden;
           transition: all .5s cubic-bezier(0, 1, 0, 1);
+
           &.reveal {
             max-height: 20rem;
             transition: all .5s ease-in-out;
