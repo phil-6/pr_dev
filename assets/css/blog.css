@@ -210,6 +210,11 @@ html body main article .video {
   text-align: center;
   margin: auto 0;
 }
+html body main article .video iframe {
+  width: 560px;
+  height: 315px;
+  max-width: 100%;
+}
 html body main article .small {
   font-size: 80%;
 }

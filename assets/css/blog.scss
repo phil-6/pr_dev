@@ -304,6 +304,12 @@ html {
         .video {
           text-align: center;
           margin: auto 0;
+          iframe {
+            width: 560px;
+            height: 315px;
+            max-width: 100%;
+          }
+
         }
 
         .small {
