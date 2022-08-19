@@ -111,7 +111,7 @@
   icon: users
   description: Web app for managing a network of contractors.
   tech: Full stack Ruby on Rails app.
-  github: https://github.com/phil-6/van-spots
+  github: https://github.com/phil-6/mobilise-digital
 
 - name: Van Spots
   available: True
