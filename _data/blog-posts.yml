@@ -1,12 +1,26 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: engineering-principles
+  full-title: Our Engineering Principles
+  file-type: html
+  summary: The principles that we follow as we build high quality software at Ryalto.
+  publish-date: September 8
+  publish-year: 2022
+  source: Ryalto
+  link: 'https://developer.ryalto.group/blog/2022/engineering-principles'
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: getting-into-ruby-rails
   full-title: Getting into Ruby on Rails
   summary: A friend asked me out of the blue how to get into programming. It's not an easy question with no single answer, but these are my thoughts.
   file-type: html
   publish-date: August 18
   publish-year: 2022
+  source: Ryalto
+  link: 'https://developer.ryalto.group/blog/2022/getting-into-ruby-rails'
 
 - layout: blog
   author: Phil
