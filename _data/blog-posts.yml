@@ -1,6 +1,18 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: rails-github-actions
+  full-title: Migrating to GitHub Actions for Rails CI
+  file-type: md
+  summary: RubyCI is tragically shutting down, so I'm migrating to GitHub Actions for Rails CI
+  publish-date: October 13
+  publish-year: 2022
+  source: Ryalto
+  link: 'https://developer.ryalto.group/blog/2022/rails-github-actions'
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: engineering-principles
   full-title: Our Engineering Principles
   file-type: html
