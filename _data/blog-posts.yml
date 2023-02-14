@@ -1,6 +1,16 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: bye-to-hey
+  full-title: Saying bye to Hey
+  file-type: md
+  summary: My Hey renewal is coming up next week and I'm moving back to Gmail because Hey lost a lot of my emails and blamed me.
+  publish-date: February 14
+  publish-year: 2023
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: rails-github-actions
   full-title: Migrating to GitHub Actions for Rails CI
   file-type: md
