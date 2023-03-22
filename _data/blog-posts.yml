@@ -1,6 +1,15 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: search-and-select-hotwire
+  full-title: Search and Select Multiple with Rails and Hotwire
+  file-type: html
+  publish-date: March 22
+  publish-year: 2023
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: bye-to-hey
   full-title: Saying bye to Hey
   file-type: md
