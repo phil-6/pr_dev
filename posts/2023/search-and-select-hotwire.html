@@ -30,8 +30,8 @@ card-color: orange
     <li><a href="#initial-user-search">Initial User Search</a></li>
     <li><a href="#chat-new-and-create">Chat New and Create</a></li>
     <li><a href="#new-chat-page">New Chat Page</a></li>
-    <li><a href="#users-index">Summoning the Users Index (The magic starts here)</a></li>
-    <li><a href="#new-chat-page">Making it more magic</a></li>
+    <li><a href="#users-index">Summoning the Users Index (The Hotwire magic starts here)</a></li>
+    <li><a href="#new-chat-page">Making it more magic (with Stimulus.js)</a></li>
 </ul>
 
 <h2 id='background-and-setup'>Background and Setup</h2>
@@ -140,13 +140,12 @@ end
 </code></pre>
 
 <p>You can see the relationships more clearly here. When creating a chat we must also create the participants. </p>
-<p>We&#39;ve also included the PgSearch::Model in our User model. This is the <a
-        href='https://github.com/Casecommons/pg_search'>pg_search gem</a> we&#39;re using to power our search. It&#39;s
-    nice and lightweight and the strong documentation makes it pretty procedural to setup. </p>
+<p>We&#39;ve also included the PgSearch::Model in our User model. This is the
+    <a href='https://github.com/Casecommons/pg_search'>pg_search gem</a> we&#39;re using to power our search. It&#39;s
+    lightweight and the strong documentation makes it pretty procedural to setup. </p>
 <p>We have a <code>:for_organisation</code> scope on the User model. This allows us to get all the users who have an
-    active membership in the organisation that is passed to the scope. <a
-            href='https://gorails.com/blog/activerecord-merge'>Chris Oliver has a good explanation of this on
-        GoRails</a></p>
+    "active" membership in the organisation which is passed to the scope.
+    <a href='https://gorails.com/blog/activerecord-merge'>Chris Oliver has a good explanation of this on GoRails</a></p>
 <p>** Is there anything else that should be explained here? **</p>
 
 <h2 id='initial-user-search'>Initial User Search</h2>
@@ -185,7 +184,6 @@ end
 <pre><code class='language-ruby' lang='ruby'># GET /chats/new
 def new
     @chat = Chat.new
-    @chat.users &lt;&lt; current_user
 end
 
 # POST /chats
@@ -252,10 +250,10 @@ end
     which makes a request to our users path.</p>
 
 <h2 id='users-index'>Summoning the Users Index</h2>
-<p class="subheading">(The magic starts here)</p>
+<p class="subheading">(The Hotwire magic starts here)</p>
 <p>Now the real fun begins with the way we&#39;re calling the user's index to allow us to add users to a chat. </p>
-<p>As this is a turbo frame request, when we hit the HTML index page, we only render the content within the matching
-    <code>turbo_frame_tag</code>. This allows us to us the index action in different parts of the app and only render
+<p>As this is a <strong>turbo frame</strong> request, when we hit the HTML index page, we only render the content within the matching
+    <code>turbo_frame_tag</code>. This allows us to use the index action in different parts of the app and only render
     the turbo frames we need. Anything else in the <code>app/views/users/index.html</code> file outside of the
     <code>users_selector_users_index</code> turbo frame will not be loaded. The example here is the &lt;h2&gt; tag
     below.</p>
@@ -323,8 +321,10 @@ end
     come back to that later.</p>
 
 
-<h2 id='making-it-magic'>Making it magic</h2>
-<p>On each user, we have a data-action call to the <code>users-selector</code> controller and the <code>select-user</code>
+<h2 id='making-it-magic'>Making it more magic</h2>
+<p class="subheading">(with Stimulus.js)</p>
+<p>On each user, we have a data-action call to the <code>users-selector</code> controller and the
+    <code>select-user</code>
     action. The controller is initialised in the chat form and handles what happens when a user clicks on a users name.
     A <code>users_for_chat_list</code> set constant is created when the controller loads.</p>
 <p>We get the user ID from the event target, and if that ID is already in the <code>users_for_chat_list</code> we remove
@@ -333,7 +333,9 @@ end
 <p>The add and remove actions both do the same but opposite things.</p>
 <p>The <code>add_user</code> function: </p>
 <ul>
-    <li>adds a user to the <code>users_for_chat_list</code> set of IDs (using a set here as sets cannot contain duplicates).</li>
+    <li>adds a user to the <code>users_for_chat_list</code> set of IDs (using a set here as sets cannot contain
+        duplicates).
+    </li>
     <li>creates a hidden form input element, which is what submits the user IDs to the create action and appends it.
     </li>
     <li>creates a visual element which shows the user which users are due to be added to the chat, and includes a data
@@ -343,7 +345,7 @@ end
         which users are selected and due to be added to the chat.
     </li>
 </ul>
-<p>The <code>remove_user</code>  action reverses all of the above.</p>
+<p>The <code>remove_user</code> action reverses all of the above.</p>
 
 <p>The full controller is below. </p>
 <pre><code class='language-javascript' lang='javascript'># app/javascript/users_selector_controller.js
@@ -424,7 +426,8 @@ export default class extends Controller {
     <code>data-action=&quot;users-selector-users-index-page:new-page@window-&gt;users-selector#style_selected_users&quot;</code>
 </p>
 <p>The format of this is <code>dispatching controller</code> : <code>dispatched action/event name</code> @
-    <code>scope</code> -&gt; <code>controller to call</code> # <code>action to invoke</code>. Note: The stimulus docs are
+    <code>scope</code> -&gt; <code>controller to call</code> # <code>action to invoke</code>. Note: The stimulus docs
+    are
     missing the scope requirement.</p>
 <p>So we take the dispatched event and use that to trigger a call back to our style_selected_users action which
     highlights the users which have been selected on the index page which has just loaded</p>
