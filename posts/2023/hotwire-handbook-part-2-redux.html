@@ -149,7 +149,7 @@ export default class extends Controller {
 
 <h2 id='upgrading-from-before-turbo-720'>Upgrading from before Turbo 7.2.0</h2>
 <p>If you&#39;re upgrading from the previous version of this guide there are some extra steps you need to take in order to remove our clever workarounds. </p>
-<p id="turbo_frame_request_variant">In our <code>ApplicationController</code> we can remove the <code>turbo_frame_request_variant</code> method and it&#39;s assoicated before_action</p>
+<p id="turbo_frame_request_variant">In our <code>ApplicationController</code> we can remove the <code>turbo_frame_request_variant</code> method and it&#39;s associated before_action</p>
 <pre><code class='language-ruby' lang='ruby'># Remove all this from #app/controllers/application_controller.rb
   before_action :turbo_frame_request_variant
   def turbo_frame_request_variant
