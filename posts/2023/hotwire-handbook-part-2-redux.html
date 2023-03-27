@@ -1,0 +1,234 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: hotwire-handbook-part-2-redux
+full-title: Hotwire Handbook Part 2 Redux
+sub-title: Part 2 - Redux
+file-type: html
+publish-date: March 27
+publish-year: 2023
+card-color: orange
+---
+
+<h1>Hotwire Handbook - Part 2 - Pagination - REDUX!</h1>
+<p class="lead"> Turbo 7.2.0 is out and it brings support for GET requests, which greatly simplifies the way to do
+    pagination with Hotwire. We're still leveraging the <a href='https://github.com/ddnexus/pagy'>Pagy Ruby Gem</a>, but
+    it's now easier to implement and has potential for even more.</p>
+<p>This is a bit delayed, oops! <a href="https://github.com/hotwired/turbo/releases/tag/v7.2.0">Turbo 7.2.0</a> came out
+    on 22nd September 2022, but it's beena a busy couple of months!</p>
+<p>There are a few other guides out there which cover this, but I've included a few additional bits I haven't seen elsewhere,
+    and the more guides, the better right! The original pagination guide is still up and there are going to be some
+    functionality examples there which are still relevant.
+    <a href="/posts/2022/hotwire-handbook-part-2">Original Pagination Guide</a></p>
+<p>This is using the <a href="https://github.com/hotwired/turbo-rails/releases/tag/v1.4.0">Turbo-Rails gem version
+    1.4.0</a> which is the Rails gem for Turbo 7.3.0. We're also using; Rails (7.0.4.3), Stiumulus-Rails (1.2.1), pagy
+    (5.10.1)</p>
+
+<h2 id='contents'>Contents</h2>
+<ul>
+    <li><a href="#paginating-an-index-page">Paginating on an index page</a></li>
+    <li><a href="#upgrading-from-before-turbo-720">Additional Changes from Previous Guide</a></li>
+    <li><a href="#introducing-filters">Pagination with Filters</a></li>
+</ul>
+
+<h3>Bonus Links for Key Changes</h3>
+<ul>
+    <li><a href="#turbo_frame_to_turbo_stream">Replacing <code>.turbo_frame.html.erb</code> with <code>.turbo_stream.html.erb</code></a></li>
+    <li><a href="#data_turbo_stream"><code>data: { turbo_stream: "" }</code> replaces <code>data: { turbo_frame: "page_handler" }</code></a></li>
+    <li><a href="#turbo_stream_for_get">Turbo Stream response for GET request</a></li>
+    <li><a href="#turbo_frame_request_variant">Remove <code>turbo_frame_request_variant</code> from ApplicationController</a></li>
+    <li><a href="#page_handler">Remove page handler turbo frame</a></li>
+    <li><a href="#respond_to_turbo_stream">Remove <code>turbo_stream</code> from <code>respond_to</code> method</a></li>
+</ul>
+
+
+<h2 id='paginating-an-index-page'>Paginating an Index Page</h2>
+<p>We have some updated examples in this redux. We&#39;re looking at the Ryalto V4 memberships directory. In Ryalto a User belongs to an Organisation through their Membership, so for the Organisation&#39;s directory of users we iterate over all those membership objects.</p>
+<p>This is in our MembershipsController and the initial directory action looks like this:</p>
+<pre><code class='language-ruby' lang='ruby'>  def directory # rubocop:disable Metrics/AbcSize
+    @pagy_memberships, @memberships = pagy(@organisation.memberships, items: 12)
+  end
+</code></pre>
+<p>The action here is nice and straight forward and will respond with the <code>directory.html.erb</code> file to HTML requests, the <code>directory.turbo_stream.erb</code> to turbo_stream requests (and <code>directory.json.jbuilder</code> to JSON requests, but we&#39;re not touching on JSON requests in this guide).</p>
+<p id="turbo_frame_to_turbo_stream">The first change from before is that we have a <code>directory.turbo_stream.erb</code> view file instead of <code>directory.html+turbo_frame.erb</code></p>
+<p>When we make the initial request to the directory path (The route is <code>get &#39;directory&#39;, action: :directory, controller: &#39;memberships&#39;</code>), we make an html request so our controller renders the directory html page at <code>app/views/memberships/directory.html.erb</code></p>
+<p>The directory page takes our <code>@memberships</code> collection and iterates through each membership within a turbo frame and a div with the ID: <code>directory</code>. We also render in our &quot;pager&quot; partial. The view looks like this:</p>
+<p>The directory page just loads in two partials within the turbo frame. The first is within the <code>#directory</code> div and the second outside of it. </p>
+<pre><code class='language-erb' lang='erb'># app/views/memberships/directory.html.erb
+&lt;%= turbo_frame_tag :directory_frame do %&gt;
+  &lt;div id=&quot;directory&quot;&gt;
+    &lt;%= render partial: &quot;memberships/memberships_table&quot;, locals: { memberships: @memberships } %&gt;
+  &lt;/div&gt;
+  &lt;%= render &quot;memberships/pager_memberships&quot;, pagy_memberships: @pagy_memberships %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>The turbo frame means that requests form within the frame will automatically just load within the frame. </p>
+<p>The memberships table iterates through our @memberships collection and displays the relevant data. </p>
+<pre><code class='language-erb' lang='erb'># app/views/memberships/memberships_table.html.erb
+&lt;% @memberships.each do |membership| %&gt;
+  &lt;% user = membership.user %&gt;
+  &lt;%= link_to user, data: { turbo_frame: &quot;_top&quot; }, class: &quot;avatar-header-list&quot; do %&gt;
+    &lt;div class=&quot;profile-card&quot;&gt;
+      &lt;div class=&quot;avatar-wrapper avatar-sm&quot;&gt;
+        &lt;% user.picture.attached? ? image_tag url_for(user.picture) : image_tag &#39;avatar-placeholder.png&#39; %&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;profile-details&quot;&gt;
+        &lt;h4&gt;&lt;%= user.full_name %&gt;&lt;/h4&gt;
+        &lt;%# Other Details here %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>The pager partial provides a link to the next page of membership results. This is automatically clicked in the same way as previously with a simple javascript &quot;Autoclick&quot; controller. </p>
+<pre><code class='language-erb' lang='erb'># app/views/memberships/_pager_memberships.html.erb
+&lt;div id=&quot;pager_users&quot; class=&quot;min-w-full my-8 flex justify-center&quot;&gt;
+  &lt;div&gt;
+    &lt;% if pagy_memberships.next %&gt;
+      &lt;%= link_to(
+            &quot;Loading...&quot;,
+            pagy_url_for(pagy_memberships, pagy_memberships.next),
+            # directory_path(page: pagy_memberships.next),
+            class: &quot;btn sm&quot;,
+            data: {
+              turbo_stream: &quot;&quot;,
+              controller: &quot;autoclick&quot;
+            }
+          ) %&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+# Note: this doesn&#39;t liver in this file, it lives at the path below.
+# Im just including it for completeness / simplicity
+# app/javascript/controllers/autoclick_controller.js
+import { Controller } from &quot;@hotwired/stimulus&quot;
+import { useIntersection } from &#39;stimulus-use&#39;
+
+export default class extends Controller {
+  options = {
+    threshold: 1
+  }
+
+  connect() {
+    useIntersection(this, this.options)
+  }
+
+  appear(entry) {
+    this.element.click()
+  }
+}
+&lt;/script&gt;
+</code></pre>
+<p id="data_turbo_stream">One subtle but key change here is the addition of <code>turbo_stream: &quot;&quot;</code> to the data param. This turns the request from at HTML request to a turbo_stream request. Which means our response looks for the <code>directory.turbo_stream</code>partial instead of the <code>directory.html</code></p>
+<p>The directory turbo stream partial contains two turbo streams, one which appends the next page of results to the bottom of the <code>&lt;div id=directory&gt;</code>, we&#39;re still going for the infinite scrolling approach. The other replaces the loading button with updated pagy variables. </p>
+<pre id="turbo_stream_for_get"><code class='language-erb' lang='erb'># app/views/directory.turbo_stream.erb
+&lt;%= turbo_stream_action_tag(
+      &quot;append&quot;,
+      target: &quot;directory&quot;,
+      template: %(#{ render partial: &quot;memberships/memberships_table&quot;,
+                            locals: { memberships: @memberships } })
+    ) %&gt;
+
+&lt;%= turbo_stream_action_tag(
+      &quot;replace&quot;,
+      target: &quot;pager_users&quot;,
+      template: %(#{render &quot;memberships/pager_memberships&quot;,
+                           pagy_memberships: @pagy_memberships})
+    ) %&gt;
+
+</code></pre>
+<p>And that&#39;s it. No more &quot;clever&quot; workarounds, just much more &quot;boring&quot;. </p>
+
+
+<h2 id='upgrading-from-before-turbo-720'>Upgrading from before Turbo 7.2.0</h2>
+<p>If you&#39;re upgrading from the previous version of this guide there are some extra steps you need to take in order to remove our clever workarounds. </p>
+<p id="turbo_frame_request_variant">In our <code>ApplicationController</code> we can remove the <code>turbo_frame_request_variant</code> method and it&#39;s assoicated before_action</p>
+<pre><code class='language-ruby' lang='ruby'># Remove all this from #app/controllers/application_controller.rb
+  before_action :turbo_frame_request_variant
+  def turbo_frame_request_variant
+    request.variant = :turbo_frame if turbo_frame_request?
+  end
+</code></pre>
+<p id="page_handler">As we mentioned earlier, we&#39;re introducing <code>data: { turbo_stream: &quot;&quot; }</code> to the next page links in our &quot;pager&quot; partials. This is replacing the turbo frame call to the <code>_page_handler</code> turbo frames. An example is to <code>data: { turbo_frame: &quot;page_hander&quot; }</code>, and then remove the associated <code>&lt;%= turbo_frame: &#39;page_hander&#39; %&gt;</code></p>
+<p id="respond_to_turbo_stream">The final thing to remove (and something I missed at first) is to remove <code>:turbo_stream</code> from our respond_to in our ApplicationController. You can actually remove the <code>respond_to</code> line entirely now as we&#39;re no longer modifying it from the defaults. </p>
+
+
+<h2 id='introducing-filters'>Introducing Filters</h2>
+<p>Previously we had implemented filters by having two paginated indexes on one page. Separated by different turbo frames. This does work, and is a viable option for some user cases. We&#39;ve now migrated off this and introduced a wider range of user-selectable filters.</p>
+<p>Adding this functionality is a nice progressive enhancement. You don&#39;t need to modify the existing structure much at all. We just introduce a form above our <code>directory_frame</code> turbo frame, and then use the params which the form sends to scope the memberships which are returned to the view. </p>
+<p>We have two filters, admins vs non-admins (which was what we had previously), and also membership categories, which is another associated table. The form, which sits above the <code>directory_frame</code> looks like this: </p>
+<pre><code class='language-erb' lang='erb'># app/views/memberships/directory.html.erb
+&lt;%= form_tag directory_path, method: :get,
+             data: { controller: &quot;filters-autoclick&quot; },
+             class: &quot;directory filters filters-wrapper&quot; do %&gt;
+  &lt;div&gt;
+    &lt;%= label_tag(:type, &quot;Filter By Type&quot;, class: &quot;filter-label&quot;) %&gt;
+    &lt;%= select_tag :filter,
+                   options_for_select([
+                                        %w[All all],
+                                        %w[Admins admins]
+                                      ], params[:filter] || &quot;all&quot;),
+                   data: { action: &quot;input-&gt;filters-autoclick#applyFilter&quot; } %&gt;
+  &lt;/div&gt;
+  &lt;% if @organisation.categories.present? %&gt;
+    &lt;div&gt;
+      &lt;%= label_tag(:type, &quot;Filter By Category&quot;, class: &quot;filter-label&quot;) %&gt;
+      &lt;%= select_tag :category,
+                     options_from_collection_for_select(
+                       @organisation.categories, :id, :name, params[:category]),
+                     multiple: true,
+                     include_blank: &quot;All&quot;,
+                     data: { action: &quot;input-&gt;filters-autoclick#applyFilter&quot; } %&gt;
+    &lt;/div&gt;
+  &lt;% end %&gt;
+
+  &lt;%= submit_tag &#39;Filter&#39;, data: { filters_autoclick_target: &quot;submitButton&quot; }, class: &quot;hidden&quot; %&gt;
+
+&lt;% end %&gt;
+</code></pre>
+<p>We the update our <code>directory</code> action in our MembershipsController to reduce the scope of the memberships returned should they be present in the params. There are some additional methods here which just help out!</p>
+<pre><code class='language-ruby' lang='ruby'># app/controllers/memberships_controller.rb
+class MembershipsController &lt; ApplicationController
+  before_action :set_organisation, only: :directory
+  before_action :sanitise_params, only: :directory, if: -&gt; { params.present? }
+
+  # GET /directory
+  def directory
+    memberships = @organisation.memberships.for_directory
+    memberships = memberships.search_by_user_name(params[:search]) if params[:search].present?
+    memberships = memberships.admins if params[:filter] == &quot;admins&quot;
+    memberships = memberships.filter_by_category(params[:category]) if params[:category].present? &amp;&amp; @organisation.categories.exists?(params[:category])
+    @pagy_memberships, @memberships = pagy(memberships, items: 12)
+  end
+
+  private
+
+  def set_organisation
+    @organisation = current_user.current_organisation
+  end
+
+  # This method is to convert params from the web multi select from an array into a string.
+  def sanitise_params
+    params[:category] = params[:category].join if params[:category].is_a?(Array)
+    params[:search] = params[:search].join if params[:search].is_a?(Array)
+    params[:filter] = params[:filter].join if params[:filter].is_a?(Array)
+  end
+end
+</code></pre>
+<p>We&#39;re leveraging some active record scopes on our membership model for the filtering. </p>
+<pre><code class='language-ruby' lang='ruby'># app/models/membership.rb
+  scope :for_directory, -&gt; { excluding_ryalto_staff_global_admins.active }
+  scope :filter_by_category, -&gt;(category_id) { where(category_id:) }
+  scope :admins, -&gt; { where(organisation_admin: true).or(where(shift_admin: true)).or(where(article_admin: true)) }
+  pg_search_scope :search_by_user_name,
+                  associated_against: { user: %i[first_name last_name] },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+</code></pre>
+<br>
+<hr>
+<p class="lead">As always I hope this was helpful, if you&#39;ve used it and have any thoughts or feedback, please feel free to get in touch! I&#39;d love to hear from you. </p>

@@ -1,6 +1,19 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: hotwire-handbook-part-2-redux
+  full-title: Hotwire Handbook
+  sub-title: Part 2 - Redux
+  summary: |
+    Pagination with Hotwire. Redux! Things changed with Turbo 7.2.0 and Turbo supporting GET requests. 
+    With a few extra bits including multiple paginated sections on one page and reverse pagination.
+  file-type: html
+  publish-date: March 27
+  publish-year: 2023
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: search-and-select-hotwire
   full-title: Search and Select Multiple with Rails and Hotwire
   summary: Selecting multiple users from a search and adding them to a form to create another model.

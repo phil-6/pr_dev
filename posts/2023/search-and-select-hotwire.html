@@ -11,10 +11,10 @@ publish-year: 2023
 card-color: orange
 ---
 <h1 id='search-and-select-multiple-with-rails-and-hotwire'>Search and Select Multiple with Rails and Hotwire.</h1>
-<p class="lead">This post walks though a user selector for adding users to a chat. The key feature here is searching one
-    model with the pg_search gem and then selecting objects from that search to add them to another model. That sounds a
-    bit confusing, but what we&#39;re doing is adding users to a group chat. I&#39;m including some additional bits that
-    added complexity (and coolness) to the setup and solution. </p>
+<p class="lead">This post walks though a user selector for adding users to a chat. <strong>The key feature here is
+    searching one model with the pg_search gem and then selecting objects from that search to add them to another
+    model.</strong>That sounds a bit confusing, but what we&#39;re doing is adding users to a group chat. I&#39;m including some
+    additional bits that added complexity (and coolness) to the setup and solution.</p>
 <p>The secondary purpose of this guide is as a memory aid for me! We&#39;re using a couple of additional gems for this
     feature, <code>pg_search</code> for the search and <code>pagy</code> for pagination and of course Hotwire to provide
     the dynamic interaction magic</p>
@@ -252,7 +252,8 @@ end
 <h2 id='users-index'>Summoning the Users Index</h2>
 <p class="subheading">(The Hotwire magic starts here)</p>
 <p>Now the real fun begins with the way we&#39;re calling the user's index to allow us to add users to a chat. </p>
-<p>As this is a <strong>turbo frame</strong> request, when we hit the HTML index page, we only render the content within the matching
+<p>As this is a <strong>turbo frame</strong> request, when we hit the HTML index page, we only render the content within
+    the matching
     <code>turbo_frame_tag</code>. This allows us to use the index action in different parts of the app and only render
     the turbo frames we need. Anything else in the <code>app/views/users/index.html</code> file outside of the
     <code>users_selector_users_index</code> turbo frame will not be loaded. The example here is the &lt;h2&gt; tag
