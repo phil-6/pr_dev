@@ -5,7 +5,7 @@
   full-title: Hotwire Handbook
   sub-title: Part 2 - Redux
   summary: |
-    Pagination with Hotwire. Redux! <br> Things changed with Turbo 7.2.0 and Turbo getting support for GET requests. 
+    Pagination with Hotwire. <em>Redux!</em> <br> Things changed with Turbo 7.2.0 and Turbo getting support for GET requests. 
     This highlights the changes you'll need to make if you're migrating to Turbo 7.2.0 and includes pagination with filters.
   file-type: html
   publish-date: March 27
