@@ -15,8 +15,8 @@
   full-title: Hotwire Handbook
   sub-title: Part 2 - Redux
   summary: |
-    Pagination with Hotwire. Redux! Things changed with Turbo 7.2.0 and Turbo supporting GET requests. 
-    With a few extra bits including multiple paginated sections on one page and reverse pagination.
+    Pagination with Hotwire. <em>Redux!</em> <br> Things changed with Turbo 7.2.0 and Turbo getting support for GET requests. 
+    This highlights the changes you'll need to make if you're migrating to Turbo 7.2.0 and includes pagination with filters.
   file-type: html
   publish-date: March 27
   publish-year: 2023
@@ -26,7 +26,7 @@
   full-name: Phil Reynolds
   short-title: search-and-select-hotwire
   full-title: Search and Select Multiple with Rails and Hotwire
-  summary: Selecting multiple users from a search and adding them to a form to create another model.
+  summary: Selecting multiple users from a search and adding them to a form to create another model with Ruby on Rails 7 and Hotwire.
   file-type: html
   publish-date: March 22
   publish-year: 2023
@@ -85,7 +85,8 @@
   sub-title: Part 2
   summary: |
     Pagination with Hotwire. Based on a fantastic guide by David Colby. 
-    With a few extra bits including multiple paginated sections on one page and reverse pagination.
+    With a few extra bits including multiple paginated sections on one page and reverse pagination.<br>
+    <strong>Note:</strong> This is now outdated and has been replaced by the Redux version.
   file-type: html
   publish-date: June 27
   publish-year: 2022
@@ -181,8 +182,8 @@
   full-title: Hotwire Handbook
   sub-title: Part 1
   summary: |
-    Recently I’ve been playing with Rails 7 and Hotwire.
-    This is the first post in a series to complement the official Turbo Handbook and the other great hotwire examples to provide examples to others, and future me, on how to implement cool bits of Hotwire.
+    Part 1 of the Hotwire Handbook, a series of guides and examples of using Hotwire with Rails 7. This part looks at 
+    toggle buttons, content updates and live counters. I also link to Parts 2 and 3.
   file-type: html
   publish-date: March 22
   publish-year: 2022
