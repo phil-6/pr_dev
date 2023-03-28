@@ -20,7 +20,7 @@ html body.dark-mode .light {
   display: none;
 }
 html body.dark-mode nav a, html body.dark-mode nav button {
-  background: #ffffffe6;
+  background: rgba(255, 255, 255, 0.9019607843);
   color: #495087;
 }
 html body.dark-mode nav a:hover {
@@ -39,13 +39,13 @@ html body.dark-mode article a {
   text-decoration: none;
 }
 html body.dark-mode article a:hover {
-  color: #03DAC6bb;
+  color: rgba(3, 218, 198, 0.7333333333);
 }
 html body.dark-mode article a.next-button {
   border-color: #03DAC6;
 }
 html body.dark-mode article a.next-button:hover {
-  background-color: #03DAC6bb;
+  background-color: rgba(3, 218, 198, 0.7333333333);
   color: #05285a;
 }
 html body.dark-mode article code.inline {
@@ -82,14 +82,14 @@ html body.light-mode .author {
   color: #495087;
 }
 html body.light-mode article a {
-  color: #6200EEbb;
+  color: rgba(98, 0, 238, 0.7333333333);
   text-decoration: none;
 }
 html body.light-mode article a:hover {
   color: #3700B3;
 }
 html body.light-mode article a.next-button {
-  border-color: #6200EEbb;
+  border-color: rgba(98, 0, 238, 0.7333333333);
 }
 html body.light-mode article a.next-button:hover {
   background-color: #3700B3;
@@ -120,7 +120,7 @@ html body header nav a, html body header nav button {
   height: 3rem;
   width: 3rem;
   line-height: 3rem;
-  box-shadow: 6px 4px 8px 0 #0006;
+  box-shadow: 6px 4px 8px 0 rgba(0, 0, 0, 0.4);
   border-radius: 100%;
 }
 @media (max-width: 370px) {
@@ -151,14 +151,14 @@ html body main article {
 }
 html body main article h1 {
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   margin: 1rem 0;
 }
 html body main article h2, html body main article h3, html body main article h4, html body main article h5 {
   margin-bottom: 0;
 }
 html body main article h2 {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 html body main article h2.text-center {
   text-align: center;
@@ -199,6 +199,24 @@ html body main article p.lead {
 }
 html body main article img {
   max-width: 100%;
+}
+html body main article .gif {
+  text-align: center;
+  margin: auto 0;
+  width: 100%;
+  position: relative;
+}
+html body main article .video {
+  text-align: center;
+  margin: auto 0;
+}
+html body main article .video iframe {
+  width: 560px;
+  height: 315px;
+  max-width: 100%;
+}
+html body main article .small {
+  font-size: 80%;
 }
 html body main article .text-center {
   text-align: center;

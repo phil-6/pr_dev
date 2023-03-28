@@ -3,7 +3,7 @@
   link: https://dailybrew.club/
   year: 2022
   icon: code
-  description: A web app which lets specicality coffee lovers track their home brews.
+  description: A web app which lets speciality coffee lovers track their home brews.
   tech: Ruby on Rails with Hotwire
   github: https://github.com/phil-6/dailybrew
 
@@ -89,12 +89,12 @@
 
 - name: Dashboard
   available: True
-  link: https://summoner.purpleriver.dev
+  link: https://philreynolds.dev/dashboard/home
   year: 2020
   icon: chart-bar
   description: "Simple serverless dashboard Note: Data is not live"
   tech: Chart.JS
-  github: https://github.com/phil-6/summoner
+  github: https://github.com/phil-6/pr_dev/tree/main/dashboard
 
 - name: Savage Adventures
   available: True
@@ -111,7 +111,7 @@
   icon: users
   description: Web app for managing a network of contractors.
   tech: Full stack Ruby on Rails app.
-  github: https://github.com/phil-6/van-spots
+  github: https://github.com/phil-6/mobilise-digital
 
 - name: Van Spots
   available: True
@@ -135,6 +135,6 @@
   available: false
   year: 2017
   icon: graduation-cap
-  description: Univeristy dissertation project, a Digital Rock Climbing Guide Book.
+  description: University dissertation project, a Digital Rock Climbing Guide Book.
   tech: Full stack web app build with Laravel and AngularJS
   github: https://github.com/phil-6/rockadvisor

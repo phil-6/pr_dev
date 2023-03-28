@@ -1,0 +1,440 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: search-and-select-hotwire
+full-title: Search and Select Multiple with Rails and Hotwire
+summary: Selecting multiple users from a search and adding them to a form to create another model with Ruby on Rails 7 and Hotwire.
+file-type: html
+publish-date: March 22
+publish-year: 2023
+card-color: orange
+---
+<h1 id='search-and-select-multiple-with-rails-and-hotwire'>Search and Select Multiple with Rails and Hotwire</h1>
+<p class="lead">This post walks though a user selector for adding users to a chat. <strong>The key feature here is
+    searching one model with the pg_search gem and then selecting objects from that search to add them to another
+    model.</strong>That sounds a bit confusing, but what we&#39;re doing is adding users to a group chat. I&#39;m including some
+    additional bits that added complexity (and coolness) to the setup and solution.</p>
+<p>The secondary purpose of this guide is as a memory aid for me! We&#39;re using a couple of additional gems for this
+    feature, <code>pg_search</code> for the search and <code>pagy</code> for pagination and of course Hotwire to provide
+    the dynamic interaction magic</p>
+<p>This is taken from the Ryalto V4. At the time of writing we are using; Rails (7.0.4.3), Turbo-Rails (1.4.0),
+    Stiumulus-Rails (1.2.1), pg_search (2.3.6), pagy (5.10.1)</p>
+
+<p>Here's an example of what we're building.</p>
+<img src="/assets/images/user-search-select.gif" alt="gif of the feature in action">
+
+<h2>Contents</h2>
+<ul>
+    <li><a href="#background-and-setup">Background and Setup</a></li>
+    <li><a href="#initial-user-search">Initial User Search</a></li>
+    <li><a href="#chat-new-and-create">Chat New and Create</a></li>
+    <li><a href="#new-chat-page">New Chat Page</a></li>
+    <li><a href="#users-index">Summoning the Users Index (The Hotwire magic starts here)</a></li>
+    <li><a href="#new-chat-page">Making it more magic (with Stimulus.js)</a></li>
+</ul>
+
+<h2 id='background-and-setup'>Background and Setup</h2>
+<p>Chat has many Users through the Chat::Participant model. I&#39;m including a bit of detail about our migrations and
+    models for additional context. </p>
+<h3 id='migrations'>Migrations</h3>
+
+<pre><code class='language-ruby' lang='ruby'>class DeviseCreateUsers &lt; ActiveRecord::Migration[7.0]
+  def change
+    enable_extension &#39;pgcrypto&#39;
+    create_table :users, id: :uuid do |t|
+      ## Database authenticatable
+      t.string :email,              null: false, default: &quot;&quot;
+      t.string :encrypted_password, null: false, default: &quot;&quot;
+      ## There&#39;s some other bits there but they&#39;re not relevant ##
+      ## User Information
+      t.string :first_name, null: false
+      t.string :last_name, null: false
+    end
+    add_index :users, :email, unique: true
+    add_index :users, :first_name
+    add_index :users, :last_name
+  end
+end
+
+
+class CreateChats &lt; ActiveRecord::Migration[7.0]
+  def change
+    create_table :chats, id: :uuid do |t|
+      t.belongs_to :organisation, null: false, foreign_key: true, index: true, type: :uuid
+      t.string :title, index: true
+      t.boolean :group_chat, default: false
+
+      t.timestamps
+    end
+    add_index :chats, :created_at
+
+  end
+end
+
+class CreateChatParticipants &lt; ActiveRecord::Migration[7.0]
+  def change
+    create_table :chat_participants, id: :uuid do |t|
+      t.belongs_to :user, null: false, foreign_key: true, index: true, type: :uuid
+      t.belongs_to :chat, null: false, foreign_key: true, index: true, type: :uuid
+
+      t.boolean :creator, default: false
+      t.boolean :admin, index: true, default: false
+      t.integer :unread_messages_count, default: 0
+      t.datetime :last_seen_at, index: true
+      t.string :color
+
+      t.timestamps
+    end
+
+    add_index :chat_participants, %i[user_id chat_id], unique: true
+
+  end
+end
+</code></pre>
+
+<p>Our ChatParticipants table not only accounts for the users that are in a chat, but also holds extra details about
+    their relationship with that chat. </p>
+<p>You might have also spotted that the Chat belongs to an Organisation. This alludes to the bigger picture of our app:
+    a User can be part of many Organisations and we store those relationships in a Memberships table. A User has one
+    &quot;current organisation&quot; at any given time and everything a user does needs to be scoped to that
+    organisation. A user can also be active or inactive in an organisation. We don&#39;t want to include inactive users
+    in this search. This is important because we need to maintain that scoping when we are searching for Users. </p>
+<h3 id='models'>Models</h3>
+<pre><code class='language-ruby' lang='ruby'># app/models/user.rb
+# User Model
+class User &lt; ApplicationRecord
+  include PgSearch::Model
+
+  has_many :memberships, dependent: :destroy
+  has_many :organisations, through: :memberships
+  has_many :chat_participants, class_name: &#39;Chat::Participant&#39;, dependent: :nullify
+  has_many :chats, through: :chat_participants
+
+  scope :for_organisation, -&gt;(organisation) { joins(:memberships).merge(organisation.memberships.active) }
+  pg_search_scope :search_by_name, against: %i[first_name last_name], using: { tsearch: { prefix: true } }
+end
+
+# app/models/chat.rb
+class Chat &lt; ApplicationRecord
+  belongs_to :organisation
+  has_many :participants, dependent: :destroy
+  accepts_nested_attributes_for :participants, allow_destroy: true
+  has_many :users, through: :participants
+  validates :participants, length: { is: 2 }, unless: :group_chat
+  validates :participants, length: { minimum: 3 }, if: :group_chat
+
+  # Validate that the chat is not a duplicate
+  validate :individual_chat_is_not_duplicate, on: :create
+end
+
+# app/models/chat/participant.rb
+# Chat::Participant Model
+# This is the model which connects users to chats.
+class Chat::Participant &lt; ApplicationRecord
+  belongs_to :user
+  belongs_to :chat
+
+  validates :user, uniqueness: { scope: :chat }
+end
+</code></pre>
+
+<p>You can see the relationships more clearly here. When creating a chat we must also create the participants. </p>
+<p>We&#39;ve also included the PgSearch::Model in our User model. This is the
+    <a href='https://github.com/Casecommons/pg_search'>pg_search gem</a> we&#39;re using to power our search. It&#39;s
+    lightweight and the strong documentation makes it pretty procedural to setup. </p>
+<p>We have a <code>:for_organisation</code> scope on the User model. This allows us to get all the users who have an
+    "active" membership in the organisation which is passed to the scope.
+    <a href='https://gorails.com/blog/activerecord-merge'>Chris Oliver has a good explanation of this on GoRails</a></p>
+<p>** Is there anything else that should be explained here? **</p>
+
+<h2 id='initial-user-search'>Initial User Search</h2>
+<p>By including the pg_search gem in our user model, we can include a <code>pg_search_scope</code> which allows us to
+    create a search scope. We&#39;re only searching against the user&#39;s name fields, which are specified in the
+    <code>against:</code> option. The <code>using:</code> section allows us to search for non-exact matches with the
+    <code>:prefix</code> option, <a href='https://github.com/Casecommons/pg_search#prefix-postgresql-84-and-newer-only'
+                                    target='_blank' class='url'>details are here</a>. </p>
+<p>Now we have that setup in our model, we want to set up a route and controller action for our searchable users
+    index.</p>
+<pre><code class='language-ruby' lang='ruby'># app/controllers/users_controller.rb
+# Controller for Users Index and User Profiles
+class UsersController &lt; ApplicationController
+  # GET /users
+  def index
+	organisation = current_user.current_organisation
+	users = User.for_organisation(organisation)
+	users = users.not_super_users unless organisation == ryalto_team_org
+	users = users.search_by_name(params[:search]) if params[:search].present?
+	params[:page_size] = 100 if params[:page_size]&amp;.to_i&amp;.&gt; 100
+	@pagy_users, @users = pagy(users, items: params[:page_size] || 10)
+  end
+end
+</code></pre>
+
+<p>This index action gradually scopes the local <code>users</code> variable and paginates it before rendering the index.
+    We have a pretty custom line around super_users, which can probably be ignored if you&#39;re implementing this
+    yourself. We allow the request to specific the page size, but only up to a page_size of 100. </p>
+<p>The search and pagination here are made nice and simple by <code>pg_search</code> and <code>pagy</code>. </p>
+<p>We use the default rails magic for rendering, so we&#39;ll render html, json or a turbo stream depending on the type
+    of request. </p>
+
+<h2 id='chat-new-and-create'>Chat New and Create</h2>
+<p>Before we get into the real fun of the front end mix, I want to take a quick look at our ChatsController and
+    specifically the new and create actions</p>
+<pre><code class='language-ruby' lang='ruby'># GET /chats/new
+def new
+    @chat = Chat.new
+end
+
+# POST /chats
+def create
+    @chat = current_user.current_organisation.chats.new(chat_params)
+    @chat.users &lt;&lt; current_user
+    @chat.group_chat = true if @chat.users.size &gt; 2
+    @chat.title = nil unless @chat.group_chat?
+    @chat.save ? success_actions : failure_response
+end
+</code></pre>
+
+<p>Both of these are fairly stock rails controller actions. When we&#39;re creating a chat we always want the current
+    user to be included. We also have some differences in behaviour and UI between group chats and &quot;individual&quot;
+    chats. </p>
+<p>The new action renders the <code>new.html.erb</code> view and this is where we start digging into some of the magic.
+</p>
+
+
+<h2 id='new-chat-page'>New Chat Page</h2>
+<p>Our new page itself is pretty uninteresting, it just loads the chat form which is shared with the edit action. </p>
+<pre><code class='language-erb' lang='erb'># app/views/chats/new.html.erb
+&lt;%= turbo_frame_tag &quot;active_chat&quot; do %&gt;
+  &lt;div class=&quot;new-chat&quot;&gt;
+
+    &lt;div class=&quot;form chat-form&quot;&gt;
+      &lt;h1 class=&quot;form-title&quot;&gt;New chat&lt;/h1&gt;
+      &lt;%= render &quot;form&quot;, chat: @chat %&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>It does load into our <code>active_chat</code> turbo frame so we maintain the chat list in the UI. </p>
+<p>Our form has a little more going on in it, I&#39;ve excluded a few bits that aren't relevant to this.</p>
+<pre><code class='language-erb' lang='erb'># app/views/chats/_form.html.erb
+&lt;%= form_with(model: chat) do |form| %&gt;
+  &lt;div id=&quot;chat_title_field&quot; class=&quot;field hidden&quot;&gt;
+	&lt;%= form.text_field :title, class: &#39;form-input&#39;, placeholder: &#39;Give your chat a name?&#39; %&gt;
+	&lt;%= form.label &quot;Give your group chat a title?&quot;, class: &#39;form-label&#39; %&gt;
+	&lt;p class=&quot;field-hint&quot;&gt;Your chat name can be edited later too&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div data-controller=&quot;users-selector&quot; data-users-selector-current-user-value=&quot;&lt;%= current_user.id %&gt;&quot; class=&quot;users-selector&quot;&gt;
+    &lt;%= turbo_frame_tag :users_selector_users_index, src: users_path(page_size: 12) do %&gt;
+      &lt;h4 class=&quot;fa-beat-fade&quot;&gt; Loading... &lt;/h4&gt;
+    &lt;% end %&gt;
+
+    &lt;div id=&quot;selected_users_container&quot; data-users-selector-target=&quot;selectedUsersContainer&quot; &gt;
+      &lt;hr&gt;
+      &lt;h3&gt;Selected Users&lt;/h3&gt;
+      &lt;em class=&quot;small hint&quot;&gt;You will also be included in the chat.&lt;/em&gt;
+      &lt;div id=&quot;selected_users&quot; data-users-selector-target=&quot;selectedUsers&quot; class=&quot;users-list&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+
+  &lt;div class=&quot;btn-wrapper&quot;&gt;&lt;%= form.submit &quot;Create Chat&quot;, class: &#39;btn btn-submit btn-primary&#39; %&gt;&lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>The important things here; we have the <code>users-selector</code> stimulus controller and we have a turbo frame
+    which makes a request to our users path.</p>
+
+<h2 id='users-index'>Summoning the Users Index</h2>
+<p class="subheading">(The Hotwire magic starts here)</p>
+<p>Now the real fun begins with the way we&#39;re calling the user's index to allow us to add users to a chat. </p>
+<p>As this is a <strong>turbo frame</strong> request, when we hit the HTML index page, we only render the content within
+    the matching
+    <code>turbo_frame_tag</code>. This allows us to use the index action in different parts of the app and only render
+    the turbo frames we need. Anything else in the <code>app/views/users/index.html</code> file outside of the
+    <code>users_selector_users_index</code> turbo frame will not be loaded. The example here is the &lt;h2&gt; tag
+    below.</p>
+<pre><code class='language-erb' lang='erb'># app/views/users/index.html
+&lt;h2&gt;If you&#39;re seeing this, something&#39;s gone wrong.&lt;/h2&gt;
+
+&lt;%= turbo_frame_tag :users_selector_users_index do %&gt;
+  &lt;div&gt;
+    &lt;h3&gt;Select Users&lt;/h3&gt;
+    &lt;%= form_with url: users_path, method: :get,
+                  class: &quot;search-wrapper&quot; do %&gt;
+      &lt;%= text_field_tag :search,
+                         params[:search],
+                         placeholder: &quot;Search by Name&quot;,
+                         class: &quot;search-bar&quot;,
+                         autocomplete: &quot;off&quot; %&gt;
+      &lt;%= hidden_field_tag :page_size, params[:page_size], value: 12 %&gt;
+      &lt;%#= submit_tag &quot;Search&quot; %&gt;
+    &lt;% end %&gt;
+
+    &lt;% if @users.present? %&gt;
+      &lt;%= @pagy_users.count %&gt; users found.
+      &lt;div data-controller=&quot;users-selector-users-index-page&quot;
+           data-action=&quot;users-selector-users-index-page:new-page@window-&gt;users-selector#style_selected_users&quot;
+           class=&quot;users-list index-list&quot;&gt;
+        &lt;% @users.each do |user| %&gt;
+          &lt;h4 data-action=&quot;click-&gt;users-selector#select_user&quot;
+              id=&quot;available_user_&lt;%= user.id %&gt;&quot;
+              value=&quot;&lt;%= user.id %&gt;&quot;
+              class=&quot;user-name&quot;&gt;
+            &lt;%= user.full_name %&gt;
+          &lt;/h4&gt;
+        &lt;% end %&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;pagy-controls&quot;&gt;
+        &lt;div class=&quot;control&quot;&gt;
+          &lt;% if @pagy_users.prev %&gt;
+            &lt;%= link_to &quot;Previous&quot;, users_path(search: params[:search], page: @pagy_users.prev, page_size: 12) %&gt;
+          &lt;% end %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;control-center&quot;&gt;
+          Page &lt;%= @pagy_users.page %&gt; of &lt;%= @pagy_users.pages %&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;control&quot;&gt;
+          &lt;% if @pagy_users.next %&gt;
+            &lt;%= link_to &quot;Next&quot;, users_path(search: params[:search], page: @pagy_users.next, page_size: 12) %&gt;
+          &lt;% end %&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;% else %&gt;
+      &lt;div class=&quot;no-users&quot;&gt;
+        &lt;h3&gt;No users found&lt;/h3&gt;
+        &lt;p&gt;Please try a different search&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;
+
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+
+<p>We can see here that we have a search form and pagination controls on this page, both of these make requests back to
+    the `users_path`. As were not breaking out of the the turbo frame (with `target: "_top"`), the new content gets
+    loaded within the same frame, depending on the params which are passed.</p>
+<p>We connect to another (somewhat verbosely named) stimulus controller if <code>@users</code> is present, but we&#39;ll
+    come back to that later.</p>
+
+
+<h2 id='making-it-magic'>Making it more magic</h2>
+<p class="subheading">(with Stimulus.js)</p>
+<p>On each user, we have a data-action call to the <code>users-selector</code> controller and the
+    <code>select-user</code>
+    action. The controller is initialised in the chat form and handles what happens when a user clicks on a users name.
+    A <code>users_for_chat_list</code> set constant is created when the controller loads.</p>
+<p>We get the user ID from the event target, and if that ID is already in the <code>users_for_chat_list</code> we remove
+    that user by calling the <code>remove_user</code> function, if its not present we add the user via the inventively
+    named <code>add_user</code> method.</p>
+<p>The add and remove actions both do the same but opposite things.</p>
+<p>The <code>add_user</code> function: </p>
+<ul>
+    <li>adds a user to the <code>users_for_chat_list</code> set of IDs (using a set here as sets cannot contain
+        duplicates).
+    </li>
+    <li>creates a hidden form input element, which is what submits the user IDs to the create action and appends it.
+    </li>
+    <li>creates a visual element which shows the user which users are due to be added to the chat, and includes a data
+        action so clicking on them will invoke the remove_action and appends it.
+    </li>
+    <li>it then calls the <code>style_selected_users</code> function. Which applies some visual styling to indicate
+        which users are selected and due to be added to the chat.
+    </li>
+</ul>
+<p>The <code>remove_user</code> action reverses all of the above.</p>
+
+<p>The full controller is below. </p>
+<pre><code class='language-javascript' lang='javascript'># app/javascript/users_selector_controller.js
+import {Controller} from &quot;@hotwired/stimulus&quot;
+
+const users_for_chat_list = new Set()
+
+export default class extends Controller {
+    static targets = [&quot;selectedUsers&quot;, &quot;selectedUsersContainer&quot;]
+
+    select_user(event) {
+        let user_id = event.target.id.replace(/\w+_user_/, &quot;&quot;)
+        let user_name = event.target.innerHTML
+        users_for_chat_list.has(user_id) ? this.remove_user(user_id) : this.add_user(user_id, user_name)
+    }
+
+    add_user(user_id, user_name) {
+        users_for_chat_list.add(user_id)
+        let user_form_input = document.createElement(&quot;input&quot;)
+        user_form_input.setAttribute(&quot;type&quot;, &quot;hidden&quot;)
+        user_form_input.setAttribute(&quot;name&quot;, &quot;chat[user_ids][]&quot;)
+        user_form_input.setAttribute(&quot;value&quot;, user_id)
+        user_form_input.setAttribute(&quot;id&quot;, &quot;chat_user_id_&quot; + user_id)
+        let selected_user = document.createElement(&quot;div&quot;)
+        selected_user.setAttribute(&quot;class&quot;, &quot;user-name selected&quot;)
+        selected_user.setAttribute(&quot;id&quot;, &quot;selected_user_&quot; + user_id)
+        selected_user.setAttribute(&quot;data-action&quot;, &quot;click-&gt;users-selector#select_user&quot;)
+        selected_user.innerHTML = user_name
+        this.style_selected_users()
+        this.selectedUsersTarget.appendChild(user_form_input)
+        this.selectedUsersTarget.appendChild(selected_user)
+        document.getElementById(&quot;available_user_&quot; + user_id).classList.add(&quot;selected&quot;)
+    }
+
+    remove_user(user_id) {
+        document.getElementById(&quot;chat_user_id_&quot; + user_id).remove();
+        document.getElementById(&quot;selected_user_&quot; + user_id).remove();
+        let user_button = document.getElementById("available_user_" + user_id)
+        if (user_button) user_button.classList.remove("selected");
+        this.style_selected_users()
+    }
+
+    style_selected_users() {
+        if (users_for_chat_list.size == 0) {
+            this.selectedUsersContainerTarget.classList.add(&quot;hidden&quot;)
+        } else {
+            this.selectedUsersContainerTarget.classList.remove(&quot;hidden&quot;)
+            users_list.forEach(user_id =&gt; {
+                let user_button = document.getElementById(&quot;available_user_&quot; + user_id)
+                if (user_button) user_button.classList.add(&quot;selected&quot;);
+            })
+        }
+        let chat_title_field_class_list = document.getElementById(&quot;chat_title_field&quot;).classList
+        users_for_chat_list.size &gt; 1 ? chat_title_field_class_list.remove(&quot;hidden&quot;) : chat_title_field_class_list.add(&quot;hidden&quot;)
+    }
+}
+</code></pre>
+
+<p>The final piece was the most difficult to get working. </p>
+<p>Initially when a user clicked on another user, everything worked as intended, until they changed pages in the users
+    index or performed a search. When this happened the styling for selected users would be lost. </p>
+<p>In order to get this working we connect to the rather verbosely named <code>users-selector-users-index-page</code>
+    controller, whenever the users index page loads. </p>
+<p>This controller does one thing, dispatch an action which calls the <code>style_selected_users</code> function on the
+    <code>users-selector</code> controller. </p>
+<pre><code class='language-javascript' lang='javascript'># app/javascript/users_selector_users_index_page_controller.js
+import {Controller} from &quot;@hotwired/stimulus&quot;
+
+export default class extends Controller {
+    connect() {
+        this.dispatch(&quot;new-page&quot;)
+    }
+}
+</code></pre>
+
+<p>The key line here is the data action within the scope of this controller on the users index html page: </p>
+<p>
+    <code>data-action=&quot;users-selector-users-index-page:new-page@window-&gt;users-selector#style_selected_users&quot;</code>
+</p>
+<p>The format of this is <code>dispatching controller</code> : <code>dispatched action/event name</code> @
+    <code>scope</code> -&gt; <code>controller to call</code> # <code>action to invoke</code>. Note: The stimulus docs
+    are
+    missing the scope requirement.</p>
+<p>So we take the dispatched event and use that to trigger a call back to our style_selected_users action which
+    highlights the users which have been selected on the index page which has just loaded</p>
+
+<img src="/assets/images/user-search-select.gif" alt="gif of the feature in action">
+
+<p>And that's it! </p>
+<p>It's a bit of a long post, but I hope it's useful to someone (and is useful to future me!)</p>
+<p>Any questions, thoughts or suggests please get in touch!</p>
