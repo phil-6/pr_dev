@@ -43,10 +43,19 @@ const getFirebaseToken = async () => {
 
 const requestForToken = async () => {
     try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-            await getFirebaseToken();
-        }
+        console.log("Requesting Notification Permissions")
+        targetElement.innerHTML = `<h1>Requesting Notification Permissions...</h1>`
+        // const permission = await Notification.requestPermission();
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                console.log("Getting Token")
+                targetElement.innerHTML = `<h1>Getting Token...</h1>`
+                getFirebaseToken();
+            } else {
+                console.log("Notification Permissions Failed")
+                targetElement.innerHTML = `<h1>Requesting Notification Failed</h1> Permissions were not granted or something went wrong`
+            }
+        });
     } catch (error) {
         console.log("An error occurred while getting user permission. ", error);
         targetElement.innerHTML = `<h1>Something went wrong</h1>${error}`
@@ -55,8 +64,8 @@ const requestForToken = async () => {
 
 const hasFirebaseMessagingSupport = await isSupported();
 if (hasFirebaseMessagingSupport) {
-    console.log("Getting Token")
-    targetElement.innerHTML = `<h1>Getting Token...</h1>`
+    console.log("Initialising App")
+    targetElement.innerHTML = `<h1>Initialising...</h1>`
     app = initializeApp(firebaseConfig);
     messaging = getMessaging()
     await requestForToken();
