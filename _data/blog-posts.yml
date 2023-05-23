@@ -1,6 +1,16 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: hotwire-handbook-part-3
+  full-title: Hotwire Handbook Part 3
+  summary: Part 3 of the Hotwire Handbook looks at broadcasting updates with Turbo Streams, Inline Editing and more magic with Turbo Frames
+  file-type: html
+  publish-date: April 11
+  publish-year: 2023
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: hotwire-handbook-part-2-redux
   full-title: Hotwire Handbook
   sub-title: Part 2 - Redux

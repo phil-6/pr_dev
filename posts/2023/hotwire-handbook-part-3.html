@@ -1,0 +1,365 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: hotwire-handbook-part-3
+full-title: Hotwire Handbook Part 3
+summary: Part 3 of the Hotwire Handbook looks at broadcasting updates with Turbo Streams, Inline Editing and more magic with Turbo Frames
+file-type: html
+publish-date: April 11
+publish-year: 2023
+---
+
+<h1>Hotwire Handbook - Part 3</h1>
+<p class="lead">Welcome to Part 3 of my Hotwire Handbook! It&#39;s been a long time coming! Sorry about that. I&#39;m
+    going to cover
+    the remaining features we built into Daily Brew in this part. That&#39;s going to include global updates, inline
+    editing tabbed content and modals.</p>
+<p>It&#39;s been a little bit since I&#39;ve worked on Daily Brew, so I apologise if there are any details that I miss.
+    If there is anything missing, or any section which could do with extra details, please let me know. </p>
+<p>My Hotwire Handbook is aiming to compliment the official <a href='https://turbo.hotwired.dev/handbook/introduction'>Turbo
+    Handbook</a> and provide additional real world examples to help developers build cool features. It&#39;s also for me
+    to be able to remember what I&#39;ve built previously and how I did it!</p>
+<p><a href='/posts/2022/hotwire-handbook-part-1'>Part 1</a> and <a href='/posts/2023/hotwire-handbook-part-2-redux'>Part
+    2</a> are also available. </p>
+<h2 id='contents'>Contents</h2>
+<ul>
+    <li><a href="#broadcasting-updates-with-turbo-streams">Broadcasting Updates</a>
+        <ul>
+            <li><a href="#global-counter">Global Counter</a></li>
+            <li><a href="#scoping-broadcasts">Scoping Broadcasts</a></li>
+        </ul>
+    </li>
+    <li><a href="#inline-editing">Inline Editing (Loading specific Turbo Frames)</a>
+        <ul>
+            <li><a href="#editing-a-brew">Daily Brew - Editing a Brew</a></li>
+            <li><a href="editing-a-chat-name">Ryalto - Editing a chat name</a></li>
+        </ul>
+    </li>
+    <li><a href="#modals">Modals</a></li>
+    <li><a href="#tabbed-content">Tabbed Content</a></li>
+</ul>
+
+<h2 id='broadcasting-updates-with-turbo-streams'>Broadcasting Updates with Turbo Streams</h2>
+<p>In my opinion, this is one of the coolest things that Hotwire facilitates. It becomes so easy to create an app which
+    really feels alive by leveraging Turbo&#39;s wrapper around web sockets to make live updates really really easy.</p>
+
+<h3 id='global-counter'>Global Counter</h3>
+<p>In Daily Brew we have multiple global counters, for example we show the number of times a particular coffee has been
+    brewed. Hotwire makes updating the counter live, when any user logs a brew, a trivial matter. </p>
+<p>In our <em>Brew</em> model we an <code>after_create_commit</code> callback. Within this we set several turbo stream
+    broadcasts. You can see the
+    <a href='https://github.com/phil-6/dailybrew/blob/f7ac1f63b28c4da2eb4d6d0f5867f746bfd29571/app/models/brew.rb#L14'>full
+        thing here</a>, below is a slightly simplified version.</p>
+<pre><code class='language-ruby' lang='ruby'># app/models/brew.rb
+after_create_commit do
+    broadcast_update_later_to(
+      &#39;daily_brewers_count&#39;,
+      target: &#39;daily_brewers&#39;,
+      html: ActionController::Base.helpers.pluralize(User.daily_brewers.count, &#39;user has&#39;, plural: &#39;users have&#39;)
+    )
+    broadcast_update_later_to(
+      &#39;daily_brews_count&#39;,
+      target: &#39;daily_brews&#39;,
+      html: ActionController::Base.helpers.pluralize(Brew.today.count, &#39;coffee&#39;)
+    )
+end
+</code></pre>
+<p>These two broadcasts target two turbo streams which are connected to on the main page of daily brew. This could be
+    streamlined by using the same turbo stream (benefits of hindsight and and extra year of experience!) The target is
+    an ID in the html page, they replace the inner html of the target element. </p>
+<pre><code class='language-erb' lang='erb'># app/views/pages/main.html.erb
+&lt;div class=&quot;stats&quot;&gt;
+  &lt;%= turbo_stream_from &quot;daily_brewers_count&quot; %&gt;
+  &lt;%= turbo_stream_from &quot;daily_brews_count&quot; %&gt;
+  &lt;h2&gt;
+    &lt;% if Brew.today.count == 0 %&gt;
+      No one has brewed today. &lt;br&gt;
+      Will you be the first?
+    &lt;% else %&gt;
+      &lt;span id=&quot;daily_brewers&quot;&gt;&lt;%= pluralize(User.daily_brewers.count, &#39;user has&#39;, plural: &#39;users have&#39;) %&gt;&lt;/span&gt; brewed
+      &lt;span id=&quot;daily_brews&quot;&gt;&lt;%= pluralize(Brew.today.count, &#39;coffee&#39;) %&gt;&lt;/span&gt; today
+    &lt;% end %&gt;
+  &lt;/h2&gt;
+&lt;/div&gt;
+</code></pre>
+<p>When a user view the main page, they connect to the <code>daily_brewers_count</code> and
+    <code>daily_brews_count</code> turbo streams, and will see the counter update in real time when any other user logs
+    a brew, and the <code>after_create_commit</code> callback is triggered. </p>
+<p>As we&#39;re using HTML as the content that we&#39;re broadcasting there&#39;s nothing else to it. Turbo streams also
+    support a <a href='https://turbo.hotwired.dev/reference/streams'>range of other actions</a> and can send partials
+    and templates as data. The best explanation of broadcasts is in the <code>broadcastable</code> model concern in the
+    <code>turbo-rails</code> gem. If you read nothing else, <strong><a
+            href='https://github.com/hotwired/turbo-rails/blob/main/app/models/concerns/turbo/broadcastable.rb'>read
+        this explanation!</a></strong></p>
+
+<h3 id='scoping-broadcasts'>Scoping Broadcasts</h3>
+<p>We use broadcasts extensively in Ryalto V4; notifications, chat, news feed and shifts all leverage turbo streams in
+    different ways. Group chat&#39;s are one of the most interesting examples. When someone sends a message to a group
+    chat, we want to broadcast that message to all other participants in that chat and make the message appear for all
+    users who are looking at the chat. </p>
+<pre><code class='language-ruby' lang='ruby'># app/models/chat/message.rb
+after_create_commit do
+    broadcast_append_to chat, target: &#39;messages&#39;, partial: &#39;chat/messages/message&#39;
+end
+</code></pre>
+<p>Here we&#39;re broadcasting the a turbo stream called &quot;<em>chat</em>&quot;. This looks at the chat which the
+    message belongs to and users the object to name the turbo stream. We use erb to create this simply as <code>&lt;%=
+        turbo_stream_from chat %&gt;</code> this then renders in a the HTML with a unique identifier. </p>
+<p>When a message is created, we also do a lot of other things, one of which is to update the chat list for each user in
+    the chat. If the user is not currently viewing that chat they can see that they have been sent a new message. For
+    this we look at the chat users and broadcast to each user&#39;s chat list. Chats are also scoped to a specific
+    organisation so we use both the user_id and the organisation_id to name the particular turbo stream. </p>
+<pre><code class='language-ruby' lang='ruby'># app/models/chat.rb
+users.each do |user|
+  broadcast_remove_to(
+    &quot;chat_list_#{user.id}_#{organisation_id}&quot;,
+    target: &quot;list-chat_#{id}&quot;
+  )
+  broadcast_prepend_to(
+    &quot;chat_list_#{user.id}_#{organisation_id}&quot;,
+    target: &quot;chat_list&quot;,
+    partial: &quot;chats/chat_list_item&quot;,
+    locals: { chat: self }
+  )
+end
+</code></pre>
+<p>In order to make the most recent chat appear at the top of the list we first remove the chat from the list and then
+    prepend it to the top of the list. In the same way as earlier, we subscribe to this turbo stream with erb <code>&lt;%=
+        turbo_stream_from &quot;chat_list_#{current_user.id}_#{current_user.current_organisation.id}&quot; %&gt;</code>
+</p>
+
+
+<h2 id='inline-editing'>Inline Editing</h2>
+<p>Inline editing makes use of Turbo Frames to allow the user to update a model without leaving the show view. </p>
+<p>I&#39;m going to talk through two examples of this. One from Daily Brew and one from Ryalto V4. </p>
+
+<h3 id='editing-a-brew'>Editing a Brew</h3>
+<p>When you view a brew, you can quickly edit the notes and the rating inline, or you can open the full edit from and
+    make other changes. We did this as notes and rating are very likely to be updated after the user has made a brew and
+    is drinking their coffee, where as the other fields are less likely to be edited.</p>
+<p>In our <code>_brew</code> partial, if you&#39;re looking at someone else&#39;s brew we simply load the fields. </p>
+<pre><code class='language-erb' lang='erb'># app/views/brews/_brew.html.erb
+&lt;div class=&quot;notes field&quot;&gt;
+  &lt;div class=&quot;form-input&quot;&gt;&lt;%= simple_format(brew.notes) %&gt;&lt;/div&gt;
+  &lt;div class=&quot;form-label&quot;&gt;Notes&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;rating field&quot;&gt;
+  &lt;div class=&quot;form-input&quot;&gt;&lt;%= brew.rating || &#39;?&#39; %&gt;/10&lt;/div&gt;
+  &lt;div class=&quot;form-label&quot;&gt;Rating&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>However if you look at your own brew (<code>if brew.user == current_user</code>), we do a bit more. </p>
+<pre><code class='language-erb' lang='erb'># app/views/brews/_brew.html.erb
+&lt;div class=&quot;notes field&quot;&gt;
+  &lt;%= form_with model: brew, data: { turbo_frame: &quot;#{dom_id(brew)}_notes&quot; } do |form| %&gt;
+    &lt;%= turbo_frame_tag &quot;#{dom_id(brew)}_notes&quot;, class: &quot;inline-edit&quot; do %&gt;
+      &lt;%= link_to edit_brew_path(brew) do %&gt;
+        &lt;div class=&quot;form-input&quot;&gt;&lt;%= simple_format(brew.notes) %&gt;&lt;/div&gt;
+        &lt;div class=&quot;form-label&quot;&gt;Notes&lt;/div&gt;
+      &lt;% end %&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;rating field&quot;&gt;
+  &lt;%= form_with model: brew, data: { turbo_frame: &quot;#{dom_id(brew)}_rating&quot; } do |form| %&gt;
+    &lt;%= turbo_frame_tag &quot;#{dom_id(brew)}_rating&quot;, class: &quot;inline-edit&quot; do %&gt;
+      &lt;%= link_to edit_brew_path(brew) do %&gt;
+        &lt;div class=&quot;form-input&quot;&gt;&lt;%= brew.rating || &#39;?&#39; %&gt;/10&lt;/div&gt;
+        &lt;div class=&quot;form-label&quot;&gt;Rating&lt;/div&gt;
+      &lt;% end %&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+<p>So when a user clicks into the field, we make a request to the <code>edit_brew_path</code> and only load the content
+    within the matching turbo frame from the brew form. The section from the form is below. </p>
+<pre><code class='language-erb' lang='erb'># app/views/brews/_form.html.erb
+
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;%= turbo_frame_tag &quot;#{dom_id(brew)}_notes&quot; do %&gt;
+      &lt;%= form.text_area :notes, class: &#39;form-input&#39;, placeholder: &#39;Notes&#39;, autofocus: true %&gt;
+      &lt;%= form.label :notes, class: &#39;form-label&#39; %&gt;
+      &lt;% if action_name == &quot;edit&quot; %&gt;
+        &lt;%= form.button &quot;Update Note&quot;, class: &quot;inline-action link link-primary&quot; %&gt;
+        &lt;%= link_to &quot;Cancel&quot;, brew_path(brew), class: &quot;inline-action link link-primary&quot; %&gt;
+      &lt;% end %&gt;
+    &lt;% end %&gt;
+  &lt;/div&gt;
+</code></pre>
+<p>This provides a really sleek interface for inline edits. </p>
+<img src="/assets/images/daily-brew-inline-edit.gif" alt="gif of editing a brew using the inline form fields">
+
+<h3 id='editing-a-chat-name'>Editing a Chat Name</h3>
+<p>In Ryalto, we want to allow group chat admins to easily edit the name of their chat. We use the same approach for
+    this. We also replace a few additional bits of information with the edit widow. So our turbo frame and form contain
+    most of the chat header element. </p>
+<pre><code class='language-erb' lang='erb'># app/views/chats/_chat_header.html.erb
+&lt;div class=&quot;chat-header chat-box&quot;&gt;
+  &lt;%= form_with model: chat, data: { turbo_frame: &quot;#{dom_id(chat)}_title&quot; } do %&gt;
+    &lt;%= turbo_frame_tag &quot;#{dom_id(chat)}_title&quot;, class: &quot;inline-edit&quot; do %&gt;
+      &lt;div class=&quot;chat-information&quot;&gt;
+        &lt;div class=&quot;chat-details&quot;&gt;
+          &lt;h4 class=&quot;truncate&quot; id=&quot;chat_title&quot;&gt;
+            &lt;%= chat.name %&gt;
+          &lt;/h4&gt;
+          &lt;p class=&quot;truncate&quot;&gt;&lt;%= chat.users.map { |user| user == current_user ? &quot;You&quot; : user.full_name }.to_sentence %&gt;&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;% if chat.admin?(current_user) &amp;&amp; chat.group_chat %&gt;
+          &lt;%= link_to edit_chat_path(chat), class: &quot;btn btn-icon btn-tertiary&quot; do %&gt;
+            &lt;%= inline_svg_tag &quot;icons/edit-filled.svg&quot; %&gt;
+          &lt;% end %&gt;
+        &lt;% end %&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+&lt;/div&gt;
+</code></pre>
+<p>So when the user clicks the &quot;edit&quot; icon, we hit the edit action, which loads the edit partial and chat
+    form. Then we only load in the <code>&quot;#{dom_id(chat)}_title&quot;</code> turbo frame. </p>
+<pre><code class='language-erb' lang='erb'># app/views/chats/_form.html.erb
+&lt;div id=&quot;chat_title_field&quot; class=&quot;field hidden&quot;&gt;
+  &lt;%= turbo_frame_tag &quot;#{dom_id(chat)}_title&quot; do %&gt;
+    &lt;%= content_tag(:h5, &quot;update chat title&quot;) if action_name == &quot;edit&quot; %&gt;
+    &lt;%= form.text_field :title, class: &#39;form-input&#39;, placeholder: &#39;Give your chat a name?&#39; %&gt;
+    &lt;% if action_name == &quot;new&quot; %&gt;
+      &lt;%= form.label &quot;Give your group chat a title?&quot;, class: &#39;form-label&#39; %&gt;
+    &lt;% end %&gt;
+    &lt;% if action_name == &quot;edit&quot; %&gt;
+      &lt;div class=&quot;btns-wrapper row&quot;&gt;
+        &lt;%= button_tag &quot;Update Title&quot;, class: &quot;btn btn-primary btn-tran-device&quot; do %&gt;
+          &lt;i class=&quot;fa-solid fa-check&quot;&gt;&lt;/i&gt;
+          &lt;span&gt;update title&lt;/span&gt;
+        &lt;% end %&gt;
+        &lt;%= link_to chat_path(chat), class: &quot;btn btn-tertiary btn-tran-device c-danger&quot; do %&gt;
+          &lt;i class=&quot;fa fa-times&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+          &lt;span&gt;cancel&lt;/span&gt;
+        &lt;% end %&gt;
+      &lt;/div&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+  &lt;p class=&quot;field-hint&quot;&gt;Your chat name can be edited later too&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>You can see here we have a <code>field_hint</code> paragraph tag that&#39;s outside of the turbo frame, so this only
+    gets loaded when the full form is loaded, and not when the user is just editing the chat title.</p>
+<p>In both of these examples we have conditionals which look at the request action name. This is to include additional
+    buttons and content depending on the action, such as a cancel button when the user is editing. The cancel button
+    makes a request back to the the show chat path, and then only the content within the matching turbo frame is loaded
+    again.</p>
+<img src="/assets/images/ryalto-v4-inline-edit.gif" alt="gif of editing a chat name using the inline form fields">
+
+
+<h2 id='modals'>Modals</h2>
+<p>We use this same principle for modals. </p>
+<p>In our <code>application.html.erb</code> we have an empty &quot;modal&quot; turbo frame. <code>&lt;%= turbo_frame_tag
+    &quot;modal&quot; %&gt;</code>, then when we want to load something into that modal, we wrap the content in the
+    turbo frame tag.</p>
+<pre><code class='language-erb' lang='erb'># app/views/brews/_brew.html.erb
+&lt;%= turbo_frame_tag &quot;modal&quot; do %&gt;
+  &lt;div id=&quot;&lt;%= dom_id brew %&gt;&quot; data-controller=&quot;modal&quot; data-action=&quot;keyup@window-&gt;modal#closeWithKeyboard&quot;&gt;
+    &lt;div data-action=&quot;click-&gt;modal#close&quot; class=&quot;modal-background&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;card column&quot;&gt;
+
+        &lt;%# Other content here %&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+
+# app/javascript/controllers/modal_controller.js
+# NOTE: This is not inside script tags, I&#39;m just including them for code highlighting
+&lt;script&gt;
+import { Controller } from &quot;@hotwired/stimulus&quot;
+
+export default class extends Controller {
+
+    close() {
+        this.element.remove()
+    }
+
+    closeWithKeyboard(e) {
+        if (e.code === &quot;Escape&quot;) {
+            this.close()
+        }
+    }
+}
+&lt;/script&gt;
+</code></pre>
+<p>We can they style the turbo frame however we want, so different modals can have have different behaviours or
+    appearances. </p>
+<p>Hotwire makes this so simple, and the only JavaScript we have is to close the modal.</p>
+
+<h2 id='tabbed-content'>Tabbed Content</h2>
+<p>In Daily Brew, we do tabbed content in the same way. Loading different content into the same turbo frame. </p>
+<p>In our coffee show template, we render the <code>recent_brews</code> partial. </p>
+<pre><code class='language-erb' lang='erb'># app/views/coffee/show.html.erb
+  &lt;section class=&quot;tabs&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;%= render &#39;coffees/recent_brews&#39;, locals: { coffee: @coffee, brews: @recent_brews } %&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+</code></pre>
+<p>This partial is within a turbo frame and provides links to two other paths which load within the same turbo
+    frame. </p>
+<pre><code class='language-erb' lang='erb'># app/views/coffees/_recent_brews.html.erb
+&lt;%= turbo_frame_tag &quot;coffee_tab&quot; do %&gt;
+  &lt;div class=&quot;links&quot;&gt;
+    &lt;h2&gt;Recent Brews&lt;/h2&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Your Brews&quot;, coffee_user_brews_path(@coffee) %&gt;&lt;/h3&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Reviews&quot;, coming_soon_coffee_path(@coffee) %&gt;&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;hr&gt;
+  &lt;% if @recent_brews.present? %&gt;
+    &lt;div class=&quot;brews-table&quot; id=&quot;brews_table&quot;&gt;
+    &lt;%= turbo_stream_from &quot;recent_brews&quot; %&gt;
+    &lt;%= render &#39;brews/brews_table&#39;, brews: @recent_brews %&gt;
+    &lt;/div&gt;
+  &lt;% else %&gt;
+    &lt;h3 class=&quot;no-brews&quot;&gt;No one has logged brews of this coffee&lt;/h3&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+# app/views/coffees/_user_brews.html.erb
+&lt;%= turbo_frame_tag &quot;coffee_tab&quot; do %&gt;
+  &lt;div class=&quot;links&quot;&gt;
+    &lt;h2&gt;Your Brews&lt;/h2&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Recent Brews&quot;, coffee_recent_brews_path(@coffee) %&gt;&lt;/h3&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Reviews&quot;, coming_soon_coffee_path(@coffee) %&gt;&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;hr&gt;
+  &lt;% if @user_brews.present? %&gt;
+    &lt;div class=&quot;brews-table&quot; id=&quot;brews_table&quot;&gt;
+      &lt;%= render &#39;brews/brews_table&#39;, brews: @user_brews %&gt;
+    &lt;/div&gt;
+  &lt;% else %&gt;
+    &lt;h3 class=&quot;no-brews&quot;&gt;You haven&#39;t logged any brews for this coffee &lt;/h3&gt;
+  &lt;% end %&gt;
+&lt;% end %&gt;
+
+# app/views/coffees/_reviews.html.erb
+&lt;%= turbo_frame_tag &quot;coffee_tab&quot; do %&gt;
+  &lt;div class=&quot;links&quot;&gt;
+    &lt;h2&gt;Reviews&lt;/h2&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Recent Brews&quot;, coffee_recent_brews_path(@coffee) %&gt;&lt;/h3&gt;
+    &lt;h3&gt;&lt;%= link_to &quot;Your Brews&quot;, coffee_user_brews_path(@coffee) %&gt;&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;hr&gt;
+  &lt;div class=&quot;coming-soon&quot;&gt;
+    &lt;h2&gt;Coming Soon&lt;/h2&gt;
+    &lt;p&gt;Soon, we&#39;re going to be adding a load of extra information here.&lt;/p&gt;
+    &lt;p&gt;You&#39;ll be able to see &lt;s&gt;your brews of this coffee, all public brews, and&lt;/s&gt; all reviews.&lt;/p&gt;
+    &lt;p&gt;If you have any suggestions as to what you would like to see, then please let us know&lt;/p&gt;
+  &lt;/div&gt;
+&lt;% end %&gt;
+</code></pre>
+<p>Tabbed content with 0 custom JavaScript. </p>
+<p>In Ryalto, we do it in the exact same way. The only difference is that our tabs are based on filters that are applied
+    in the controller. The controls for the filter are outside of the turbo frame, so after they&#39;re applied we only
+    reload the tabbed content, not the controls which made it change. </p>
+<br>
+<hr>
+<p class="subheading">I think that&#39;s everything for Part 3. I don&#39;t have anything else I want to cover in a part
+    4 so this might be the end! Please get in touch if there is anything that you'd like to see added!</p>
