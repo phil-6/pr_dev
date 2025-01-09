@@ -1,8 +1,26 @@
+- name: Ryalto V4
+  available: True
+  link: https://developer.ryalto.group/features
+  year: 2022-2025
+  icon: building-user
+  description: A platform for increasing engagement and shift booking for healthcare workers.
+  tech: Ruby on Rails with Hotwire
+  github: https://github.com/ryalto/
+
+- name: Ryalto Dev Page
+  available: True
+  link: https://developer.ryalto.group
+  year: 2023
+  icon: terminal
+  description: The Ryalto developer page, including a feature list.
+  tech: Jekyll.rb
+  github: https://github.com/ryalto/dev-page
+
 - name: Daily Brew
   available: True
   link: https://dailybrew.club/
   year: 2022
-  icon: code
+  icon: mug-hot
   description: A web app which lets speciality coffee lovers track their home brews.
   tech: Ruby on Rails with Hotwire
   github: https://github.com/phil-6/dailybrew
@@ -30,7 +48,7 @@
   year: 2021
   icon: code
   description: Developer page for Legal Innovation Lab Wales
-  tech: Jekyll
+  tech: Jekyll.rb
   github: https://github.com/Legal-Innovation-Lab-Wales/dev-page
 
 - name: Include Journey
@@ -79,7 +97,7 @@
   github: https://github.com/phil-6/purpleriver
 
 - name: Jade Gould Portfolio
-  available: True
+  available: False
   link: https://jadegould.uk
   year: 2020
   icon: user-circle

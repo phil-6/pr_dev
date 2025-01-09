@@ -1,0 +1,315 @@
+/* *** Variables *** */
+html {
+  scroll-behavior: smooth;
+  font-family: "Krub", Verdana, Geneva, sans-serif;
+  min-height: 100vh;
+}
+html body {
+  margin: 0;
+  height: 100%;
+}
+html body.dark-mode {
+  background-color: #0e182a;
+  background: linear-gradient(100deg, #0e182a, #210047);
+  color: #ece9e6;
+}
+html body.dark-mode .dark {
+  display: block;
+}
+html body.dark-mode .light {
+  display: none;
+}
+html body.dark-mode nav a, html body.dark-mode nav button {
+  background: rgba(255, 255, 255, 0.9019607843);
+  color: #495087;
+}
+html body.dark-mode nav a:hover {
+  color: #05285a;
+  background: #fff;
+}
+html body.dark-mode nav button:hover {
+  color: #05285a;
+  background: linear-gradient(-45deg, #dfecf1, #f6f8f9);
+}
+html body.dark-mode .author {
+  color: #c8bedc;
+}
+html body.dark-mode article a {
+  color: #03DAC6;
+  text-decoration: none;
+}
+html body.dark-mode article a:hover {
+  color: rgba(3, 218, 198, 0.7333333333);
+}
+html body.dark-mode article a.next-button {
+  border-color: #03DAC6;
+}
+html body.dark-mode article a.next-button:hover {
+  background-color: rgba(3, 218, 198, 0.7333333333);
+  color: #05285a;
+}
+html body.dark-mode article code.inline {
+  color: #c8bedc;
+}
+html body.dark-mode article blockquote {
+  color: #dfecf1;
+  border-left: 0.2rem solid #dfecf1;
+  padding-left: 0.5rem;
+}
+html body.light-mode {
+  background-color: #dfecf1;
+  background: linear-gradient(-45deg, #dfecf1, #f6f8f9);
+  color: #05285a;
+}
+html body.light-mode .light {
+  display: block;
+}
+html body.light-mode .dark {
+  display: none;
+}
+html body.light-mode nav a, html body.light-mode nav button {
+  background: #495087;
+  color: #ece9e6;
+}
+html body.light-mode nav a:hover {
+  color: #0e182a;
+}
+html body.light-mode nav button:hover {
+  color: #ece9e6;
+  background: linear-gradient(100deg, #0e182a, #210047);
+}
+html body.light-mode .author {
+  color: #495087;
+}
+html body.light-mode article a {
+  color: rgba(98, 0, 238, 0.7333333333);
+  text-decoration: none;
+}
+html body.light-mode article a:hover {
+  color: #3700B3;
+}
+html body.light-mode article a.next-button {
+  border-color: rgba(98, 0, 238, 0.7333333333);
+}
+html body.light-mode article a.next-button:hover {
+  background-color: #3700B3;
+  color: #ece9e6;
+}
+html body.light-mode article code.inline {
+  color: #495087;
+}
+html body.light-mode article blockquote {
+  color: #495087;
+  border-left: 0.2rem solid #495087;
+  padding-left: 0.5rem;
+}
+html body header {
+  text-align: center;
+}
+html body header nav {
+  margin: 1.4rem 0;
+}
+@media (min-width: 992px) {
+  html body header nav {
+    margin: 2rem 0;
+  }
+}
+html body header nav a, html body header nav button {
+  display: inline-block;
+  text-align: center;
+  height: 3rem;
+  width: 3rem;
+  line-height: 3rem;
+  box-shadow: 6px 4px 8px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 100%;
+}
+@media (max-width: 370px) {
+  html body header nav a, html body header nav button {
+    height: 2.4rem;
+    width: 2.4rem;
+    line-height: 2.4rem;
+  }
+}
+html body header nav a:hover, html body header nav button:hover {
+  box-shadow: none;
+  transition: all 0.3s;
+}
+html body header h1, html body header h2, html body header h3 {
+  margin: 0;
+  font-weight: 400;
+}
+html body header h1.author, html body header h2.author, html body header h3.author {
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+}
+html body main {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+html body main article {
+  padding: 0 0.5rem;
+}
+html body main article h1 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 1rem 0;
+}
+html body main article h2, html body main article h3, html body main article h4, html body main article h5 {
+  margin-bottom: 0;
+}
+html body main article h2 {
+  font-size: 1.8rem;
+}
+html body main article h2.text-center {
+  text-align: center;
+}
+html body main article h2 button {
+  visibility: hidden;
+  border: none;
+}
+html body main article h2:hover button {
+  visibility: visible;
+  color: #495087;
+  background-color: inherit;
+}
+html body main article h3 {
+  font-size: 1.2rem;
+}
+html body main article h4 {
+  font-size: 1.1rem;
+}
+html body main article h5 {
+  font-size: 1rem;
+}
+html body main article p {
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+html body main article p.caption {
+  font-size: 0.8rem;
+  text-align: center;
+}
+html body main article p.subheading {
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+html body main article p.lead {
+  font-size: 1.3rem;
+  font-weight: 200;
+}
+html body main article img {
+  max-width: 100%;
+}
+html body main article .gif {
+  text-align: center;
+  margin: auto 0;
+  width: 100%;
+  position: relative;
+}
+html body main article .video {
+  text-align: center;
+  margin: auto 0;
+}
+html body main article .video iframe {
+  width: 560px;
+  height: 315px;
+  max-width: 100%;
+}
+html body main article .small {
+  font-size: 80%;
+}
+html body main article .text-center {
+  text-align: center;
+}
+html body main article .map-container {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+}
+html body main article .button-container {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+html body main article .button-container a.next-button {
+  border: 1px solid;
+  border-radius: 100px;
+  padding: 0.6rem;
+  margin: 0.2rem;
+  transition: all 0.5s;
+}
+@media (min-width: 992px) {
+  html body main article {
+    padding: 0;
+  }
+  html body main article h1 {
+    font-size: 2.8rem;
+  }
+  html body main article h2 {
+    font-size: 2rem;
+  }
+  html body main article h2.text-center {
+    text-align: center;
+    font-size: 2.2rem;
+  }
+  html body main article h2 .link-spacer {
+    margin-left: 45px;
+  }
+  html body main article h3 {
+    font-size: 1.6rem;
+  }
+  html body main article h4 {
+    font-size: 1.4rem;
+  }
+  html body main article h5 {
+    font-size: 1.2rem;
+  }
+  html body main article p {
+    margin-top: 0;
+  }
+  html body main article p.subheading {
+    font-size: 1.4rem;
+    font-weight: 100;
+  }
+  html body main article p code {
+    color: #e2777a;
+  }
+}
+html body main article pre {
+  max-height: 36rem;
+}
+html body main article .hideable {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+html body main article .hideable.reveal {
+  max-height: 20rem;
+  transition: all 0.5s ease-in-out;
+}
+html body main article .flex {
+  display: flex;
+  gap: 0.2rem;
+  max-width: 100%;
+}
+html body footer {
+  margin-top: 5rem;
+}
+html body footer .logos {
+  padding: 20px 0;
+  background-color: #f6f8f9;
+  text-align: center;
+  margin: 0 auto;
+}
+html body footer .logos img {
+  max-width: 160px;
+  vertical-align: middle;
+}
+@media (min-width: 768px) {
+  html body footer .logos img.erdf {
+    margin-left: 48px;
+  }
+}
+
+/*# sourceMappingURL=blog.css.map */
