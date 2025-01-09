@@ -10,8 +10,8 @@
             <i class="fab fa-github"></i></a>
         <a href="https://twitter.com/PurpleRiver_Dev" class="btn" data-toggle="tooltip" data-placement="top" title="Twitter">
             <i class="fab fa-twitter"></i></a>
-        <a href="https://www.polywork.com/philreynolds" class="btn" data-toggle="tooltip" data-placement="top" title="Polywork">
-            <i class="fas fa-puzzle-piece"></i></a>
+        <a class="btn" data-placement="top" data-toggle="tooltip" href="https://bsky.app/profile/purpleriver.dev" title="Bluesky">
+            <i class="fab fa-bluesky"></i></a>
         {% comment %}<a href="/assets/files/PhilReynolds-CV_2020-02.pdf" class="btn" data-toggle="tooltip" data-placement="top" title="Download CV">{% endcomment %}
             {% comment %}<i class="fas fa-file-download"></i></a>{% endcomment %}
         <button id="blog-theme-toggle" data-toggle="tooltip" data-placement="top" title="Toggle Theme">
@@ -19,4 +19,5 @@
             <i class="fas fa-sun dark"></i>
         </button>
     </nav>
+    <p>Published: {{ page.publish-date }} {{ page.publish-year }}</p>
 </header>
