@@ -301,5 +301,24 @@ body.dark main #blog .blog-posts .blog:hover {
 body.light main #blog .blog-posts .blog:hover {
   background-color: rgba(105, 105, 105, 0.1);
 }
+main #career {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #career .container {
+  max-width: 1200px;
+}
+main #career .container h2, main #career .container h3 {
+  text-align: center;
+}
+main #career .container p {
+  text-align: center;
+}
+@media (min-width: 768px) {
+  main #career .container p {
+    font-size: 1.2rem;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
