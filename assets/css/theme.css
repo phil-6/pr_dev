@@ -1,22 +1,22 @@
 body.dark.red {
-  color: #fff5f4;
+  color: rgb(255, 245.3829787234, 243.7);
 }
 body.dark.red.grad {
-  background-color: #120300;
-  background: linear-gradient(185deg, #2B1E00, #2B0700, #120300, #0E0137);
+  background-color: rgb(17.5, 2.8488372093, 0);
+  background: linear-gradient(185deg, #2B1E00, #2B0700, rgb(17.5, 2.8488372093, 0), #061632);
 }
 body.dark.red.no-grad {
-  background: #120300;
+  background: rgb(17.5, 2.8488372093, 0);
 }
 body.dark.red h1, body.dark.red h2 {
-  color: #FF2800;
+  color: #FF2805;
 }
 body.dark.red button, body.dark.red a {
   color: #FFB400;
   border-color: #FFB400;
 }
 body.dark.red button:hover, body.dark.red a:hover {
-  color: #FF2800;
+  color: #FF2805;
 }
 body.dark.red button.btn, body.dark.red a.btn {
   background: none;
@@ -37,27 +37,27 @@ body.dark.red button.color-button:hover, body.dark.red a.color-button:hover {
 }
 body.dark.red .social a {
   background-color: #FFB400;
-  color: #120300;
+  color: rgb(17.5, 2.8488372093, 0);
 }
 body.dark.red .social a:hover {
-  background-color: #120300;
+  background-color: rgb(17.5, 2.8488372093, 0);
   border-color: #FFB400;
   color: #FFB400;
 }
 body.dark.red #projects .project {
-  color: #fff5f4;
+  color: rgb(255, 245.3829787234, 243.7);
   border-color: #55036C;
   background-color: #16001C;
 }
 body.dark.red #projects .project hr {
-  border-color: #FF2800;
+  border-color: #FF2805;
 }
 body.dark.red #projects .project .btn-container .btn {
   color: #FF745B;
   border-color: #FF745B;
 }
 body.dark.red #projects .project .btn-container .btn:hover {
-  background-color: #120300;
+  background-color: rgb(17.5, 2.8488372093, 0);
 }
 body.dark.red #projects .project:hover {
   background: #2B0700;
@@ -69,11 +69,11 @@ body.dark.orange {
   color: #C2D2EF;
 }
 body.dark.orange.grad {
-  background-color: #010A1B;
-  background: linear-gradient(172deg, #082C6C -20%, #010A1B 10%, #010A1B 60%, #A34500 130%);
+  background-color: #061632;
+  background: linear-gradient(175deg, #210575 -20%, #061632 10%, #060A1E 60%, #A34500 130%);
 }
 body.dark.orange.no-grad {
-  background: #010A1B;
+  background: #061632;
 }
 body.dark.orange h1, body.dark.orange h2 {
   color: #FF6C00;
@@ -104,10 +104,10 @@ body.dark.orange button.color-button:hover, body.dark.orange a.color-button:hove
 }
 body.dark.orange .social a {
   background-color: #FF6C00;
-  color: #010A1B;
+  color: #061632;
 }
 body.dark.orange .social a:hover {
-  background-color: #010A1B;
+  background-color: #061632;
   border-color: #FF6C00;
   color: #FF6C00;
 }
@@ -127,7 +127,7 @@ body.dark.orange #projects .project .btn-container .btn:hover {
   background-color: #1047A9;
 }
 body.dark.orange #projects .project:hover {
-  background: #021334;
+  background: rgb(1.9107142857, 19.1071428571, 51.5892857143);
 }
 body.dark.orange #projects .project:hover .icon {
   color: #FF6C00;
@@ -193,7 +193,7 @@ body.dark.yellow #projects .project .btn-container .btn:hover {
   background-color: #054565;
 }
 body.dark.yellow #projects .project:hover {
-  background: #001119;
+  background: rgb(0, 16.8, 25.2);
 }
 body.dark.yellow #projects .project:hover .icon {
   color: #FADE0A;
@@ -259,7 +259,7 @@ body.dark.green #projects .project .btn-container .btn:hover {
   background-color: #21851C;
 }
 body.dark.green #projects .project:hover {
-  background: #08183b;
+  background: rgb(8.0357142857, 24.1071428571, 59.4642857143);
 }
 body.dark.green #projects .project:hover .icon {
   color: #4AB944;
@@ -326,30 +326,30 @@ body.dark.blue #projects .project .btn-container .btn:hover {
   background-color: #00d4ff;
 }
 body.dark.blue #projects .project:hover {
-  background: #1ad8ff;
+  background: rgb(25.5, 216.3, 255);
 }
 body.dark.blue #projects .project:hover .icon {
   color: #0a2540;
 }
 body.dark.purple {
-  color: #F5F3FB;
+  color: #f2f4fc;
 }
 body.dark.purple.grad {
-  background-color: #0E0137;
-  background: linear-gradient(to bottom, #0E0137, #A34500);
+  background-color: #210575;
+  background: linear-gradient(185deg, #210575 60%, #A34500);
 }
 body.dark.purple.no-grad {
-  background: #0E0137;
+  background: #210575;
 }
 body.dark.purple h1, body.dark.purple h2 {
-  color: #7453D7;
+  color: #3E0ECB;
 }
 body.dark.purple button, body.dark.purple a {
-  color: #F5F3FB;
-  border-color: #F5F3FB;
+  color: #f2f4fc;
+  border-color: #f2f4fc;
 }
 body.dark.purple button:hover, body.dark.purple a:hover {
-  color: #7453D7;
+  color: #7285e3;
 }
 body.dark.purple button.btn, body.dark.purple a.btn {
   background: none;
@@ -360,8 +360,8 @@ body.dark.purple button.btn:hover, body.dark.purple a.btn:hover {
   background: #3E0ECB;
 }
 body.dark.purple button.theme-button:hover, body.dark.purple a.theme-button:hover {
-  color: #F5F3FB;
-  background-color: #7453D7;
+  color: #f2f4fc;
+  background-color: #7285e3;
 }
 body.dark.purple button.color-button:hover, body.dark.purple a.color-button:hover {
   color: #FFD7D0;
@@ -369,18 +369,18 @@ body.dark.purple button.color-button:hover, body.dark.purple a.color-button:hove
   border-color: #FFD7D0;
 }
 body.dark.purple .social a {
-  background-color: #F5F3FB;
-  color: #0E0137;
+  background-color: #f2f4fc;
+  color: #210575;
 }
 body.dark.purple .social a:hover {
-  background-color: #0E0137;
-  border-color: #F5F3FB;
-  color: #F5F3FB;
+  background-color: #210575;
+  border-color: #f2f4fc;
+  color: #f2f4fc;
 }
 body.dark.purple #projects .project {
-  color: #F5F3FB;
+  color: #f2f4fc;
   border-color: #210575;
-  background-color: #0E0137;
+  background-color: #061632;
 }
 body.dark.purple #projects .project hr {
   border-color: #A34500;
@@ -392,7 +392,7 @@ body.dark.purple #projects .project .btn-container .btn:hover {
   background-color: #291100;
 }
 body.dark.purple #projects .project:hover {
-  background: #110141;
+  background: rgb(7.0928571429, 26.0071428571, 59.1071428571);
 }
 body.dark.purple #projects .project:hover .icon {
   color: #FF6C00;
@@ -401,14 +401,14 @@ body.light.red {
   color: #A31900;
 }
 body.light.red.grad {
-  background-color: #fff5f4;
-  background: linear-gradient(185deg, #FFF1D0, #FFD7D0, #7453D7);
+  background-color: rgb(255, 245.3829787234, 243.7);
+  background: linear-gradient(185deg, #FFF1D0, #FFD7D0, #7285e3);
 }
 body.light.red.no-grad {
-  background: #fff5f4;
+  background: rgb(255, 245.3829787234, 243.7);
 }
 body.light.red h1, body.light.red h2 {
-  color: #FF2800;
+  color: #FF2805;
 }
 body.light.red button, body.light.red a {
   color: #55036C;
@@ -436,10 +436,10 @@ body.light.red button.color-button:hover, body.light.red a.color-button:hover {
 }
 body.light.red .social a {
   background-color: #55036C;
-  color: #fff5f4;
+  color: rgb(255, 245.3829787234, 243.7);
 }
 body.light.red .social a:hover {
-  background-color: #fff5f4;
+  background-color: rgb(255, 245.3829787234, 243.7);
   border-color: #55036C;
   color: #55036C;
 }
@@ -592,7 +592,7 @@ body.light.yellow #projects .project .btn-container .btn:hover {
   background-color: #FADE0A;
 }
 body.light.yellow #projects .project:hover {
-  background: linear-gradient(160deg, #c1e3f2, rgba(255, 246, 181, 0.5));
+  background: linear-gradient(160deg, rgb(193.165, 226.69, 242.335), rgba(255, 246, 181, 0.5));
 }
 body.light.yellow #projects .project:hover .icon {
   color: #FADE0A;
@@ -697,7 +697,7 @@ body.light.blue button.theme-button:hover, body.light.blue a.theme-button:hover 
 }
 body.light.blue button.color-button:hover, body.light.blue a.color-button:hover {
   color: #3E0ECB;
-  background-color: #F5F3FB;
+  background-color: #f2f4fc;
   border-color: #3E0ECB;
 }
 body.light.blue .social a {
@@ -725,20 +725,20 @@ body.light.blue #projects .project .btn-container .btn:hover {
   background-color: #0a2540;
 }
 body.light.blue #projects .project:hover {
-  background: #0d3256;
+  background: rgb(13.4459459459, 49.75, 86.0540540541);
 }
 body.light.blue #projects .project:hover .icon {
   color: #00d4ff;
 }
 body.light.purple {
-  color: #0E0137;
+  color: #060A1E;
 }
 body.light.purple.grad {
-  background-color: #F5F3FB;
-  background: linear-gradient(100deg, #3E0ECB -40%, #F5F3FB, #F5F3FB, #210575 125%);
+  background-color: #f2f4fc;
+  background: linear-gradient(100deg, #3E0ECB -40%, #f2f4fc, #f2f4fc, #210575 125%);
 }
 body.light.purple.no-grad {
-  background: #F5F3FB;
+  background: #f2f4fc;
 }
 body.light.purple h1, body.light.purple h2 {
   color: #210575;
@@ -759,8 +759,8 @@ body.light.purple button.btn:hover, body.light.purple a.btn:hover {
   background: #3E0ECB;
 }
 body.light.purple button.theme-button:hover, body.light.purple a.theme-button:hover {
-  color: #F5F3FB;
-  background-color: #0E0137;
+  color: #f2f4fc;
+  background-color: #061632;
 }
 body.light.purple button.color-button:hover, body.light.purple a.color-button:hover {
   color: #A31900;
@@ -769,17 +769,17 @@ body.light.purple button.color-button:hover, body.light.purple a.color-button:ho
 }
 body.light.purple .social a {
   background-color: #210575;
-  color: #F5F3FB;
+  color: #f2f4fc;
 }
 body.light.purple .social a:hover {
-  background-color: #F5F3FB;
+  background-color: #f2f4fc;
   border-color: #210575;
   color: #210575;
 }
 body.light.purple #projects .project {
   color: #210575;
   border-color: #3E0ECB;
-  background-color: #F5F3FB;
+  background-color: #f2f4fc;
 }
 body.light.purple #projects .project hr {
   border-color: #3E0ECB;
@@ -791,7 +791,7 @@ body.light.purple #projects .project .btn-container .btn:hover {
   background-color: #3E0ECB;
 }
 body.light.purple #projects .project:hover {
-  background: rgba(216, 207, 244, 0.7);
+  background: rgba(241.650887574, 243.449704142, 252.349112426, 0.7);
 }
 body.light.purple #projects .project:hover .icon {
   color: #3E0ECB;

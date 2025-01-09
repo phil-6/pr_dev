@@ -27,7 +27,10 @@ function setTheme() {
         } else { // if no preferences, default to dark theme
             currentTheme = "dark"
         }
+        console.log ("No preferences found, setting theme with:\n", currentTheme, currentColor, currentGrad)
         setTheme()
+        setColor()
+        setGrad()
     }
 }
 
@@ -93,14 +96,15 @@ colorBtn.addEventListener('mouseover', () => { colorBtn.innerHTML = `Colour ➟ 
 colorBtn.addEventListener('mouseout', () => { colorBtn.innerHTML = `Colour: ${currentColor}` })
 
 gradBtn.addEventListener("click", function () {
-    if (currentGrad === "no-grad") {
-        currentGrad = "grad"
+    if (currentGrad === "grad") {
+        currentGrad = "no-grad"
         setGrad()
     } else {
-        currentGrad = "no-grad";
+        currentGrad = "grad";
         setGrad()
     }
 });
 
-if (!currentColor) currentColor = "orange";
+if (!currentColor) currentColor = document.body.dataset.defaultColor
+if (!currentGrad) currentGrad = document.body.dataset.defaultGrad;
 setTheme()
