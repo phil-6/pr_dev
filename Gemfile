@@ -30,5 +30,9 @@ end
 # Performance-booster for watching directories on Windows
 gem 'wdm', '~> 0.1.1', platforms: %i[mingw x64_mingw mswin]
 
+# Gems for Cloudflare Pages
 gem 'webrick', '~> 1.7'
 gem 'csv'
+gem 'logger'
+gem 'base64'
+gem 'safe_yaml'
