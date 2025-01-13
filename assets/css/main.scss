@@ -352,13 +352,25 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    .container{
+
+    .container {
       max-width: 1200px;
+
       h2, h3 {
         text-align: center;
       }
+
       p {
-        text-align: center;
+        text-align: left;
+        &.center {
+          text-align: center;
+        }
+
+        @media (min-width: $breakpoint-md) {
+          font-size: 1.2rem;
+        }
+      }
+      li {
         @media (min-width: $breakpoint-md) {
           font-size: 1.2rem;
         }

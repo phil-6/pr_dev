@@ -313,10 +313,18 @@ main #career .container h2, main #career .container h3 {
   text-align: center;
 }
 main #career .container p {
+  text-align: left;
+}
+main #career .container p.center {
   text-align: center;
 }
 @media (min-width: 768px) {
   main #career .container p {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 768px) {
+  main #career .container li {
     font-size: 1.2rem;
   }
 }
