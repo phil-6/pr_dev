@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/30fa2950fc.js"></script>
+    <link href="/assets/css/coffee-roasters-fonts.css" rel="stylesheet">
+    <link href="/assets/css/coffee-roasters.css" rel="stylesheet">
+
+    <title>UK Coffee Roasters - A Big List</title>
+</head>
+
+<body>
+
+<header class="banner banner-primary-1">
+    <div class="banner-content">
+        <div class="page-title">
+            <h1>UK Coffee Roasters</h1>
+        </div>
+        <p class="center">This is a big list of <strong>{{ site.data.coffee-roasters.size }} roasters</strong> in the UK.</p>
+        <p>There are many more, and we are constantly updating our list but if you think someone is missing, please
+            <a href="mailto:coffeeroasters@purpleriver.dev?subject=New Coffee Roaster!">let us know</a>, and we'll get them added.</p>
+        <br/>
+        <p>This list (and this pages styling) came from my Daily Brew project. Daily Brew isn't live at the moment, but I wanted to preserve
+            this list.</p>
+    </div>
+</header>
+<main class="roasters-index">
+    <div class="banner banner-primary-3">
+        <div class="banner-content">
+            <div class="search">
+                <div class="field">
+                    <input id="search-input" type="text" class="form-input search" placeholder="Search" >
+                    <div class="icon-container">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+
+                <div class="results">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="roasters" class="card-collection row">
+        {% for roaster in site.data.coffee-roasters %}
+        <a href="{{roaster.website}}" target="_blank" id="{{roaster.reference}}" class="roaster-card card column">
+            <div class="header">
+                <div class="left">
+                    <h3 class="card-title">{{roaster.name}}</h3>
+                    <div class="location">
+                        {{ roaster.location }}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+
+</body>
+<script>
+    document.getElementById('search-input').addEventListener('input', function () {
+        const searchQuery = this.value.toLowerCase();
+        const roasters = document.querySelectorAll('#roasters .roaster-card');
+
+        roasters.forEach(roaster => {
+            const text = roaster.textContent.toLowerCase();
+            if (text.includes(searchQuery)) {
+                roaster.classList.remove('hidden');
+            } else {
+                roaster.classList.add('hidden');
+            }
+        });
+    });
+</script>
+</html>

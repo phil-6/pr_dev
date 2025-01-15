@@ -1,0 +1,354 @@
+$font: 'Poppins', sans-serif;
+$heading-font: 'Playball', sans-serif;
+
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;
+$screen-xxl: 1400px;
+
+$container-xs: 200px;
+$container-sm: 300px;
+$container-md: 600px;
+$container-lg: 800px;
+$container-xl: 1200px;
+$container-xxl: 1600px;
+$nav-height: 69px;
+
+$color-brand: #D5B034;
+$color-brand-light: #E0C467;
+$color-brand-dark: #987C1F;
+$color-mid-0: #95b1b0;
+$color-mid-1: #BEC9DF;
+$color-white: #e6edef;
+
+$color-secondary: #03418C;
+$color-secondary-light: #9ca8e0;
+$color-secondary-dark: #011936;
+
+//$ink: ##030027;
+$ink: #021727;
+$ink-80: #021727CC;
+
+$primary-box-shadow: 0 0.1rem 0.25rem $color-brand-light;
+
+$warning: #FF8727;
+$warning-light: #FFB479;
+$warning-dark: #DE6402;
+$danger: #FD272C;
+$danger-light: #FE787C;
+$danger-dark: #DC0208;
+
+// From https://colorhunt.co/palette/041c3204293a064663ecb365
+
+$color-primary-0: #064763; // Main Primary color */
+$color-primary-1: #1f5973;
+$color-primary-2: #296D8A;
+$color-primary-3: #9bb5c1;
+$color-primary-4: #033043;
+
+$color-primary-opacity-10: rgba(6, 71, 99, 0.1);
+$color-primary-opacity-25: rgba(6, 71, 99, 0.25);
+$color-primary-opacity-50: rgba(6, 71, 99, 0.5);
+$color-primary-opacity-90: rgba(6, 71, 99, 0.9);
+
+$color-complementary-0: #ECB365; // Complementary color */
+$color-complementary-1: #FFE3BC;
+$color-complementary-2: #FFD193;
+$color-complementary-3: #CC903E;
+$color-complementary-4: #A86F1F;
+
+
+html, body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background-color: $color-white;
+  font-family: $font;
+  color: $ink;
+
+  main {
+    margin: auto 0;
+  }
+
+  h1, h2, h3, h4, h5 {
+    color: $color-primary-1;
+    font-weight: 600;
+    letter-spacing: -1px;
+  }
+
+  p {
+    &.center {
+      text-align: center;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $color-complementary-0;
+
+    &:hover {
+      color: $color-complementary-4
+    }
+  }
+
+  .banner {
+    width: 100%;
+
+    &-primary-0 {
+      background-color: $color-primary-0;
+    }
+
+    &-primary-1 {
+      background-color: $color-primary-1;
+    }
+
+    &.banner-primary-0, &.banner-primary-1 {
+      .banner-content {
+        padding: 3rem 2rem 4rem;
+
+        @media screen and (max-width: $screen-md) {
+          padding: 2rem 1rem 3rem;
+        }
+
+        h1, h2, p {
+          color: $color-white;
+        }
+      }
+    }
+
+    &-primary-3 {
+      background-color: $color-primary-3;
+    }
+
+    .banner-content {
+      margin: 0 auto;
+      padding: 2rem;
+      max-width: $container-lg;
+
+      @media screen and (max-width: $screen-md) {
+        padding: 1rem;
+      }
+
+      .page-title {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 1.5rem;
+
+        h1 {
+          font-family: $heading-font;
+          font-size: 4.5rem;
+          color: $color-complementary-0;
+        }
+
+        h2 {
+          line-height: 1;
+        }
+
+        &::before, &::after {
+          content: "";
+          height: 1px;
+          background: $color-complementary-0;
+          flex: 1 1 auto;
+          margin-top: 2px;
+        }
+
+        &::before {
+          margin-right: 1rem;
+        }
+
+        &::after {
+          margin-left: 1rem;
+        }
+      }
+
+      p {
+        word-spacing: 0.1rem;
+      }
+
+      .cta {
+        margin-top: 2rem;
+        text-align: center;
+
+        .btn {
+          box-shadow: 0 0 5px 5px $color-primary-opacity-50;
+
+          &:hover {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+
+  .roasters {
+    &-index {
+
+      .search {
+        display: flex;
+        justify-content: center;
+
+        .field {
+          margin: 1rem 0;
+          position: relative;
+          width: $container-md;
+
+
+          .form-input {
+            display: block;
+            border: 1px solid $color-mid-1;
+            transition: border-color 0.25s, box-shadow 0.25s;
+            border-radius: 2rem;
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+            padding: 1rem 2rem;
+            width: calc(100% - 4rem - 2px);
+            &:focus, &:focus-visible {
+              outline: 0;
+              box-shadow: 0 0 0 2px $color-complementary-0;
+            }
+          }
+
+          .icon-container {
+            font-size: 1.5rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            height: calc(3.5rem + 2px);
+            border-radius: 2rem;
+            display:flex;
+            align-items: center;
+            background-color: #ECB365;
+            border: 1px solid #ECB365;
+            color: #1f5973;
+
+            &:hover {
+              background-color: #FFD193;
+              border-color: #FFD193;
+            }
+
+            i {
+            }
+          }
+        }
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 2rem;
+      }
+
+      .card-collection {
+        max-width: $container-xxl;
+        margin: 0 auto;
+        padding: 2rem 2rem 4rem;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        @media screen and (max-width: $screen-xxl) {
+          gap: 1rem;
+        }
+
+        @media screen and (max-width: $screen-lg) {
+          padding: 1rem 1rem 2rem;
+          gap: 1rem;
+        }
+
+        @media screen and (max-width: $screen-md) {
+          gap: 1rem;
+        }
+
+        .card {
+          flex-grow: 1;
+          flex-basis: calc(33% - 2rem);
+          max-width: 33%;
+
+          @media screen and (max-width: $screen-xl) {
+            flex-basis: calc(50% - 1rem);
+            max-width: 50%;
+          }
+
+          @media screen and (max-width: $screen-md) {
+            flex-basis: 100%;
+            max-width: 100%;
+          }
+        }
+      }
+
+      .card-collection .card {
+        flex-basis: calc(25% - 2rem);
+        max-width: 25%;
+
+        @media screen and (max-width: $screen-xxl) {
+          flex-basis: calc(33% - 2rem);
+          max-width: 33%;
+        }
+
+        @media screen and (max-width: $screen-lg) {
+          flex-basis: calc(50% - 1rem);
+          max-width: 50%;
+        }
+
+        @media screen and (max-width: $screen-md) {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+  .roaster-card {
+    padding: 1.5rem 2rem;
+    justify-content: space-between;
+
+    &.hidden {
+      display: none;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+
+      h3 {
+        width: fit-content;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.25rem;
+        border-bottom: 3px solid $color-complementary-0;
+      }
+
+      .location {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+    }
+
+    .row {
+      overflow-y: auto;
+    }
+  }
+}
+

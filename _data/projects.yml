@@ -1,3 +1,12 @@
+- name: List of Coffee Roasters
+  available: True
+  link: /coffee-roasters
+  year: 2025
+  icon: mug-hot
+  description: A spin-off from Daily Brew, a simple list of UK specialty coffee roasters.
+  tech: HTML, CSS, JS
+  github: https://github.com/phil-6/pr_dev/blob/main/_layouts/coffee-roasters.html
+
 - name: Ryalto V4
   available: True
   link: https://developer.ryalto.group/features
