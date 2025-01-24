@@ -227,6 +227,10 @@ body .roaster-card {
   padding: 1.5rem 2rem;
   justify-content: space-between;
 }
+body .roaster-card:hover {
+  background-color: #ffeacc;
+  transition: all 0.5s ease-in-out;
+}
 body .roaster-card.hidden {
   display: none;
 }
@@ -239,6 +243,9 @@ body .roaster-card .header h3 {
   padding-bottom: 0.25rem;
   margin-bottom: 0.25rem;
   border-bottom: 3px solid #ECB365;
+}
+body .roaster-card .header .description {
+  color: #021727;
 }
 body .roaster-card .header .location {
   font-size: 0.8rem;

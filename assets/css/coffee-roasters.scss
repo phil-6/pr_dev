@@ -53,7 +53,7 @@ $color-primary-opacity-50: rgba(6, 71, 99, 0.5);
 $color-primary-opacity-90: rgba(6, 71, 99, 0.9);
 
 $color-complementary-0: #ECB365; // Complementary color */
-$color-complementary-1: #FFE3BC;
+$color-complementary-1: #ffeacc;
 $color-complementary-2: #FFD193;
 $color-complementary-3: #CC903E;
 $color-complementary-4: #A86F1F;
@@ -190,10 +190,8 @@ body {
     }
   }
 
-
   .roasters {
     &-index {
-
       .search {
         display: flex;
         justify-content: center;
@@ -202,7 +200,6 @@ body {
           margin: 1rem 0;
           position: relative;
           width: $container-md;
-
 
           .form-input {
             display: block;
@@ -213,6 +210,7 @@ body {
             font-size: 1rem;
             padding: 1rem 2rem;
             width: calc(100% - 4rem - 2px);
+
             &:focus, &:focus-visible {
               outline: 0;
               box-shadow: 0 0 0 2px $color-complementary-0;
@@ -228,7 +226,7 @@ body {
             padding-right: 1rem;
             height: calc(3.5rem + 2px);
             border-radius: 2rem;
-            display:flex;
+            display: flex;
             align-items: center;
             background-color: #ECB365;
             border: 1px solid #ECB365;
@@ -325,6 +323,11 @@ body {
     padding: 1.5rem 2rem;
     justify-content: space-between;
 
+    &:hover {
+      background-color: $color-complementary-1;
+      transition: all 0.5s ease-in-out;
+    }
+
     &.hidden {
       display: none;
     }
@@ -340,6 +343,10 @@ body {
         border-bottom: 3px solid $color-complementary-0;
       }
 
+      .description {
+        color: $ink;
+      }
+
       .location {
         font-size: 0.8rem;
         opacity: 0.8;
@@ -351,4 +358,3 @@ body {
     }
   }
 }
-
