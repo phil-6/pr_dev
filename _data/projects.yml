@@ -1,3 +1,21 @@
+- name: Radius Contractors
+  available: True
+  link: https://radius-contractors.purpleriver.dev/
+  year: 2025
+  icon: screwdriver-wrench
+  description: An app to find builders recommended by your connections, inspired by a Google Doc used by our group of friends!
+  tech: Rails 8
+  github: https://github.com/phil-6/radius-contractors
+
+- name: Van Spots 2
+  available: True
+  link: https://vanspots.uk
+  year: 2025
+  icon: shuttle-van
+  description: A Rebuild of the VanSpots App to bring dependencies up to date. A database of wild camping spots for campervans.
+  tech: Rails 8
+  github: https://github.com/phil-6/van-spots-2
+
 - name: List of Coffee Roasters
   available: True
   link: /coffee-roasters
@@ -146,7 +164,7 @@
   year: 2018
   icon: shuttle-van
   description: Database of wild camping spots for campervans.
-  tech: Full stack Ruby on Rails app.
+  tech: Full stack Ruby on Rails 5 app.
   github: https://github.com/phil-6/van-spots
 
 - name: Veeqo Developers
