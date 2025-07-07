@@ -1,12 +1,24 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: honeymoon
+  full-title: Honeymoon
+  summary: We went on honeymoon to New Zealand!
+  file-type: html
+  publish-date: April 18
+  publish-year: 2025
+  published: false
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: hotwire-handbook-part-3
   full-title: Hotwire Handbook Part 3
   summary: Part 3 of the Hotwire Handbook looks at broadcasting updates with Turbo Streams, Inline Editing and more magic with Turbo Frames
   file-type: html
   publish-date: April 11
   publish-year: 2023
+  published: true
 
 - layout: blog
   author: Phil
@@ -20,6 +32,7 @@
   file-type: html
   publish-date: March 27
   publish-year: 2023
+  published: true
 
 - layout: blog
   author: Phil
@@ -30,6 +43,7 @@
   file-type: html
   publish-date: March 22
   publish-year: 2023
+  published: true
 
 - layout: blog
   author: Phil
@@ -40,6 +54,7 @@
   summary: My Hey renewal is coming up next week and I'm moving back to Gmail because Hey lost a lot of my emails and blamed me.
   publish-date: February 14
   publish-year: 2023
+  published: true
 
 - layout: blog
   author: Phil
@@ -52,6 +67,7 @@
   publish-year: 2022
   source: Ryalto
   link: 'https://developer.ryalto.group/blog/2022/rails-github-actions'
+  published: true
 
 - layout: blog
   author: Phil
@@ -64,6 +80,7 @@
   publish-year: 2022
   source: Ryalto
   link: 'https://developer.ryalto.group/blog/2022/engineering-principles'
+  published: true
 
 - layout: blog
   author: Phil
@@ -76,6 +93,7 @@
   publish-year: 2022
   source: Ryalto
   link: 'https://developer.ryalto.group/blog/2022/getting-into-ruby-rails'
+  published: true
 
 - layout: blog
   author: Phil
@@ -91,6 +109,7 @@
   publish-date: June 27
   publish-year: 2022
   card-color: orange
+  published: true
 
 - layout: blog
   author: Phil
@@ -105,6 +124,7 @@
   publish-year: 2022
   source: Ryalto
   link: 'https://developer.ryalto.group/blog/2022/upgrade-or-rebuild'
+  published: true
 
 - layout: blog
   author: Phil
@@ -119,6 +139,7 @@
   publish-year: 2022
   source: Ryalto
   link: 'https://developer.ryalto.group/blog/2022/admin-authorisation'
+  published: true
 
 - layout: blog
   author: Phil
@@ -130,6 +151,7 @@
   file-type: html
   publish-date: March 31
   publish-year: 2022
+  published: true
 
 - layout: blog
   author: Phil
@@ -141,6 +163,7 @@
   file-type: html
   publish-date: March 31
   publish-year: 2022
+  published: true
 
 - layout: blog
   author: Shona
@@ -152,6 +175,7 @@
   file-type: html
   publish-date: March 28
   publish-year: 2022
+  published: true
 
 - layout: blog
   author: Phil
@@ -163,6 +187,7 @@
   file-type: html
   publish-date: March 27
   publish-year: 2022
+  published: true
 
 - layout: blog
   author: Phil
@@ -176,6 +201,7 @@
   file-type: html
   publish-date: March 26
   publish-year: 2022
+  published: true
 
 - layout: blog
   short-title: hotwire-handbook-part-1
@@ -189,6 +215,7 @@
   publish-year: 2022
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2022/hotwire-handbook-part-1'
+  published: true
 
 - layout: blog
   short-title: extended-theme-switch
@@ -201,6 +228,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/extending-the-theme-switch.html'
+  published: true
 
 - layout: blog
   short-title: challenge
@@ -214,6 +242,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/challenge.html'
+  published: true
 
 - layout: blog
   short-title: theme-toggle
@@ -225,6 +254,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/theme-toggle.html'
+  published: true
 
 - layout: blog
   short-title: tooling
@@ -236,6 +266,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/tooling.html'
+  published: true
 
 - layout: blog
   short-title: build-a-feature
@@ -247,6 +278,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/build-a-feature.html'
+  published: true
 
 - layout: blog
   short-title: directory-of-expertise
@@ -258,6 +290,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/directory-of-expertise.html'
+  published: true
 
 - layout: blog
   short-title: welcome
@@ -269,6 +302,7 @@
   publish-year: 2021
   source: LILW
   link: 'https://developer.legaltech.wales/blog/phil/2021/welcome.html'
+  published: true
 
 - layout: blog
   short-title: thesummoner-original
@@ -280,6 +314,4 @@
   publish-year: 2018
   source: Mobilise
   link: 'https://www.mobilise.cloud/how-to-build-a-simple-serverless-app-to-send-a-text-message/'
-
-
-
+  published: true
