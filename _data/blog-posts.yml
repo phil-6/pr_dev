@@ -12,6 +12,17 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: turbo-frame-queue
+  full-title: Turbo Frame Loading Queue
+  summary: A simple queue for loading Turbo Frames in batches.
+  file-type: md
+  publish-date: July 7
+  publish-year: 2025
+  published: true
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: hotwire-handbook-part-3
   full-title: Hotwire Handbook Part 3
   summary: Part 3 of the Hotwire Handbook looks at broadcasting updates with Turbo Streams, Inline Editing and more magic with Turbo Frames
