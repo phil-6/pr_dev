@@ -14,7 +14,7 @@
   full-name: Phil Reynolds
   short-title: turbo-frame-queue
   full-title: Turbo Frame Loading Queue
-  summary: A simple queue for loading Turbo Frames in batches.
+  summary: A simple queue for loading Turbo Frames in batches. Useful when loading="lazy" will send too many requests.
   file-type: md
   publish-date: July 7
   publish-year: 2025

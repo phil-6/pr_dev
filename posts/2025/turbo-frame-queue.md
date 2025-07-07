@@ -1,3 +1,15 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: turbo-frame-queue
+full-title: Turbo Frame Loading Queue
+summary: A simple queue for loading Turbo Frames in batches. Useful when loading="lazy" will send too many requests.
+file-type: md
+publish-date: July 7
+publish-year: 2025
+published: true
+---
 # Simple Turbo Frame Queue Loading
 
 ### Why? What problem is this solving? Why not just use `loading="lazy"` ?
@@ -68,7 +80,7 @@ export default class extends Controller {
 
 ```
 
-With a 1s delay between each load, and the queue size set to 1s, it looks like this:
+With a 1s delay between each load, and the queue size set to 1, it looks like this:
 
 ![Turbo Frame Loading Queue Gif](/assets/images/turbo-frame-queue.gif)
 
