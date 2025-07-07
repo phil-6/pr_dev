@@ -25,6 +25,15 @@
   tech: HTML, CSS, JS
   github: https://github.com/phil-6/pr_dev/blob/main/_layouts/coffee-roasters.html
 
+- name: Savage Adventures
+  available: True
+  link: https://savage-adventures.com
+  year: 2019-2025
+  icon: mountain
+  description: Serverless, zero-cost marketing website for an adventure company.
+  tech: Previously HTML + CSS, now Jekyll
+  github: https://github.com/phil-6/savage-adventures/
+
 - name: Ryalto V4
   available: True
   link: https://developer.ryalto.group/features
@@ -140,15 +149,6 @@
   description: "Simple serverless dashboard Note: Data is not live"
   tech: Chart.JS
   github: https://github.com/phil-6/pr_dev/tree/main/dashboard
-
-- name: Savage Adventures
-  available: True
-  link: https://savage-adventures.com
-  year: 2019
-  icon: mountain
-  description: Serverless, zero-cost marketing website for an adventure company.
-  tech: Previously HTML + CSS, now Jekyll
-  github: https://github.com/phil-6/savage-adventures/tree/jekyll
 
 - name: Mobilise Digital
   available: False
