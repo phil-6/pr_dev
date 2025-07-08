@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battery Payback Calculator</title>
+  <link rel="stylesheet" href="/assets/css/battery-payback.css">
+  <script src="assets/js/battery-payback.js"></script>
+</head>
+<body>
+<header>
+  <h1>Battery Payback Calculator</h1>
+  <section class="explanation">
+    <p>
+      This calculator estimates the payback period and savings for a home battery system based on your half-hourly electricity usage data
+      and your chosen battery configuration.
+    </p>
+    <p>
+      <strong>What it does:</strong> The calculator uses your actual half-hourly readings for the last 12 months calculate how quickly a
+      specific battery in a residential ESS setup will earn its money back. It presumes charging the battery from the grid at off-peak
+      rates, and discharging during peak-rate periods to offset your most expensive usage. It takes into account any days where your usage
+      is greater than the battery capacity and you would end up drawing from the grid to balance. You can input your expected annual usage
+      growth. All calculations are based on your real usage patterns, so results are tailored to your home.
+    </p>
+    <p>
+      <strong>What it doesn't do:</strong> It does not consider any additional savings from solar generation or export tariffs.
+    </p>
+    <p>
+      <strong>Defaults:</strong> The default values are for a <a href="https://www.bimblesolar.com/Victron-MultiplusII-48-8000" target="_blank" rel="noopener">Victron Multiplus-II 48-8000</a> inverter, a
+      Cerbo GX, typical accessories, and a reasonable installation cost. The default tariff is set for Intelligent Octopus Go.
+    </p>
+    <p>
+      <strong>Disclaimer:</strong> This calculator is for informational purposes only and does not guarantee actual savings or payback
+      periods. Actual results may vary based on changes in energy prices, usage patterns, and other factors.
+    </p>
+    <p>
+      <strong>Privacy:</strong> This web page does not store or collect ANY data. All calculations are performed in your browser, and no
+      information is transmitted or stored. It's also open source, so you can review the code
+      <a href="https://github.com/phil-6/pr_dev/blob/main/assets/js/battery-payback.js">here</a>. If you have any concerns, questions or
+      suggestions, you can <a href="mailto:battery-payback-calculator@purpleriver.dev">drop me an email</a>.
+    </p>
+  </section>
+</header>
+<main>
+  <form id="constantsForm">
+    <div class="form-section">
+      <span class="form-section-title">Tariff Rates (per kWh)</span>
+      <div class="form-row">
+        <label>Cheap Rate (£): <input type="number" step="0.01" min="0" id="CHEAP_RATE" value="0.07" required></label>
+        <label>Peak Rate (£): <input type="number" step="0.01" min="0" id="PEAK_RATE" value="0.29" required></label>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section-title">Peak/Off-Peak Window</span>
+      <div class="form-row">
+        <label>Peak Start (HH:MM): <input type="text" pattern="^([01]?\d|2[0-3]):[0-5]\d$" id="PEAK_START" value="05:30" required></label>
+        <label>Peak End (HH:MM): <input type="text" pattern="^([01]?\d|2[0-3]):[0-5]\d$" id="PEAK_END" value="23:30" required></label>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section-title">Fixed Costs (£)</span>
+      <div class="form-row">
+        <label>Inverter Cost: <input type="number" min="0" id="INVERTER_COST" value="1270" required></label>
+        <label>Extras Cost: <input type="number" min="0" id="EXTRAS_COST" value="260" required></label>
+        <label>Install Cost: <input type="number" min="0" id="INSTALL_COST" value="2000" required></label>
+      </div>
+    </div>
+    <div class="form-section form-section-row">
+      <div class="form-section-col">
+        <span class="form-section-title">Battery Settings</span>
+        <div class="form-row">
+          <label>Usable Factor (0-1): <input type="number" step="0.01" min="0" max="1" id="BATTERY_USABLE_FACTOR" value="0.9" required></label>
+        </div>
+      </div>
+      <div class="form-section-col">
+        <span class="form-section-title">Annual Usage Growth</span>
+        <div class="form-row">
+          <label>Predicted Annual Usage Increase (%): <input type="number" step="0.1" min="0" max="20" id="ANNUAL_USAGE_GROWTH" value="1" required></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section-title">Inverter Limit</span>
+      <div class="form-row">
+        <label>Inverter Limit (VA): <input type="number" min="0" id="INVERTER_LIMIT_VA" value="5000" required></label>
+        <label>Inverter Efficiency (0-1): <input type="number" step="0.01" min="0" max="1" id="INVERTER_EFFICIENCY" value="0.97" required></label>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section-title">Battery Configurations</span>
+      <div class="form-row flex-col">
+        <div class="flex-row">
+          <strong class="battery-label">Battery 1</strong>
+          <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT1_CAP" value="16.1" required></label>
+          <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT1_WARRANTY" value="10" required></label>
+          <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT1_COST" value="2450" required></label>
+          <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT1_CYCLES" value="8000" required></label>
+        </div>
+        <div class="flex-row">
+          <strong class="battery-label">Battery 2</strong>
+          <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT2_CAP" value="16.1" required></label>
+          <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT2_WARRANTY" value="6" required></label>
+          <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT2_COST" value="1750" required></label>
+          <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT2_CYCLES" value="8000" required></label>
+        </div>
+        <div class="flex-row">
+          <strong class="battery-label">Battery 3</strong>
+          <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT3_CAP" value="32.1" required></label>
+          <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT3_WARRANTY" value="10" required></label>
+          <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT3_COST" value="3500" required></label>
+          <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT3_CYCLES" value="6000" required></label>
+        </div>
+        <div class="flex-row">
+          <strong class="battery-label">Battery 4</strong>
+          <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT4_CAP" value="20" required></label>
+          <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT4_WARRANTY" value="10" required></label>
+          <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT4_COST" value="6500" required></label>
+          <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT4_CYCLES" value="20000" required></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row usage-csv-info">
+      <div>
+        <strong>Usage CSV requirements:</strong><br>
+        Please upload a CSV file containing the <strong>last full 12 months</strong> of half-hourly readings exported from Octopus Energy. This can be downloaded from the bottom of the MyEnergy page on your Octopus account.<br>
+        The file must have the following columns:<br>
+        <code>Consumption (kwh), Start</code><br>
+        <br>
+        <em>Example:</em><br>
+        <code>
+          Consumption (kwh), Estimated Cost Inc. Tax (p),Start,End<br>
+          0.128000, 2.86, 2024-07-01T00:00:00+01:00, 2024-07-01T00:30:00+01:00<br>
+          0.158000, 3.53, 2024-07-01T00:30:00+01:00, 2024-07-01T01:00:00+01:00<br>
+          ...
+        </code>
+        <br>
+        Each row should represent a single half-hour period.
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Usage CSV File (required):</label> <input type="file" id="csvFile" accept=".csv" required>
+    </div>
+    <button type="submit" id="calculateBtn">Calculate</button>
+    <span class="error" id="formError"></span>
+  </form>
+
+  <section class="usage-stats-container">
+    <div class="usage-stats hidden" id="usageStats">
+      <div class="usage-stats-title">Annual Usage Analytics</div>
+      <div class="usage-stats-table-vertical">
+        <div class="usage-stats-row"><div class="usage-stats-label">Days Analysed</div><div id="usageStatsDaysAnalysed"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Avg Daily Usage</div><div id="usageStatsAvgDaily"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Total Usage</div><div id="usageStatsTotalUsage"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Total Peak Usage</div><div id="usageStatsTotalPeak"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Total Offpeak Usage</div><div id="usageStatsTotalOffpeak"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Days Peak > 5kWh</div><div id="usageStatsDaysAbove5"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Days Peak > 10kWh</div><div id="usageStatsDaysAbove10"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Days Peak > 15kWh</div><div id="usageStatsDaysAbove15"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Days Peak > 20kWh</div><div id="usageStatsDaysAbove20"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Max Daily Usage</div><div id="usageStatsMaxDaily"></div></div>
+        <div class="usage-stats-row"><div class="usage-stats-label">Min Daily Usage</div><div id="usageStatsMinDaily"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results hidden" id="results">
+    <div class="results-list">
+      <div class="results-header">
+        <div class="results-cell">Battery</div>
+        <div class="results-cell">Total Cost</div>
+        <div class="results-cell">First Year Savings</div>
+        <div class="results-cell">Warranty (years)</div>
+        <div class="results-cell">Savings over Warranty</div>
+        <div class="results-cell">Net Savings Warranty</div>
+        <div class="results-cell">Payback (years)</div>
+        <div class="results-cell">Annual days battery is drained</div>
+        <div class="results-cell">Annual Cycles</div>
+        <div class="results-cell">Savings over Lifetime</div>
+      </div>
+      <div id="resultsBody"></div>
+    </div>
+    <div class="results-explanation">
+      <strong>Explanation of Terms:</strong>
+      <ul>
+        <li><strong>Battery</strong>: The battery configuration (capacity and cost).</li>
+        <li><strong>Total Cost</strong>: The total installed cost of the battery system (battery + inverter + extras + install).</li>
+        <li><strong>First Year Savings</strong>: Estimated savings in the first year of use, based on your usage data.</li>
+        <li><strong>Warranty (years)</strong>: The manufacturer's warranty period for the battery.</li>
+        <li><strong>Savings over Warranty</strong>: Total estimated savings over the full warranty period.</li>
+        <li><strong>Net Savings Warranty</strong>: Total savings over the warranty period minus the total system cost.</li>
+        <li><strong>Payback (years)</strong>: Estimated time to recover the total system cost from savings.</li>
+        <li><strong>Annual days battery is drained</strong>: Number of days per year when your usage exceeds the battery's usable capacity.</li>
+        <li><strong>Annual Cycles</strong>: Estimated number of full battery cycles per year.</li>
+        <li><strong>Savings over Lifetime</strong>: Projected savings over the battery's rated cycle life (not limited by warranty).</li>
+      </ul>
+    </div>
+    <div id="noResults" class="hidden">No results.</div>
+    <div id="workingMsg" class="hidden">Working</div>
+  </section>
+
+</main>
+</body>
+</html>

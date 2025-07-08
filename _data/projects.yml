@@ -1,3 +1,12 @@
+- name: Battery Payback Calculator
+  available: True
+  link: /battery-payback
+  year: 2025
+  icon: bolt
+  description: A tool that calculates the return on investment of residental battery storage based on actual energy usage and battery options.
+  tech: HTML, CSS, JS
+  github: https://github.com/phil-6/pr_dev/blob/main/_layouts/battery-payback.html
+
 - name: Radius Contractors
   available: True
   link: https://radius-contractors.purpleriver.dev/
