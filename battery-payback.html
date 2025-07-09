@@ -69,13 +69,6 @@
     </div>
     <div class="form-section form-section-row">
       <div class="form-section-col">
-        <h3 class="form-section-title">Battery Settings</h3>
-        <div class="form-row">
-          <label>Usable Factor / DoD (0-1): <input type="number" step="0.01" min="0" max="1" id="BATTERY_USABLE_FACTOR" value="0.9"
-                                                   required></label>
-        </div>
-      </div>
-      <div class="form-section-col">
         <h3 class="form-section-title">Annual Usage Growth</h3>
         <div class="form-row">
           <label>Predicted Annual Usage Increase (%): <input type="number" step="0.1" min="0" max="20" id="ANNUAL_USAGE_GROWTH" value="1"
@@ -108,27 +101,19 @@
           </div>
           <div class="battery-config-explanation-item">
             <h5>Rated Cycles</h5>
-            <p>
-              The number of full charge/discharge cycles the battery is rated for.
-            </p>
+            <p>The number of full charge/discharge cycles the battery is rated for.</p>
           </div>
           <div class="battery-config-explanation-item">
             <h5>Warranty (years)</h5>
-            <p>
-              The manufacturer's warranty period for the battery.
-            </p>
+            <p>The manufacturer's warranty period for the battery.</p>
           </div>
           <div class="battery-config-explanation-item">
             <h5>Cost (£)</h5>
-            <p>
-              The purchase price of the battery.
-            </p>
+            <p>The purchase price of the battery.</p>
           </div>
           <div class="battery-config-explanation-item">
             <h5>Extra Costs (£)</h5>
-            <p>
-              Any additional costs associated with this battery (e.g. installation, inverter, accessories, etc).
-            </p>
+            <p>Any additional costs associated with this battery (e.g. installation, inverter, accessories, etc).</p>
           </div>
         </div>
       </details>
@@ -136,82 +121,69 @@
         <!-- Battery 1 -->
         <div class="battery-config-block">
           <div class="flex-row">
-            <h4 class="battery-label">Battery 1</h4>
-            <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT1_CAP" value="16.1" required></label>
-            <label class="battery-config-label">Capacity (Ah): <input type="number" step="0.1" min="0" id="BAT1_AH" value="314"
-                                                                      required></label>
-            <label class="battery-config-label">Charger Rating (A): <input type="number" step="0.1" min="0" id="BAT1_CHG" value="100"
-                                                                           required></label>
-            <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT1_CYCLES" value="8000" required></label>
+            <div class="battery-title">Battery 1</div>
+            <div class="battery-field"><label for="BAT1_CAP">Capacity (kWh)</label><input type="number" step="0.1" min="0" id="BAT1_CAP" value="16.1" required></div>
+            <div class="battery-field"><label for="BAT1_AH">Capacity (Ah)</label><input type="number" step="0.1" min="0" id="BAT1_AH" value="314" required></div>
+            <div class="battery-field"><label for="BAT1_CHG">Charger Rating (A)</label><input type="number" step="0.1" min="0" id="BAT1_CHG" value="100" required></div>
+            <div class="battery-field"><label for="BAT1_CYCLES">Rated Cycles</label><input type="number" min="1" id="BAT1_CYCLES" value="8000" required></div>
           </div>
           <div class="flex-row">
-            <span class="battery-label spacer"></span>
-            <label class="battery-config-label spacer"></label>
-            <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT1_WARRANTY" value="10"
-                                                                         required></label>
-            <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT1_COST" value="2450" required></label>
-            <label class="battery-config-label">Extra Costs (£): <input type="number" min="0" id="BAT1_EXTRA" value="2800" required></label>
+            <div class="battery-field spacer"></div>
+            <div class="battery-field"><label for="BAT1_DOD">Depth of Discharge (%)</label><input type="number" step="1" min="0" max="100" id="BAT1_DOD" value="80" required></div>
+            <div class="battery-field"><label for="BAT1_WARRANTY">Warranty (years)</label><input type="number" min="1" id="BAT1_WARRANTY" value="10" required></div>
+            <div class="battery-field"><label for="BAT1_COST">Cost (£)</label><input type="number" min="0" id="BAT1_COST" value="2450" required></div>
+            <div class="battery-field"><label for="BAT1_EXTRA">Extra Costs (£)</label><input type="number" min="0" id="BAT1_EXTRA" value="2800" required></div>
           </div>
         </div>
         <!-- Battery 2 -->
         <div class="battery-config-block">
           <div class="flex-row">
-            <h4 class="battery-label">Battery 2</h4>
-            <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT2_CAP" value="16.1" required></label>
-            <label class="battery-config-label">Capacity (Ah): <input type="number" step="0.1" min="0" id="BAT2_AH" value="314"
-                                                                      required></label>
-            <label class="battery-config-label">Charger Rating (A): <input type="number" step="0.1" min="0" id="BAT2_CHG" value="100"
-                                                                           required></label>
-            <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT2_CYCLES" value="8000" required></label>
+            <div class="battery-title">Battery 2</div>
+            <div class="battery-field"><label for="BAT2_CAP">Capacity (kWh)</label><input type="number" step="0.1" min="0" id="BAT2_CAP" value="16.1" required></div>
+            <div class="battery-field"><label for="BAT2_AH">Capacity (Ah)</label><input type="number" step="0.1" min="0" id="BAT2_AH" value="314" required></div>
+            <div class="battery-field"><label for="BAT2_CHG">Charger Rating (A)</label><input type="number" step="0.1" min="0" id="BAT2_CHG" value="100" required></div>
+            <div class="battery-field"><label for="BAT2_CYCLES">Rated Cycles</label><input type="number" min="1" id="BAT2_CYCLES" value="8000" required></div>
           </div>
           <div class="flex-row">
-            <span class="battery-label spacer"></span>
-            <label class="battery-config-label spacer"></label>
-            <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT2_WARRANTY" value="6"
-                                                                         required></label>
-            <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT2_COST" value="1750" required></label>
-            <label class="battery-config-label">Extra Costs (£): <input type="number" min="0" id="BAT2_EXTRA" value="2800" required></label>
+            <div class="battery-field spacer"></div>
+            <div class="battery-field"><label for="BAT2_DOD">Depth of Discharge (%)</label><input type="number" step="1" min="0" max="100" id="BAT2_DOD" value="80" required></div>
+            <div class="battery-field"><label for="BAT2_WARRANTY">Warranty (years)</label><input type="number" min="1" id="BAT2_WARRANTY" value="6" required></div>
+            <div class="battery-field"><label for="BAT2_COST">Cost (£)</label><input type="number" min="0" id="BAT2_COST" value="1750" required></div>
+            <div class="battery-field"><label for="BAT2_EXTRA">Extra Costs (£)</label><input type="number" min="0" id="BAT2_EXTRA" value="2800" required></div>
           </div>
         </div>
         <!-- Battery 3 -->
         <div class="battery-config-block">
           <div class="flex-row">
-            <h4 class="battery-label">Battery 3</h4>
-            <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT3_CAP" value="32.1" required></label>
-            <label class="battery-config-label">Capacity (Ah): <input type="number" step="0.1" min="0" id="BAT3_AH" value="628"
-                                                                      required></label>
-            <label class="battery-config-label">Charger Rating (A): <input type="number" step="0.1" min="0" id="BAT3_CHG" value="110"
-                                                                           required></label>
-            <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT3_CYCLES" value="6000" required></label>
+            <div class="battery-title">Battery 3</div>
+            <div class="battery-field"><label for="BAT3_CAP">Capacity (kWh)</label><input type="number" step="0.1" min="0" id="BAT3_CAP" value="32.1" required></div>
+            <div class="battery-field"><label for="BAT3_AH">Capacity (Ah)</label><input type="number" step="0.1" min="0" id="BAT3_AH" value="628" required></div>
+            <div class="battery-field"><label for="BAT3_CHG">Charger Rating (A)</label><input type="number" step="0.1" min="0" id="BAT3_CHG" value="110" required></div>
+            <div class="battery-field"><label for="BAT3_CYCLES">Rated Cycles</label><input type="number" min="1" id="BAT3_CYCLES" value="6000" required></div>
           </div>
           <div class="flex-row">
-            <span class="battery-label spacer"></span>
-            <label class="battery-config-label spacer"></label>
-            <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT3_WARRANTY" value="10"
-                                                                         required></label>
-            <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT3_COST" value="3500" required></label>
-            <label class="battery-config-label">Extra Costs (£): <input type="number" min="0" id="BAT3_EXTRA" value="3500" required></label>
+            <div class="battery-field spacer"></div>
+            <div class="battery-field"><label for="BAT3_DOD">Depth of Discharge (%)</label><input type="number" step="1" min="0" max="100" id="BAT3_DOD" value="80" required></div>
+            <div class="battery-field"><label for="BAT3_WARRANTY">Warranty (years)</label><input type="number" min="1" id="BAT3_WARRANTY" value="10" required></div>
+            <div class="battery-field"><label for="BAT3_COST">Cost (£)</label><input type="number" min="0" id="BAT3_COST" value="3500" required></div>
+            <div class="battery-field"><label for="BAT3_EXTRA">Extra Costs (£)</label><input type="number" min="0" id="BAT3_EXTRA" value="3500" required></div>
           </div>
         </div>
         <!-- Battery 4 -->
         <div class="battery-config-block">
           <div class="flex-row">
-            <h4 class="battery-label">Battery 4</h4>
-            <label class="battery-config-label">Capacity (kWh): <input type="number" step="0.1" min="0" id="BAT4_CAP" value="20"
-                                                                       required></label>
-            <label class="battery-config-label">Capacity (Ah): <input type="number" step="0.1" min="0" id="BAT4_AH" value="400"
-                                                                      required></label>
-            <label class="battery-config-label">Charger Rating (A): <input type="number" step="0.1" min="0" id="BAT4_CHG" value="80"
-                                                                           required></label>
-            <label class="battery-config-label">Rated Cycles: <input type="number" min="1" id="BAT4_CYCLES" value="20000" required></label>
+            <div class="battery-title">Battery 4</div>
+            <div class="battery-field"><label for="BAT4_CAP">Capacity (kWh)</label><input type="number" step="0.1" min="0" id="BAT4_CAP" value="20" required></div>
+            <div class="battery-field"><label for="BAT4_AH">Capacity (Ah)</label><input type="number" step="0.1" min="0" id="BAT4_AH" value="400" required></div>
+            <div class="battery-field"><label for="BAT4_CHG">Charger Rating (A)</label><input type="number" step="0.1" min="0" id="BAT4_CHG" value="80" required></div>
+            <div class="battery-field"><label for="BAT4_CYCLES">Rated Cycles</label><input type="number" min="1" id="BAT4_CYCLES" value="20000" required></div>
           </div>
           <div class="flex-row">
-            <span class="battery-label spacer"></span>
-            <label class="battery-config-label spacer"></label>
-            <label class="battery-config-label">Warranty (years): <input type="number" min="1" id="BAT4_WARRANTY" value="10"
-                                                                         required></label>
-            <label class="battery-config-label">Cost (£): <input type="number" min="0" id="BAT4_COST" value="6500" required></label>
-            <label class="battery-config-label">Extra Costs (£): <input type="number" min="0" id="BAT4_EXTRA" value="2500" required></label>
+            <div class="battery-field spacer"></div>
+            <div class="battery-field"><label for="BAT4_DOD">Depth of Discharge (%)</label><input type="number" step="1" min="0" max="100" id="BAT4_DOD" value="90" required></div>
+            <div class="battery-field"><label for="BAT4_WARRANTY">Warranty (years)</label><input type="number" min="1" id="BAT4_WARRANTY" value="10" required></div>
+            <div class="battery-field"><label for="BAT4_COST">Cost (£)</label><input type="number" min="0" id="BAT4_COST" value="6500" required></div>
+            <div class="battery-field"><label for="BAT4_EXTRA">Extra Costs (£)</label><input type="number" min="0" id="BAT4_EXTRA" value="2500" required></div>
           </div>
         </div>
       </div>
@@ -310,6 +282,7 @@
         <div class="results-cell">Savings over Warranty</div>
         <div class="results-cell">Net Savings Warranty</div>
         <div class="results-cell">Payback (years)</div>
+        <div class="results-cell">Charge Time vs Off-peak</div>
         <div class="results-cell">Annual days battery is drained</div>
         <div class="results-cell">Annual Cycles</div>
         <div class="results-cell">Savings over Lifetime</div>

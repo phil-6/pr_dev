@@ -6,7 +6,6 @@ let CHEAP_RATE = 0.07;
 let PEAK_RATE = 0.29;
 let PEAK_START = {hour: 5, min: 30};
 let PEAK_END = {hour: 23, min: 30};
-let BATTERY_USABLE_FACTOR = 0.9;
 let ANNUAL_USAGE_GROWTH = 1; // percent, default
 let BATTERIES = [
     {
@@ -85,25 +84,27 @@ function parsePeakTime(timeString) {
 
 function parseBatteriesFromForm() {
     const batFields = [
-        {cap: 'BAT1_CAP', ah: 'BAT1_AH', chg: 'BAT1_CHG', war: 'BAT1_WARRANTY', cost: 'BAT1_COST', extra: 'BAT1_EXTRA', cyc: 'BAT1_CYCLES'},
-        {cap: 'BAT2_CAP', ah: 'BAT2_AH', chg: 'BAT2_CHG', war: 'BAT2_WARRANTY', cost: 'BAT2_COST', extra: 'BAT2_EXTRA', cyc: 'BAT2_CYCLES'},
-        {cap: 'BAT3_CAP', ah: 'BAT3_AH', chg: 'BAT3_CHG', war: 'BAT3_WARRANTY', cost: 'BAT3_COST', extra: 'BAT3_EXTRA', cyc: 'BAT3_CYCLES'},
-        {cap: 'BAT4_CAP', ah: 'BAT4_AH', chg: 'BAT4_CHG', war: 'BAT4_WARRANTY', cost: 'BAT4_COST', extra: 'BAT4_EXTRA', cyc: 'BAT4_CYCLES'}
+        {cap: 'BAT1_CAP', ah: 'BAT1_AH', chg: 'BAT1_CHG', dod: 'BAT1_DOD', war: 'BAT1_WARRANTY', cost: 'BAT1_COST', extra: 'BAT1_EXTRA', cyc: 'BAT1_CYCLES'},
+        {cap: 'BAT2_CAP', ah: 'BAT2_AH', chg: 'BAT2_CHG', dod: 'BAT2_DOD', war: 'BAT2_WARRANTY', cost: 'BAT2_COST', extra: 'BAT2_EXTRA', cyc: 'BAT2_CYCLES'},
+        {cap: 'BAT3_CAP', ah: 'BAT3_AH', chg: 'BAT3_CHG', dod: 'BAT3_DOD', war: 'BAT3_WARRANTY', cost: 'BAT3_COST', extra: 'BAT3_EXTRA', cyc: 'BAT3_CYCLES'},
+        {cap: 'BAT4_CAP', ah: 'BAT4_AH', chg: 'BAT4_CHG', dod: 'BAT4_DOD', war: 'BAT4_WARRANTY', cost: 'BAT4_COST', extra: 'BAT4_EXTRA', cyc: 'BAT4_CYCLES'}
     ];
     return batFields.map((fields, idx) => {
         const capacity = parseFloat(document.getElementById(fields.cap).value);
         const capacity_ah = parseFloat(document.getElementById(fields.ah).value);
         const charger_rating = parseFloat(document.getElementById(fields.chg).value);
+        const dod = parseFloat(document.getElementById(fields.dod).value) / 100;
         const warranty = parseInt(document.getElementById(fields.war).value);
         const cost = parseFloat(document.getElementById(fields.cost).value);
         const extra = parseFloat(document.getElementById(fields.extra).value);
         const cycles = parseInt(document.getElementById(fields.cyc).value);
-        if ([capacity, capacity_ah, charger_rating, warranty, cost, extra, cycles].some(value => isNaN(value) || value < 0)) return null;
+        if ([capacity, capacity_ah, charger_rating, dod, warranty, cost, extra, cycles].some(value => isNaN(value) || value < 0)) return null;
         return {
             name: `${capacity}kWh @ £${cost}`,
             capacity_kwh: capacity,
             capacity_ah: capacity_ah,
             charger_rating: charger_rating,
+            dod: dod,
             warranty_years: warranty,
             battery_only_cost: cost,
             extra_costs: extra,
@@ -126,8 +127,6 @@ function updateConstantsFromForm() {
         PEAK_END = parsePeakTime(peakEndString);
         if (!PEAK_START || !PEAK_END) throw new Error('Invalid peak time format');
 
-        BATTERY_USABLE_FACTOR = parseFloat(document.getElementById('BATTERY_USABLE_FACTOR').value);
-        if (isNaN(BATTERY_USABLE_FACTOR) || BATTERY_USABLE_FACTOR < 0 || BATTERY_USABLE_FACTOR > 1) throw new Error('Invalid battery usable factor');
         const batteries = parseBatteriesFromForm();
         if (batteries.length === 0) throw new Error('Invalid battery configuration(s)');
         BATTERIES = batteries;
@@ -208,7 +207,7 @@ function baselineCost(data) {
 
 function batterySavings(battery, data) {
     const totalBatteryCost = battery.battery_only_cost + battery.extra_costs;
-    const usableCapacity = +(battery.capacity_kwh * BATTERY_USABLE_FACTOR).toFixed(2);
+    const usableCapacity = +(battery.capacity_kwh * battery.dod).toFixed(2);
     let cumulativeSavings = 0, warrantySavings = 0, paybackYears = null, firstYearSavings = null;
 
     for (let year = 1; year <= battery.warranty_years || !paybackYears; year++) {
@@ -241,7 +240,7 @@ function batterySavings(battery, data) {
 }
 
 function batteryEmptyDays(battery, data) {
-    const usable = battery.capacity_kwh * BATTERY_USABLE_FACTOR;
+    const usable = battery.capacity_kwh * battery.dod;
     // Group by day
     const byDay = {};
     data.forEach(entry => {
@@ -258,7 +257,7 @@ function batteryEmptyDays(battery, data) {
 }
 
 function calculateBatteryCycles(battery, data) {
-    const usable = battery.capacity_kwh * BATTERY_USABLE_FACTOR;
+    const usable = battery.capacity_kwh * battery.dod;
     let cumulative = 0, cycles = 0;
     data.forEach(entry => {
         if (!isPeakTime(entry.timestamp)) return;
@@ -272,6 +271,28 @@ function calculateBatteryCycles(battery, data) {
     return cycles;
 }
 
+function calculateChargeTimeVsOffpeak(battery, peak_start, peak_end) {
+    // Calculate charge time in hours (factoring DoD and 2.5% inefficiency)
+    const ah = battery.capacity_ah;
+    const charger_a = battery.charger_rating;
+    const dod = battery.dod;
+    if (!ah || !charger_a || charger_a === 0 || !dod) return {chargeTime: null, offpeakHours: null, warning: 'N/A'};
+    const charge_time = (ah * dod) / charger_a / 0.975;
+    // Calculate off-peak window duration in hours
+    let start = peak_end.hour + peak_end.min / 60;
+    let end = peak_start.hour + peak_start.min / 60;
+    let offpeak_hours = (end > start) ? (24 - start + end) : (end - start);
+    if (offpeak_hours <= 0) offpeak_hours += 24;
+    // If offpeak window is 0, fallback to 0
+    offpeak_hours = Math.round(offpeak_hours * 100) / 100;
+    const warning = charge_time > offpeak_hours ? '⚠️ Too long for off-peak window' : '';
+    return {
+        chargeTime: Math.round(charge_time * 100) / 100,
+        offpeakHours: offpeak_hours,
+        warning
+    };
+}
+
 function modelBatteryEconomics(batteries, data) {
     return batteries.map(battery => {
         const totalCost = battery.battery_only_cost + battery.extra_costs;
@@ -280,6 +301,11 @@ function modelBatteryEconomics(batteries, data) {
         const annualBatteryEmptyDays = batteryEmptyDays(battery, data);
         const annualBatteryCycles = calculateBatteryCycles(battery, data);
         const savingsOverLifetime = annualBatteryCycles > 0 ? +((battery.rated_cycles / annualBatteryCycles) * savingStats.first_year_savings).toFixed(2) : 0;
+        const chargeInfo = calculateChargeTimeVsOffpeak(
+            battery,
+            PEAK_START,
+            PEAK_END
+        );
         return {
             name: battery.name,
             total_cost: totalCost,
@@ -288,6 +314,7 @@ function modelBatteryEconomics(batteries, data) {
             savings_over_warranty: savingStats.savings_over_warranty,
             net_savings_warranty: netSavingsWarranty,
             payback_years: savingStats.payback_years,
+            charge_time_vs_offpeak: chargeInfo,
             annual_battery_empty_days: annualBatteryEmptyDays,
             annual_battery_cycles: annualBatteryCycles,
             savings_over_lifetime: savingsOverLifetime
@@ -376,6 +403,12 @@ function showResults(results, usageStats) {
     results.forEach(result => {
         const row = document.createElement('div');
         row.className = 'results-row';
+        let chargeCell = '';
+        if (result.charge_time_vs_offpeak.chargeTime !== null) {
+            chargeCell = `${result.charge_time_vs_offpeak.chargeTime}h <br>(off-peak: ${result.charge_time_vs_offpeak.offpeakHours}h) <span class="charge-warning">${result.charge_time_vs_offpeak.warning}</span>`;
+        } else {
+            chargeCell = '<span class="charge-warning">N/A</span>';
+        }
         row.innerHTML = `
             <div class="results-cell">${result.name}</div>
             <div class="results-cell">£${result.total_cost}</div>
@@ -384,6 +417,7 @@ function showResults(results, usageStats) {
             <div class="results-cell">£${result.savings_over_warranty}</div>
             <div class="results-cell">£${result.net_savings_warranty}</div>
             <div class="results-cell">${result.payback_years}</div>
+            <div class="results-cell">${chargeCell}</div>
             <div class="results-cell">${result.annual_battery_empty_days}</div>
             <div class="results-cell">${result.annual_battery_cycles}</div>
             <div class="results-cell">£${result.savings_over_lifetime}</div>
