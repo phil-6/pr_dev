@@ -52,87 +52,150 @@ body {
     margin-bottom: 2em;
 
     .form-section {
-      margin-bottom: 1em;
-    }
-
-    .form-section-title {
-      font-weight: bold;
-      margin-bottom: 0.5em;
-      display: block;
-      font-size: 1.1em;
-    }
-
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1em;
-      margin-bottom: 0.7em;
-    }
-
-    .flex-row {
-      display: flex;
-      flex-direction: row;
-      gap: 1em;
-      align-items: flex-end;
-      width: 100%;
-    }
-
-    .flex-col {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
-    }
-
-    .battery-label {
-      width: 90px;
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-
-    .battery-config-label {
-      flex: 1 1 0;
-      min-width: 90px;
-      margin-right: 0.1em;
-    }
-
-    label {
-      display: flex;
-      flex-direction: column;
-      font-size: 1em;
-      font-weight: 500;
-      gap: 0.1em;
-    }
-
-    input[type="number"],
-    input[type="text"],
-    input[type="file"] {
-      border: 1px solid var(--border);
-      border-radius: 0.4em;
-      padding: 0.4em 0.7em;
-      font-size: 1em;
-      background: #fff;
-      margin-top: 0.2em;
       margin-bottom: 0.2em;
-      transition: border 0.2s;
+
+      .form-section-title {
+        font-weight: bold;
+        margin-bottom: 0.5em;
+        display: block;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 1em;
+        margin-bottom: 0.7em;
+
+        label {
+          flex: 1 1 0;
+          max-width: 240px;
+        }
+
+        &.flex-col {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5em;
+
+          .battery-config-block {
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.2em;
+            padding-bottom: 1.2em;
+
+            .flex-row {
+              display: flex;
+              flex-direction: row;
+              gap: 1em;
+              align-items: flex-start;
+              width: 100%;
+            }
+
+            .battery-label {
+              width: 110px;
+              font-weight: bold;
+              flex-shrink: 0;
+              align-self: flex-start;
+              margin-top: 0.2em;
+            }
+
+            .battery-config-label {
+              flex: 1 1 0;
+              min-width: 120px;
+              max-width: 180px;
+              margin-right: 0.1em;
+            }
+
+            .battery-config-label.spacer {
+              flex: 1 1 0;
+              min-width: 120px;
+              max-width: 180px;
+              margin-right: 0.1em;
+              visibility: hidden;
+            }
+          }
+        }
+      }
+
+      &.form-section-row {
+        display: flex;
+        flex-direction: row;
+        gap: 2em;
+        align-items: flex-start;
+
+        .form-section-col {
+          flex: 1 1 0;
+          min-width: 220px;
+          max-width: 400px;
+          display: flex;
+          flex-direction: column;
+
+          label {
+            flex: 1 1 0;
+            max-width: 320px;
+          }
+        }
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        font-size: 1em;
+        font-weight: 500;
+        gap: 0.1em;
+        width: 50%;
+        min-width: 140px;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      input[type="file"] {
+        border: 1px solid var(--border);
+        border-radius: 0.4em;
+        padding: 0.4em 0.7em;
+        font-size: 1em;
+        background: #fff;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        transition: border 0.2s;
+      }
+
+      input[type="number"]:focus,
+      input[type="text"]:focus {
+        border: 1.5px solid var(--button-bg);
+        outline: none;
+      }
+
+      input[type="file"] {
+        padding: 0.2em 0.2em;
+        background: none;
+      }
+
+      input[type="number"],
+      input[type="text"] {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
     }
 
-    input[type="number"]:focus,
-    input[type="text"]:focus {
-      border: 1.5px solid var(--button-bg);
-      outline: none;
-    }
+    button#calculateBtn {
+      background: var(--button-bg);
+      color: var(--ink-dark);
+      border: none;
+      border-radius: 2em;
+      padding: 0.6em 2em;
+      font-size: 1.1em;
+      font-weight: bold;
+      box-shadow: 0 4px 12px var(--button-shadow);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      margin-left: 1em;
 
-    input[type="file"] {
-      padding: 0.2em 0.2em;
-      background: none;
-    }
-
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
+      &:hover, &:focus {
+        background: var(--button-bg-hover);
+        color: var(--ink-dark-hover);
+        box-shadow: 0 2px 8px var(--button-shadow-hover);
+      }
     }
   }
 
@@ -261,41 +324,6 @@ body {
     #workingMsg {
       margin-top: 1em;
     }
-  }
-
-  button#calculateBtn {
-    background: var(--button-bg);
-    color: var(--ink-dark);
-    border: none;
-    border-radius: 2em;
-    padding: 0.6em 2em;
-    font-size: 1.1em;
-    font-weight: bold;
-    box-shadow: 0 4px 12px var(--button-shadow);
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    margin-left: 1em;
-
-    &:hover, &:focus {
-      background: var(--button-bg-hover);
-      color: var(--ink-dark-hover);
-      box-shadow: 0 2px 8px var(--button-shadow-hover);
-    }
-  }
-
-  .form-section-row {
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
-    align-items: flex-start;
-  }
-
-  .form-section-col {
-    flex: 1 1 0;
-    min-width: 220px;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
   }
 }
 

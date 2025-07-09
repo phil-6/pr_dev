@@ -6,10 +6,6 @@ let CHEAP_RATE = 0.07;
 let PEAK_RATE = 0.29;
 let PEAK_START = {hour: 5, min: 30};
 let PEAK_END = {hour: 23, min: 30};
-let INVERTER_COST = 1270;
-let EXTRAS_COST = 80;
-let INSTALL_COST = 2000;
-let FIXED_COSTS = INVERTER_COST + EXTRAS_COST + INSTALL_COST;
 let BATTERY_USABLE_FACTOR = 0.9;
 let INVERTER_LIMIT_KW = (5000 * 0.97) / 1000;
 let ANNUAL_USAGE_GROWTH = 1; // percent, default
@@ -19,6 +15,7 @@ let BATTERIES = [
         capacity_kwh: 16.1,
         warranty_years: 10,
         battery_only_cost: 2450,
+        extra_cost: 2800,
         rated_cycles: 8000
     },
     {
@@ -26,6 +23,7 @@ let BATTERIES = [
         capacity_kwh: 16.1,
         warranty_years: 6,
         battery_only_cost: 1750,
+        extra_cost: 2800,
         rated_cycles: 8000
     },
     {
@@ -33,6 +31,7 @@ let BATTERIES = [
         capacity_kwh: 32.1,
         warranty_years: 10,
         battery_only_cost: 3500,
+        extra_cost: 3500,
         rated_cycles: 6000
     }
 ];
@@ -87,22 +86,28 @@ function parsePeakTime(timeString) {
 
 function parseBatteriesFromForm() {
     const batFields = [
-        {cap: 'BAT1_CAP', war: 'BAT1_WARRANTY', cost: 'BAT1_COST', cyc: 'BAT1_CYCLES'},
-        {cap: 'BAT2_CAP', war: 'BAT2_WARRANTY', cost: 'BAT2_COST', cyc: 'BAT2_CYCLES'},
-        {cap: 'BAT3_CAP', war: 'BAT3_WARRANTY', cost: 'BAT3_COST', cyc: 'BAT3_CYCLES'},
-        {cap: 'BAT4_CAP', war: 'BAT4_WARRANTY', cost: 'BAT4_COST', cyc: 'BAT4_CYCLES'}
+        {cap: 'BAT1_CAP', ah: 'BAT1_AH', chg: 'BAT1_CHG', war: 'BAT1_WARRANTY', cost: 'BAT1_COST', extra: 'BAT1_EXTRA', cyc: 'BAT1_CYCLES'},
+        {cap: 'BAT2_CAP', ah: 'BAT2_AH', chg: 'BAT2_CHG', war: 'BAT2_WARRANTY', cost: 'BAT2_COST', extra: 'BAT2_EXTRA', cyc: 'BAT2_CYCLES'},
+        {cap: 'BAT3_CAP', ah: 'BAT3_AH', chg: 'BAT3_CHG', war: 'BAT3_WARRANTY', cost: 'BAT3_COST', extra: 'BAT3_EXTRA', cyc: 'BAT3_CYCLES'},
+        {cap: 'BAT4_CAP', ah: 'BAT4_AH', chg: 'BAT4_CHG', war: 'BAT4_WARRANTY', cost: 'BAT4_COST', extra: 'BAT4_EXTRA', cyc: 'BAT4_CYCLES'}
     ];
     return batFields.map((fields, idx) => {
         const capacity = parseFloat(document.getElementById(fields.cap).value);
+        const capacity_ah = parseFloat(document.getElementById(fields.ah).value);
+        const charger_rating = parseFloat(document.getElementById(fields.chg).value);
         const warranty = parseInt(document.getElementById(fields.war).value);
         const cost = parseFloat(document.getElementById(fields.cost).value);
+        const extra = parseFloat(document.getElementById(fields.extra).value);
         const cycles = parseInt(document.getElementById(fields.cyc).value);
-        if ([capacity, warranty, cost, cycles].some(value => isNaN(value) || value < 0)) return null;
+        if ([capacity, capacity_ah, charger_rating, warranty, cost, extra, cycles].some(value => isNaN(value) || value < 0)) return null;
         return {
             name: `${capacity}kWh @ £${cost}`,
             capacity_kwh: capacity,
+            capacity_ah: capacity_ah,
+            charger_rating: charger_rating,
             warranty_years: warranty,
             battery_only_cost: cost,
+            extra_costs: extra,
             rated_cycles: cycles
         };
     }).filter(battery => battery);
@@ -121,12 +126,6 @@ function updateConstantsFromForm() {
         PEAK_START = parsePeakTime(peakStartString);
         PEAK_END = parsePeakTime(peakEndString);
         if (!PEAK_START || !PEAK_END) throw new Error('Invalid peak time format');
-
-        INVERTER_COST = parseFloat(document.getElementById('INVERTER_COST').value);
-        EXTRAS_COST = parseFloat(document.getElementById('EXTRAS_COST').value);
-        INSTALL_COST = parseFloat(document.getElementById('INSTALL_COST').value);
-        if ([INVERTER_COST, EXTRAS_COST, INSTALL_COST].some(value => isNaN(value) || value < 0)) throw new Error('Invalid fixed costs');
-        FIXED_COSTS = INVERTER_COST + EXTRAS_COST + INSTALL_COST;
 
         const inverterLimitVA = parseFloat(document.getElementById('INVERTER_LIMIT_VA').value);
         const inverterEfficiency = parseFloat(document.getElementById('INVERTER_EFFICIENCY').value);
@@ -214,7 +213,7 @@ function baselineCost(data) {
 }
 
 function batterySavings(battery, data) {
-    const totalBatteryCost = battery.battery_only_cost + FIXED_COSTS;
+    const totalBatteryCost = battery.battery_only_cost + battery.extra_costs;
     const usableCapacity = +(battery.capacity_kwh * BATTERY_USABLE_FACTOR).toFixed(2);
     let cumulativeSavings = 0, warrantySavings = 0, paybackYears = null, firstYearSavings = null;
 
@@ -281,7 +280,7 @@ function calculateBatteryCycles(battery, data) {
 
 function modelBatteryEconomics(batteries, data) {
     return batteries.map(battery => {
-        const totalCost = battery.battery_only_cost + FIXED_COSTS;
+        const totalCost = battery.battery_only_cost + battery.extra_costs;
         const savingStats = batterySavings(battery, data);
         const netSavingsWarranty = +(savingStats.savings_over_warranty - totalCost).toFixed(2);
         const annualBatteryEmptyDays = batteryEmptyDays(battery, data);
