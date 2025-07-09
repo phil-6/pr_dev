@@ -2,6 +2,7 @@
   --light: #dfecf1;
   --white: #f6f8f9;
   --border: #d0e0f0;
+  --border-subtle: #d0e0f060;
   --ink-light: #ece9e6;
   --medium-gray: #c8bedc;
   --ink-dark: #05285a;
@@ -253,7 +254,7 @@ body {
         align-items: center;
         padding: 0.4em 0.2em;
         font-size: 1em;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--border-subtle);
 
         &:last-child {
           border-bottom: none;
@@ -304,7 +305,7 @@ body {
       }
 
       .results-row {
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px solid var(--border-subtle);
         padding: 0.2em 0;
       }
 

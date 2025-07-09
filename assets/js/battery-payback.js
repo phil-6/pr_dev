@@ -322,6 +322,42 @@ function modelBatteryEconomics(batteries, data) {
     });
 }
 
+function calculateMaxHourlyUsages(data) {
+    // Group by day
+    const byDay = {};
+    data.forEach(entry => {
+        const dateString = entry.timestamp.toISOString().slice(0, 10);
+        if (!byDay[dateString]) byDay[dateString] = [];
+        byDay[dateString].push(entry);
+    });
+    let hourlyUsages = [];
+    Object.values(byDay).forEach(entries => {
+        for (let i = 0; i < entries.length - 1; i++) {
+            const sum = entries[i].kwh + entries[i + 1].kwh;
+            hourlyUsages.push(+sum.toFixed(4));
+        }
+    });
+    // Max hourly usage
+    let maxHourly = hourlyUsages.length ? Math.max(...hourlyUsages) : 0;
+    // Find the max hourly usage that occurs more than X times
+    const freq = {};
+    hourlyUsages.forEach(val => {
+        freq[val] = (freq[val] || 0) + 1;
+    });
+    let maxHourly5 = 0, maxHourly10 = 0, maxHourly20 = 0;
+    Object.entries(freq).forEach(([val, count]) => {
+        if (count > 5 && +val > maxHourly5) maxHourly5 = +val;
+        if (count > 10 && +val > maxHourly10) maxHourly10 = +val;
+        if (count > 20 && +val > maxHourly20) maxHourly20 = +val;
+    });
+    return {
+        maxHourly: +maxHourly.toFixed(3),
+        maxHourly5: +maxHourly5.toFixed(3),
+        maxHourly10: +maxHourly10.toFixed(3),
+        maxHourly20: +maxHourly20.toFixed(3)
+    };
+}
+
 function calculateUsageStats(data) {
     // Group by day
     const byDay = {};
@@ -333,7 +369,7 @@ function calculateUsageStats(data) {
     const daysAnalysed = Object.keys(byDay).length;
     let totalUsage = 0, totalPeak = 0, totalOffpeak = 0;
     let maxDaily = -Infinity, minDaily = Infinity;
-    let daysAbove5 = 0, daysAbove10 = 0, daysAbove15 = 0, daysAbove20 = 0;
+    let daysAbove5 = 0, daysAbove10 = 0, daysAbove15 = 0, daysAbove20 = 0, daysAbove30 = 0;
     Object.values(byDay).forEach(entries => {
         let dailyTotal = 0, dailyPeak = 0;
         entries.forEach(entry => {
@@ -350,8 +386,11 @@ function calculateUsageStats(data) {
         if (dailyPeak > 10) daysAbove10++;
         if (dailyPeak > 15) daysAbove15++;
         if (dailyPeak > 20) daysAbove20++;
+        if (dailyTotal > 30) daysAbove30++;
     });
     const avgDaily = daysAnalysed ? totalUsage / daysAnalysed : 0;
+    // Use the extracted function for max hourly usages
+    const { maxHourly, maxHourly5, maxHourly10, maxHourly20 } = calculateMaxHourlyUsages(data);
     return {
         daysAnalysed,
         avgDaily: +avgDaily.toFixed(2),
@@ -362,8 +401,13 @@ function calculateUsageStats(data) {
         daysAbove10,
         daysAbove15,
         daysAbove20,
+        daysAbove30,
         maxDaily: +maxDaily.toFixed(2),
-        minDaily: +minDaily.toFixed(2)
+        minDaily: +minDaily.toFixed(2),
+        maxHourly,
+        maxHourly5,
+        maxHourly10,
+        maxHourly20
     };
 }
 
@@ -380,8 +424,15 @@ function showUsageStats(stats) {
     document.getElementById('usageStatsDaysAbove10').textContent = stats.daysAbove10;
     document.getElementById('usageStatsDaysAbove15').textContent = stats.daysAbove15;
     document.getElementById('usageStatsDaysAbove20').textContent = stats.daysAbove20;
+    document.getElementById('usageStatsDaysAbove30').textContent = stats.daysAbove30;
     document.getElementById('usageStatsMaxDaily').textContent = stats.maxDaily + ' kWh';
     document.getElementById('usageStatsMinDaily').textContent = stats.minDaily + ' kWh';
+    document.getElementById('usageStatsMaxHourly').textContent = stats.maxHourly + ' kWh';
+    if(document.getElementById('usageStatsMaxHourly5'))
+      document.getElementById('usageStatsMaxHourly5').textContent = stats.maxHourly5 + ' kWh';
+    if(document.getElementById('usageStatsMaxHourly10'))
+      document.getElementById('usageStatsMaxHourly10').textContent = stats.maxHourly10 + ' kWh';
+    document.getElementById('usageStatsMaxHourly20').textContent = stats.maxHourly20 + ' kWh';
 }
 
 function showResults(results, usageStats) {
