@@ -325,6 +325,36 @@ body {
       margin-top: 1em;
     }
   }
+
+  .battery-config-explanation {
+    margin-bottom: 1em;
+
+    summary {
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .battery-config-explanation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+      margin-top: 0.7em;
+
+      .battery-config-explanation-item {
+        margin-bottom: 0;
+
+        h5 {
+          margin: 0;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.9em;
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 900px) {

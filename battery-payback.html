@@ -83,6 +83,53 @@
     </div>
     <div class="form-section">
       <h3 class="form-section-title">Battery Configurations</h3>
+      <details class="battery-config-explanation">
+        <summary>What do these terms mean?</summary>
+        <div class="battery-config-explanation-list">
+          <div class="battery-config-explanation-item">
+            <h5>Capacity (kWh)</h5>
+            <p>The total energy the battery can store, measured in kilowatt-hours.</p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Capacity (Ah)</h5>
+            <p>
+              The total charge the battery can store, measured in ampere-hours. This is used to calculate how long it will take the battery
+              to charge. Sometimes you have to dig into the datasheet to find this.
+            </p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Charger Rating (A)</h5>
+            <p>
+              The maximum current (in amps) the battery can be charged at. Combined with the capacity in Ah, this tells us whether you'll
+              be able to charge your battery within the offpeak window. This could be from the inverter or the battery, use the lower one.
+            </p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Rated Cycles</h5>
+            <p>
+              The number of full charge/discharge cycles the battery is rated for.
+            </p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Warranty (years)</h5>
+            <p>
+              The manufacturer's warranty period for the battery.
+            </p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Cost (£)</h5>
+            <p>
+              The purchase price of the battery.
+            </p>
+          </div>
+          <div class="battery-config-explanation-item">
+            <h5>Extra Costs (£)</h5>
+            <p>
+              Any additional costs associated with this battery (e.g. installation, inverter, accessories, etc).
+            </p>
+          </div>
+        </div>
+      </details>
       <div class="form-row flex-col">
         <!-- Battery 1 -->
         <div class="battery-config-block">
