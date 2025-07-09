@@ -7,7 +7,6 @@ let PEAK_RATE = 0.29;
 let PEAK_START = {hour: 5, min: 30};
 let PEAK_END = {hour: 23, min: 30};
 let BATTERY_USABLE_FACTOR = 0.9;
-let INVERTER_LIMIT_KW = (5000 * 0.97) / 1000;
 let ANNUAL_USAGE_GROWTH = 1; // percent, default
 let BATTERIES = [
     {
@@ -126,11 +125,6 @@ function updateConstantsFromForm() {
         PEAK_START = parsePeakTime(peakStartString);
         PEAK_END = parsePeakTime(peakEndString);
         if (!PEAK_START || !PEAK_END) throw new Error('Invalid peak time format');
-
-        const inverterLimitVA = parseFloat(document.getElementById('INVERTER_LIMIT_VA').value);
-        const inverterEfficiency = parseFloat(document.getElementById('INVERTER_EFFICIENCY').value);
-        if (isNaN(inverterLimitVA) || inverterLimitVA < 0 || isNaN(inverterEfficiency) || inverterEfficiency <= 0 || inverterEfficiency > 1) throw new Error('Invalid inverter limit/efficiency');
-        INVERTER_LIMIT_KW = (inverterLimitVA * inverterEfficiency) / 1000;
 
         BATTERY_USABLE_FACTOR = parseFloat(document.getElementById('BATTERY_USABLE_FACTOR').value);
         if (isNaN(BATTERY_USABLE_FACTOR) || BATTERY_USABLE_FACTOR < 0 || BATTERY_USABLE_FACTOR > 1) throw new Error('Invalid battery usable factor');

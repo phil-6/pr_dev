@@ -38,6 +38,10 @@ body {
       color: var(--white);
     }
   }
+  .lead {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
 
   .hidden {
     display: none;
@@ -48,7 +52,7 @@ body {
     color: var(--ink-dark);
     border-radius: 1.2em;
     box-shadow: 0 2px 12px var(--shadow);
-    padding: 2em 2em 1.5em 2em;
+    padding: 0.5em 2em 1.5em 2em;
     margin-bottom: 2em;
 
     .form-section {
