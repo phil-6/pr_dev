@@ -58,7 +58,7 @@ actions:
             {{ slot_msg }}
           data:
             clickAction: /energy-custom/4
-        action: notify.mobile_app_phil_s24u
+        action: notify.mobile_app_device
 variables:
   triggered_at: "{{ now() | as_timestamp  | timestamp_custom('%I:%M:%S %p') }}"
 mode: single

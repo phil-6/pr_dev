@@ -32,7 +32,7 @@ actions:
                 Battery charge session skipped at {{ now() | as_timestamp  |
                 timestamp_custom('%I:%M:%S %p') }}  because SoC={{
                 states('sensor.victron_battery_soc') }}%.
-            action: notify.mobile_app_phil_s24u
+            action: notify.mobile_app_device
       - conditions:
           - condition: template
             alias: >-
@@ -45,7 +45,7 @@ actions:
         sequence:
           - data:
               topic: >-
-                victron/W/c0619ab7cdb5/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
+                victron/W/xxx/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
               payload: "{\"value\":7}"
             action: mqtt.publish
           - data:
@@ -66,7 +66,7 @@ actions:
         sequence:
           - data:
               topic: >-
-                victron/W/c0619ab7cdb5/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
+                victron/W/xxx/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
               payload: "{\"value\":-7}"
             action: mqtt.publish
           - data:

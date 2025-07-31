@@ -71,5 +71,5 @@ actions:
                 Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
                 start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
                 {{ end_soc }}%).
-            action: notify.mobile_app_phil_s24u
+            action: notify.mobile_app_device
 mode: single

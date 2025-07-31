@@ -2,7 +2,7 @@
 # Processes next-day Octopus rates, stores cheapest slots, and returns change status
 
 # Entity IDs and constants
-EVENT_ENTITY = 'event.octopus_energy_electricity_19l2935327_2199998228556_next_day_rates'
+EVENT_ENTITY = 'event.octopus_energy_electricity_xxx_xxx_next_day_rates'
 SENSOR_ENTITY = 'sensor.scheduled_battery_charge_times'
 CHARGING_SLOTS_COUNT = 6
 
