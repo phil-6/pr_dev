@@ -1,0 +1,72 @@
+# templates.yaml
+
+# ——————————————————————————————————————————————
+# Battery Charging Window Active
+# ——————————————————————————————————————————————
+- binary_sensor:
+    - name: "Battery Charging Window Active"
+      device_class: power
+
+      # ON if now() falls inside any slot
+      state: >
+        {{ state_attr('binary_sensor.battery_charging_window_active','in_charge_window') }}
+
+      attributes:
+        current_slot_start: >
+          {%- set slots  = state_attr('sensor.scheduled_battery_charge_times','charge_times') or [] -%}
+          {%- set now_ts = as_timestamp(now())                                  -%}
+          {%- for slot in slots                                                 -%}
+            {%- set start_ts = as_timestamp(slot.start)                         -%}
+            {%- set end_ts   = as_timestamp(slot.end)                           -%}
+            {%- if start_ts <= now_ts <= end_ts                                  %}
+              {{ slot.start }}
+              {%- break                                                         -%}
+            {%- endif                                                           -%}
+          {%- endfor                                                            -%}
+
+        current_slot_end: >
+          {%- set slots  = state_attr('sensor.scheduled_battery_charge_times','charge_times') or [] -%}
+          {%- set now_ts = as_timestamp(now())                                  -%}
+          {%- for slot in slots                                                 -%}
+            {%- set start_ts = as_timestamp(slot.start)                         -%}
+            {%- set end_ts   = as_timestamp(slot.end)                           -%}
+            {%- if start_ts <= now_ts <= end_ts                                  %}
+              {{ slot.end }}
+              {%- break                                                         -%}
+            {%- endif                                                           -%}
+          {%- endfor                                                            -%}
+
+        next_slot_start: >
+          {%- set slots  = state_attr('sensor.scheduled_battery_charge_times','charge_times') or [] -%}
+          {%- set now_ts = as_timestamp(now())                                  -%}
+          {%- set ns = namespace(next='')                                       -%}
+          {%- for slot in slots | sort(attribute='start')                       -%}
+            {%- set start_ts = as_timestamp(slot.start)                         -%}
+            {%- if start_ts > now_ts                                            -%}
+              {%- set ns.next = slot.start                                      -%}
+              {%- break                                                         -%}
+            {%- endif                                                           -%}
+          {%- endfor                                                            -%}
+          {{ ns.next if ns.next else "No Future Slots" }}
+
+        next_slot_end: >
+          {%- set slots  = state_attr('sensor.scheduled_battery_charge_times','charge_times') or [] -%}
+          {%- set now_ts = as_timestamp(now())                                  -%}
+          {%- set ns = namespace(next='')                                       -%}
+          {%- for slot in slots | sort(attribute='start')                       -%}
+            {%- set start_ts = as_timestamp(slot.start)                         -%}
+            {%- if start_ts > now_ts                                            -%}
+              {%- set ns.next = slot.end                                        -%}
+              {%- break                                                         -%}
+            {%- endif                                                           -%}
+          {%- endfor                                                            -%}
+          {{ ns.next if ns.next else "No Future Slots" }}
+
+        now: >
+          {{ now() }}
+
+        in_charge_window: >
+          {{ state_attr('binary_sensor.battery_charging_window_active','current_slot_start') | default('') | length > 0 }}
+
+        all_slots_today: >
+          {{ state_attr('sensor.scheduled_battery_charge_times','charge_times') }}

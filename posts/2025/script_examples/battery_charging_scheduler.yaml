@@ -1,0 +1,81 @@
+alias: Battery Charging Scheduler
+description: ""
+triggers:
+  - minutes: /1
+    trigger: time_pattern
+actions:
+  - target:
+      entity_id: binary_sensor.battery_charging_window_active
+    action: homeassistant.update_entity
+    data: {}
+  - variables:
+      new_state: "{{ states('binary_sensor.battery_charging_window_active') }}"
+  - choose:
+      - conditions:
+          - condition: template
+            alias: If in new charging window, but battery is above 80%
+            value_template: |
+              {{ previous_state != new_state
+                 and new_state == 'on'
+                 and (states('sensor.victron_battery_soc')|float >= 80) }}
+        sequence:
+          - data:
+              title: 🔋 Charge Session Skipped
+              message: >
+                Battery charge session skipped at {{ now() | as_timestamp  |
+                timestamp_custom('%I:%M:%S %p') }}  because SoC={{
+                states('sensor.victron_battery_soc') }}%.
+            action: persistent_notification.create
+          - data:
+              title: 🔋 Charge Session Skipped
+              message: >
+                Battery charge session skipped at {{ now() | as_timestamp  |
+                timestamp_custom('%I:%M:%S %p') }}  because SoC={{
+                states('sensor.victron_battery_soc') }}%.
+            action: notify.mobile_app_phil_s24u
+      - conditions:
+          - condition: template
+            alias: >-
+              In charging window and (state has changed or battery is not
+              already charging) and battery is below 80%
+            value_template: |
+              {{ new_state == 'on'
+                 and (previous_state != new_state or states('sensor.victron_system_battery_state') != 'CHARGING')
+                 and (states('sensor.victron_battery_soc')|float < 80) }}
+        sequence:
+          - data:
+              topic: >-
+                victron/W/c0619ab7cdb5/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
+              payload: "{\"value\":7}"
+            action: mqtt.publish
+          - data:
+              notification_id: battery_charging_scheduler
+              title: 🔋 Battery charging started
+              message: >
+                Started at {{ now() | as_timestamp  | timestamp_custom('%I:%M:%S
+                %p') }}
+            action: persistent_notification.create
+      - conditions:
+          - condition: template
+            alias: >-
+              Out of charging window and (state has changed or battery is not
+              discharging)
+            value_template: |
+              {{ new_state == 'off'
+                 and (previous_state != new_state or states('sensor.victron_system_battery_state') != 'DISCHARGING') }}
+        sequence:
+          - data:
+              topic: >-
+                victron/W/c0619ab7cdb5/settings/0/Settings/CGwacs/BatteryLife/Schedule/Charge/4/Day
+              payload: "{\"value\":-7}"
+            action: mqtt.publish
+          - data:
+              notification_id: battery_charging_scheduler
+              title: 🔋 Battery charging ended
+              message: >
+                Ended at {{ now() | as_timestamp  | timestamp_custom('%I:%M:%S
+                %p') }}
+            action: persistent_notification.create
+variables:
+  previous_state: "{{ states('binary_sensor.battery_charging_window_active') }}"
+mode: single

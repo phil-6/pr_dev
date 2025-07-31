@@ -1,0 +1,356 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: home-ess
+full-title: Home Battery ESS
+summary: I installed a home battery, automating it was more of a challenge than I expected.
+file-type: html
+publish-date: July 31
+publish-year: 2025
+published: true
+---
+
+<h1>Home ESS Setup</h1>
+<p class="lead">Recently I&#39;ve planned, installed and automated a home battery energy storage system. </p>
+<p>Quite a lot of research went into this. Thanks to James at Bimble Solar, Paul Swinford the Electrican and the team at Fogstar energy for
+  going above and beyond helping me get this sorted. </p>
+<p>There were lots of questions that weren&#39;t that easy to find answers for during this process and considering I expect this to save me
+  close to £900 per year and pay for itself in under 6 years, I thought I&#39;d write down everything I went through to help anyone else
+  considering this journey!</p>
+<p>I&#39;ve broken this up into three sections:</p>
+<ul>
+  <li><a href="#planning">Planning</a></li>
+  <li><a href="#installtion">Installation &amp; Configuration</a></li>
+  <li><a href="#automation">Automation</a></li>
+</ul>
+
+<section id="planning">
+  <h2>Planning</h2>
+  <p>I started looking into a battery system when I saw that on the Intelligent Octopus Go (IOG) tariff, your entire house is eligible for
+    their 7p/kWh rate when the EV is charging overnight. We&#39;re getting an PHEV later in the year, so will be able to go onto that
+    tariff. </p>
+  <p>The IOG tariff is 29p/kWh during the day and 7p/kWh during the overnight (23:30 - 05:30), based on our average daily usage of 13kWh, if
+    we managed to shift all of our usage to the 7p/kWh rate, my rough maths said we could be saving ~£950 per year! </p>
+  <p>That&#39;s enough to make a deeper investigation very worthwhile!</p>
+  <h3>Choosing the system</h3>
+  <h4>Consideration Factors</h4>
+  <p>There&#39;s a lot to consider when choosing the system?</p>
+  <ul>
+    <li>How big a battery?</li>
+    <li>How big an inverter?</li>
+    <li>Can you add solar now or later?</li>
+    <li>How are various bits of the system going to talk to each other?</li>
+    <li>How is the system going to work out when to charge and discharge?</li>
+    <li>How will the ESS talk to an EV Charger?</li>
+
+  </ul>
+  <p>The generic answers are quite easy</p>
+  <p>
+    <strong>How big a battery?</strong> Big enough to cover the house&#39;s energy usage most of the time, extra capacity is extra cost and
+    will be &quot;wasted&quot;
+  </p>
+  <p>
+    <strong>How big an inverter?</strong> Big enough to charge the battery during the cheap rates and big enough to cover most of the peak
+    loads.
+  </p>
+  <p>
+    <strong>Can you add solar now or later?</strong>
+    For most people, this is a yes or a maybe. However we live in a conservation area, in a mid terrace with a small south facing roof space
+    with large gable end our garage roof is no where near strong enough. So it&#39;s a clear no from us.
+  </p>
+  <p>
+    <strong>How are various bits of the system going to talk to each other?</strong> I already have Home Assistant so we can use that, but
+    it would be nice if it was a little more tightly coupled.
+  </p>
+  <p>
+    <strong>How is the system going to work out when to charge and discharge?</strong> Some sort of scheduling. IOG is pretty simple, but
+    Octopus Agile is more complicated.
+  </p>
+  <p>
+    <strong>How will the ESS talk to an EV Charger?</strong> Again, Home Assistant is possible but it would be nice if it was more
+    integrated.
+  </p>
+
+  <h4>Options</h4>
+  <p>
+    There are some really nice, tightly integrated systems that are offered by Solar installers. It&#39;s big business and I spoke to quite a few providers, for no specific reason I narrowed down my integrated systems to GivEnergy and MyEnergi. These both were tightly integrated systems with great support. 
+  </p>
+  <p>
+    For comparison, I ended up settling with a quote for a MyEnergi System.
+  </p>
+  <p>
+    The company who quoted for the GivEnergy system (CES Solar Shop) were extremely pushy and not very knowledgeable, slating the
+    alternatives I was discussing without giving evidence. The quote I had for this system was over 12k for 13.5kWh of storage with a 6kW
+    inverter.
+  </p>
+  <p>MyEnergi seemed like a better solution overall, the quotes I had were better, both in terms of cost and customer service. The MyEnergi
+    quote for 15kWh of batteries came to ~£7000 and 20kWh came to ~£9000.</p>
+  <p>The other option is a lot more modular and requires more DIY work. A 16.1kWh battery from Fogstar energy, backed by UK based customer
+    support and a 10 year warranty is only £2000. Plus an inverter and Paul&#39;s installation quote brought the total cost to as little as
+    £4000. </p>
+  
+  <h4>Analysis (Payback Calculator)</h4>
+  <p>It looks as though the DIY approach was the better option but I wanted to really verify the rough calculations I had done previous and
+    work out what the best battery and inverter to go for was. </p>
+  <p>I couldn&#39;t find a good online calculator for a home ESS system <em>without</em> solar. <a
+    href='https://garydoessolar.com/utilities/dailymodellingutility/'>Gary Does Solar</a> has a brilliant calculator for solar installations
+    but it didn&#39;t work great for what I was looking at. As I couldn&#39;t find a good calculator, I built one. </p>
+  <p>
+    The <a href="https://purpleriver.dev/battery-payback">Battery Payback Calculator</a> takes your last years of electricity readings from Octopus (easy to download from your account page),
+    lets you enter some details about the systems you are considering and gives you details about your energy usage and an analysis of the
+    batteries you are looking. If you want to give it a play you can download some example energy readings here.
+  </p>
+
+  <a href="/assets/images/posts/2025/home-ess/BatteryCalculations_Final.png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/BatteryCalculations_Final.png" alt="Battery Payback Calculator Screenshot"
+          class="img-fluid">
+  </a>
+  <p class="caption"> Click or Tap to open in new tab to see clearer)</p>
+
+  <p>From that screenshot, we can see that more than 15kWh of storage is probably the sweet spot and there is 4000kWh of usage during the
+    peak rate times that I can aim to offset. </p>
+  <p>The four battery options in that comparison are the Fogstar 16.1kWh battery with either the 48/5000/70-50 or 48/8000/110-100
+    Multiplus-II inverter from Victron, a 32,1kWh Fogstar battery with the larger Victron MP-II inverter and the 20kWh MyEnergi system</p>
+  <p>I did look at other inverters, from SolarX, SunSync and others. A lot of the others seem to focus on integration with solar. Victron
+    has great community support, has a strong Home Assistant integration and a really good reputation. </p>
+  <p>Looking at the battery comparison, I might have been better off going for the smaller inverter, but the larger inverter felt a bit more
+    versatile and &quot;future proof&quot; should the Octopus cheap rate window change for example. It also means that it can cover more of
+    the peaks in usage such as when the oven and kettle and washing machine are all on at the same time. </p>
+  <h4>Final System </h4>
+  <p><a href="https://www.fogstar.co.uk/collections/solar-battery-storage/products/fogstar-energy-16kwh-48v-solar-battery">Fogstar Energy 16.1kWh Battery</a></p>
+  <p><a href="https://www.victronenergy.com/inverters-chargers/multiplus-ii">Victron Multiplus-II</a> <a href="https://www.victronenergy.com/upload/documents/Datasheet-MultiPlus-II-inverter-charger-EN.pdf">48/8000/110-100</a></p>
+  <p><a href="https://www.victronenergy.com/communication-centres/cerbo-gx">CerboGX MKII</a></p>
+  <p>3 x <a href="https://www.victronenergy.com/meters-and-sensors/energy-meter">ET112</a> -&gt; Monitoring Grid, Feed to Garage and (Future) EVC</p>
+  <p>All Supplied by <a href="https://www.bimblesolar.com/">Bimble Solar</a></p>
+  
+  <h4>Layout and Design</h4>
+  <p>As I decided to go for the more DIY approach, I then needed to work out extra bits of the installation.
+    Paul the Electrican had already laid a new radial to the Garage, he confirmed that the cables were the right size. He had also laid a
+    Cat6 cable that ran from the mains in to the house, to the garage. </p>
+  <p>There were still questions over whether usual CT clamps would work as sensors for the Victron system (they don&#39;t), how the
+    Cerbo gets powered and what additional bits would be needed for the Victron to manage the battery. </p>
+  <p>After various questions on Reddit, the Victron Forums and the Octopus Agile forum I ended up with the following design</p>
+  
+  <img src="/assets/images/posts/2025/home-ess/Battery_Design_(Tidy).png" alt="Home ESS Design" class="img-fluid">
+  
+  <p>There&#39;s a bit of redundancy in the sensors here, in all the places where I have an ET112 sensor I also have a Shelly EM. The ET112s
+    are more of a faff as they need to go in-line rather than using a CT Clamp but they are required for the Victron ESS to work.</p>
+  <p>The Cerbo is powered from the battery and has M8 rings that can be added to the terminals in the MP-II</p>
+</section>
+
+<section id="installation">
+  <h2>Installation and Configuration</h2>
+  <h3>Preparation</h3>
+  <p>Paul had already updated the garage electrics last year and run a larger AC cable, and two data cables. One for the local network and
+    one for current sense. He&#39;d also added a new CU into the garage with the space for all of this. </p>
+  <h3>DC Side</h3>
+  <p>48V is the top end of what counts as &quot;Low Voltage&quot; and as long as you&#39;re not touching live and neutral, its pretty safe,
+    so I managed to get this all setup before Paul arrived. </p>
+  <h3>AC Side</h3>
+  <p>The AC was a little more involved, mostly because of the ET112 sensors. </p>
+
+  <div id="slider">
+    <a href="/assets/images/posts/2025/home-ess/installation/fogstar_battery.jpg" target="_blank">
+      <img src="/assets/images/posts/2025/home-ess/installation/fogstar_battery.jpg" alt="Fogstar Energy 16.1kWh Battery">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/battery_inverter.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/battery_inverter.jpg" src="" alt="Battery and Inverter">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/battery_inverter_2.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/battery_inverter_2.jpg" src="" alt="Battery and Inverter">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/cerbo_2.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/cerbo_2.jpg" src="" alt="Cerbo GX MKII">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/inverter_inside.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/inverter_inside.jpg" src="" alt="Inside the inverter cover, showing Cerbo power">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/garage_cu_1.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/garage_cu_1.jpg" src="" alt="Garage CU with sensors">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/garage_cu_2.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/garage_cu_2.jpg" src="" alt="Garage CU with sensors">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/garage_cu_3.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/garage_cu_3.jpg" src="" alt="Finished Garage CU with Isolator">
+    </a>
+    <a href="/assets/images/posts/2025/home-ess/installation/grid_in.jpg" target="_blank">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/grid_in.jpg" src="" alt="Grid in with ET112 before Henly Blocks">
+    </a>
+  </div>
+  <p class="caption">9 images of the ESS</p>
+  
+  
+  <h3>Configuration (ESS Assistant)</h3>
+  <p>Configuration for the system was overall fairly straight forward.</p>
+  <p>It took a bit of time to get the Cerbo to correctly recognise the battery, I just need to change the connection type to in Settings&gt;Connectivity
+    to CAN-bus BMS LV (500 kbits/s)</p>
+  <p>Adding the ESS Assistant wasn&#39;t straight forward either, mostly because I expected it to live on the Cerbo rather than the MP-II.
+    It
+    also requires a windows device in order to upload and configure the ESS Assistant before uploading it to the to the MP-II via VRM Remote
+    Configuration. The actual configuration was straightforward although the configuration tool looks like something from Windows 95! </p>
+</section>
+
+<section id="automation">
+  <h2>Automation - Octopus Agile with ESS</h2>
+  <p>Automation was less straight-forward. I can see why a lot of people pay the extra for a system that is tightly coupled and they don&#39;t
+    have to do the work to get it working. </p>
+  <p>Home assistant has good HACS integrations for <a href='https://github.com/BottlecapDave/HomeAssistant-OctopusEnergy'>Octopus</a> and <a
+    href='https://github.com/sfstar/hass-victron'>Victron</a> and these are the foundation of the automations I put together. After
+    exploring
+    the integrations in general, I could see that Octopus exposes the Agile rates for the current day and the next day when they&#39;re
+    released. </p>
+
+
+  <h3>Finding the Cheapest Rates</h3>
+  <p>The first step was to try and find the cheapest rates within a 24 hour period. This is supported out of the box by the <a
+    href='https://bottlecapdave.github.io/HomeAssistant-OctopusEnergy/setup/target_rate/'>Target Rates sensor</a>, although this is in the
+    process of being extracted to a separate <a href='https://bottlecapdave.github.io/HomeAssistant-TargetTimeframes/'>Target Timeframes</a>
+    integration. I couldn&#39;t get this working reliably, but it didn&#39;t seem too difficiult and I didn&#39;t need any of the more
+    sophisticated features offered by target timeframes.</p>
+  <p>In order to test my logic, I first created a graph that showed the daily agile rates and highlighted the cheapest ones. This is very
+    similar to the rate graph that octopus provides.</p>
+
+
+  <a href="/assets/images/posts/2025/home-ess/octopus_agile_rates_graph.png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/octopus_agile_rates_graph.png" alt="Octopus Agile Rates Graph">
+  </a>
+  <a href="/assets/images/posts/2025/home-ess/ha_agile_rates_graph.png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/ha_agile_rates_graph.png" alt="Home Assistant Agile Rates Graph">
+  </a>
+
+  <details>
+    <summary>Graph Code</summary>
+    <p><a href="script_examples/agile_rates_graph.yaml" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% include_relative /script_examples/agile_rates_graph.yaml %}</code></pre>
+  </details>
+  <br>
+
+  <p>We simply sort the rates by cheapest and pluck the cheapest 6, which gives us the cheapest 3 hours. </p>
+  <p>That proved the logic, and was pretty simple syntax to write. That definitely lulled me into a false sense of security for the
+    complexity
+    of the next step</p>
+  <p>I wanted to set up an automation in HA to find those cheapest slots, store them, then trigger the battery to charge during those
+    windows.</p>
+  <p>Simples.... Right.... (I am certain there is an easier way to do this, but this is now working so I&#39;m not touching it for a
+    bit!)</p>
+
+
+  <h3>Storing the battery charge times</h3>
+  <p>The Octopus integration <a href='https://bottlecapdave.github.io/HomeAssistant-OctopusEnergy/events/#electricity-next-day-rates'>fires
+    an event</a> when the next day rates are updated. So that was my starting point. Processing those dates to find the cheapest 6 took me
+    way down the rabbit hole.</p>
+
+  <details>
+    <summary>Agile Rates Updated Automation</summary>
+    <p><a href="script_examples/agile_rates_updated.yaml" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% include_relative /script_examples/agile_rates_updated.yaml %}</code></pre>
+  </details>
+  <br>
+
+  <details>
+    <summary>Story Battery Charge Time Python Script</summary>
+    <p><a href="script_examples/store_battery_charge_times.py" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-python' lang='python'>{% include_relative /script_examples/store_battery_charge_times.py %}</code></pre>
+  </details>
+  <br>
+
+
+  <p>The python script actually does a little more, because once you&#39;ve gone that far, then why not. So it merges any adjacent slots and
+    averages their cost. I don&#39;t actually use the costs at the moment, but I might do in the future. </p>
+  <p>The Scheduled Battery Charge Times sensor&#39;s attributes end up like:</p>
+  <pre><code class='language-yaml' lang='yaml'>charge_times:
+  - start: &quot;2025-07-31T02:30:00+01:00&quot;
+    end: &quot;2025-07-31T03:00:00+01:00&quot;
+    price: 15.79
+  - start: &quot;2025-07-31T03:30:00+01:00&quot;
+    end: &quot;2025-07-31T05:00:00+01:00&quot;
+    price: 15.71
+  - start: &quot;2025-07-31T14:30:00+01:00&quot;
+    end: &quot;2025-07-31T15:30:00+01:00&quot;
+    price: 15.835
+</code></pre>
+
+  <p>Cool, so with that, we should be able to build a schedule and automate the charge times.</p>
+
+
+  <h3>Talking to the Cerbo GX</h3>
+  <p>Before we get to the scheduling, we need to get Home Assistant to talk to the Victron CerboGX the majority of the work was done by <a
+    href='https://community.home-assistant.io/t/victron-integration-with-octopus-energy-automatic-iog-scheduling-via-mqtt/897087'>tfboy on
+    the Home Assistant forums</a>. However, I already have an MQTT integration, so it took a few extra steps to get this to work alongside
+    that.
+  </p>
+  <p>A fairly simple Node-RED flow was needed to bridge between the Cerbo&#39;s MQTT Broker and the EMQX broker that I had running on Home
+    Assistant</p>
+
+  <a href="/assets/images/posts/2025/home-ess/node-red-flow.png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/node-red-flow.png" alt="Node Red Flow for CerboGX MQTT">
+  </a>
+
+  <p class="caption">Not sure if any extra detail is needed here, happy to provide if you need it! <a href="mailto:ha-help@purpleriver.dev?subject=Node%20Red%20MQTT%20Help&body=I%20want%20some%20help%20setting%20up%20a%20Node%20Red%20flow%20to%20allow%20my%20CerboGX%20to%20talk%20to%20Home%20Assistant!">✉️</a></p>
+  <p>Once that was set up, I could listen the the <code>N/#</code> topic to see the messages the CerboGX was publishing and publish a simple
+    packet to trigger the battery to charge or discharge.</p>
+
+  <a href="/assets/images/posts/2025/home-ess/mqtt_listening.png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/mqtt_listening.png" alt="MQTT Settings, listening to N/#">
+  </a>
+
+  <h3>Scheduling the Battery Charging</h3>
+  <p>On IOG, scheduling will become a lot easier. Set the battery to only charge during the off-peak hours and disable discharge when the
+    EVC is charging. </p>
+  <p>On Agile, now we have the rates, and we know how to trigger the charging schedule, we&#39;re rolling!</p>
+  <p>My &quot;Battery Charging Scheduler&quot; automation went a bit further than I meant it to, but I wanted to keep it flexible to allow
+    me to modify as needed in the future. </p>
+  <p>This involved templating a new binary sensor. Not something I&#39;d done in home assistant before but it&#39;s a powerful tool.</p>
+  <p>Every minute, the automation runs and checks the current state and then updates the &quot;Battery Charging Window Active&quot; binary
+    sensor. The sensor looks at the Scheduled Battery Charge Times &gt; Charge Times, compares it with now and turns on if it&#39;s in a
+    window. It also stores the Current Charge window and Next Charge Window.</p>
+
+  <details>
+    <summary>Battery Charging Window Active Sensor</summary>
+    <p><a href="script_examples/battery_charging_window_active_sensor.yaml" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/battery_charging_window_active_sensor.yaml %}</code></pre>
+  </details>
+  <br>
+
+  <p>After updating that sensor, the Scheduler automation does a bit of logic and fires a few notifications before triggering the MQTT
+    message to start the battery charging.</p>
+
+  <details>
+    <summary>Battery Charging Scheduler Automation</summary>
+    <p><a href="script_examples/battery_charging_scheduler.yaml" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/battery_charging_scheduler.yaml %}</code></pre>
+  </details>
+
+  <h3>Tracking the Charging</h3>
+  <p>The final thing I added was an automation to track when the battery was actually charging and how much it had charged. </p>
+  <details>
+    <summary>Battery Charging Session Tracker Automation</summary>
+    <p><a href="script_examples/battery_charge_session_tracker.yaml" target="_blank">Click to open raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/battery_charge_session_tracker.yaml %}</code></pre>
+  </details>
+</section>
+
+<section id="conclusion">
+  <h2>Conclusion</h2>
+  <p>I'm really glad this is all up and running. The automation side of it was more work that I expected.</p>
+  <p>I hope this has been useful to anyone else looking at setting up a home ESS system, if you have any questions or want to know more,
+    please feel free to <a href="mailto:batteryess@purpleriver.dev">email me</a>
+</section>
+
+<script>
+    new IdealImageSlider.Slider('#slider');
+    const slider = new IdealImageSlider.Slider({
+        selector: '#slider',
+        height: '16:9', // Required but can be set by CSS
+        interval: 4000
+    });
+    slider.start();
+</script>

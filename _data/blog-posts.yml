@@ -12,6 +12,17 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: home-ess
+  full-title: Home Battery ESS
+  summary: I installed a home battery, automating it was more of a challenge than I expected.
+  file-type: html
+  publish-date: July 31
+  publish-year: 2025
+  published: true
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: turbo-frame-queue
   full-title: Turbo Frame Loading Queue
   summary: A simple queue for loading Turbo Frames in batches. Useful when loading="lazy" will send too many requests.

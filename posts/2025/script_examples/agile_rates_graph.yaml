@@ -1,0 +1,68 @@
+type: custom:apexcharts-card
+apex_config:
+  chart:
+    height: 300
+  stroke:
+    curve: stepline
+header:
+  title: Octopus Agile – Today’s Rates
+  show: true
+  show_states: true
+  colorize_states: true
+graph_span: 1d
+span:
+  start: day
+now:
+  show: true
+yaxis:
+  - min: 0
+    decimals: 2
+series:
+  - entity: >-
+      event.octopus_energy_electricity_xxx_xxx_current_day_rates
+    name: Agile Price (p/kWh)
+    type: line
+    color: "#3399ff"
+    show:
+      in_header: false
+      legend_value: false
+    stroke_width: 2
+    data_generator: |
+      const rates = entity.attributes.rates || [];
+      return rates.map(rate => {
+        const ts = new Date(rate.start).getTime();
+        return [ts, rate.value_inc_vat * 100];
+      });
+  - entity: sensor.octopus_energy_electricity_xxx_xxx_current_rate
+    name: Current Rate
+    type: line
+    show:
+      in_chart: false
+    unit: p/kWh
+    transform: return x * 100;
+  - entity: >-
+      event.octopus_energy_electricity_xxx_xxx_current_day_rates
+    name: Cheapest 6 Slots
+    type: column
+    color: "#00cc66"
+    show:
+      in_header: false
+      legend_value: false
+    data_generator: >
+      const rates = [...entity.attributes.rates || []];
+
+      // Sort by price ascending
+
+      const sorted = [...rates].sort((a, b) => a.value_inc_vat -
+      b.value_inc_vat);
+
+      const cheapest = sorted.slice(0, 6).map(r => r.start);
+
+
+      return rates.map(rate => {
+        const start = new Date(rate.start).getTime();
+        const end = new Date(rate.end).getTime();
+        const midpoint = (start + end) / 2;
+        const isCheapest = cheapest.includes(rate.start);
+        return [midpoint, isCheapest ? rate.value_inc_vat * 100 : null];
+      });

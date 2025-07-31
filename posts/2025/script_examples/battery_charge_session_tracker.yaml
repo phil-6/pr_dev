@@ -1,0 +1,75 @@
+alias: Battery Charge Session Tracker
+description: Track when charging starts and ends, log it, and send a mobile notification.
+triggers:
+  - entity_id: sensor.victron_system_battery_state
+    to: CHARGING
+    trigger: state
+  - entity_id: sensor.victron_system_battery_state
+    from: CHARGING
+    trigger: state
+actions:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ trigger.to_state is defined and trigger.to_state.state ==
+              'CHARGING' }}
+        sequence:
+          - variables:
+              start_ts: "{{ as_timestamp(now()) }}"
+              start_soc: "{{ states('sensor.victron_battery_soc') | float }}"
+          - data:
+              name: Battery
+              message: >
+                Charge started at {{ start_ts | timestamp_custom('%H:%M') }}
+                (SoC {{ start_soc }}%).
+            action: logbook.log
+          - data:
+              notification_id: battery_charge_session_tracker
+              title: Battery Charging Started 🪫🗹
+              message: >
+                Charge started at {{ start_ts | timestamp_custom('%H:%M') }}
+                (SoC {{ start_soc }}%).
+            action: persistent_notification.create
+          - data:
+              entity_id: input_text.current_battery_charge_session
+              value: |
+                {{ { 'start': start_ts,
+                     'start_soc': start_soc } | to_json }}
+            action: input_text.set_value
+      - conditions:
+          - condition: template
+            value_template: >
+              {{ trigger.from_state is defined and trigger.from_state.state ==
+              'CHARGING' }}
+        sequence:
+          - variables:
+              end_ts: "{{ as_timestamp(now()) }}"
+              end_soc: "{{ states('sensor.victron_battery_soc') | float }}"
+              session: >-
+                {{ states('input_text.current_battery_charge_session') |
+                from_json }}
+              start_ts: "{{ session.start }}"
+              start_soc: "{{ session.start_soc }}"
+          - data:
+              name: Battery
+              message: >
+                Charge ended at {{ end_ts | timestamp_custom('%H:%M') }} (SoC {{
+                end_soc }}%).
+            action: logbook.log
+          - data:
+              notification_id: battery_charge_session_tracker
+              title: Battery Charging Ended🔋🏁
+              message: >
+                Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
+                start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
+                {{ end_soc }}%).
+            action: persistent_notification.create
+          - data:
+              title: Battery Charging Ended🔋🏁
+              message: >
+                Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
+                start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
+                {{ end_soc }}%).
+            action: notify.mobile_app_phil_s24u
+mode: single

@@ -1,0 +1,64 @@
+alias: Agile Rates Updated
+description: >-
+  Compute & store 6 cheapest half-hour slots (with full times & prices), notify
+  on change
+triggers:
+  - event_type: octopus_energy_electricity_next_day_rates
+    trigger: event
+actions:
+  - data:
+      notification_id: battery_charge_times
+      title: 🔋 Battery charge times update in progress
+      message: |-
+        🕓 Started at: {{ triggered_at }}
+
+        Calculating cheapest slots…
+    action: persistent_notification.create
+  - response_variable: ps_result
+    action: python_script.store_battery_charge_times
+    data: {}
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ not ps_result.changed }}"
+        sequence:
+          - data:
+              notification_id: battery_charge_times
+            action: persistent_notification.dismiss
+    default:
+      - variables:
+          slot_msg: |-
+            {%- if ps_result.rates_available and ps_result.slots %}
+              {%- for slot in ps_result.slots %}
+                {{ slot.start | as_timestamp | timestamp_custom('%H:%M') }} – {{ slot.end | as_timestamp | timestamp_custom('%H:%M') }} @ {{ slot.price }} p/kWh
+                {%- if not loop.last %}
+
+                {%- endif %}
+              {%- endfor %}
+            {%- else %}
+             🚫 Next-day rates not available yet
+            
+              {%- if ps_result.old_slots_in_progress %}
+                📈 Old Slots Still In Progress
+              {%- endif %}
+            {%- endif %}
+      - data:
+          notification_id: battery_charge_times
+          title: 🔋 Battery charge times updated
+          message: |-
+            🕓 Ran at: {{ triggered_at }}
+
+            {{ slot_msg }}
+        action: persistent_notification.create
+      - data:
+          title: Tomorrow’s Battery charge times 🔋
+          message: |-
+            🕓 Ran at: {{ triggered_at }}
+
+            {{ slot_msg }}
+          data:
+            clickAction: /energy-custom/4
+        action: notify.mobile_app_phil_s24u
+variables:
+  triggered_at: "{{ now() | as_timestamp  | timestamp_custom('%I:%M:%S %p') }}"
+mode: single
