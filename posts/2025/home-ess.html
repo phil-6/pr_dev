@@ -34,6 +34,8 @@ published: true
     we managed to shift all of our usage to the 7p/kWh rate, my rough maths said we could be saving ~£950 per year! </p>
   <p>That&#39;s enough to make a deeper investigation very worthwhile!</p>
   <h3>Choosing the system</h3>
+  <p>The fundamental idea is to load-shift our electricity usage to when the cost is a lot cheaper. To do this we need to charge the battery
+    when electricity is cheapest and use the battery to power the house when it's more expensive. </p>
   <h4>Consideration Factors</h4>
   <p>There&#39;s a lot to consider when choosing the system?</p>
   <ul>
@@ -43,7 +45,9 @@ published: true
     <li>How are various bits of the system going to talk to each other?</li>
     <li>How is the system going to work out when to charge and discharge?</li>
     <li>How will the ESS talk to an EV Charger?</li>
-
+    <li>Can I Export to the grid to increase the RoI?</li>
+    <li>Can I use the battery as a UPS, to keep the house running when the power goes out?</li>
+    <li>Do I need to do any regulatory things?</li>
   </ul>
   <p>The generic answers are quite easy</p>
   <p>
@@ -71,10 +75,35 @@ published: true
     <strong>How will the ESS talk to an EV Charger?</strong> Again, Home Assistant is possible but it would be nice if it was more
     integrated.
   </p>
+  <p>
+    <strong>Can I export to the grid?</strong> No. But actually maybe. I contacted Octopus support about export and their answer was the
+    same &quot;No, you need to be actually generating electricity to export, but if you have energy to export then you must be generating!&quot;
+    I considered getting a bigger battery to facilitate this, however I decided against it in the again because of the uncertainty of the
+    returns, and the complexity of planning when and how much to send to the grid. I&#39;ve not closed the door on this possibility
+    completely though, it&#39;s possible to add another battery to the system later to double the capacity.
+  </p>
+  <p>
+    <strong>Can I use the battery as a UPS?</strong> No. For a number of reasons. In order to have the battery as a UPS the load needs to be
+    after the inverter. So Grid &gt; Inverter &gt; Load. Our mains comes in at the front of the house and the battery is going into the
+    garage, so the system will be Grid &gt; Load &gt; Inverter. It would be possible to run a secondary feed back to the house to power a
+    separate essential circuit, Grid &gt; Load &gt; Inverter &gt; Essential Load. That was too much work. This system is going to be
+    Grid-Tied, so if the grid goes out, the system with shut off. One reason for this is, as we don&#39;t have any export limitation device,
+    we don&#39;t want to be powering the grid when it&#39;s out (imagine if an engineer was working on something he expected to be off and
+    we were providing power, has the potential to get dangerous fast). Luckily we live in an area where the grid is really stable. We&#39;ve
+    had one power outage in the last 5 years.
+  </p>
+  <p>
+    <strong>Do I need to do any regulatory things?</strong> Yes. I need to notify National Grid about this via a G99 application. This must
+    be done within 28 days of the install. It&#39;s worth considering an inverter that is already G99 approved. (The Multiplus-II I ended up
+    going for is. It&#39;s ENA Number is <a href='VICEN/10792/V1'>VICEN/10792/V1</a> )
+  </p>
+
 
   <h4>Options</h4>
   <p>
-    There are some really nice, tightly integrated systems that are offered by Solar installers. It&#39;s big business and I spoke to quite a few providers, for no specific reason I narrowed down my integrated systems to GivEnergy and MyEnergi. These both were tightly integrated systems with great support. 
+    There are some really nice, tightly integrated systems that are offered by Solar installers. It&#39;s big business and I spoke to quite
+    a few providers, for no specific reason I narrowed down my integrated systems to GivEnergy and MyEnergi. These both were tightly
+    integrated systems with great support.
   </p>
   <p>
     For comparison, I ended up settling with a quote for a MyEnergi System.
@@ -89,7 +118,7 @@ published: true
   <p>The other option is a lot more modular and requires more DIY work. A 16.1kWh battery from Fogstar energy, backed by UK based customer
     support and a 10 year warranty is only £2000. Plus an inverter and Paul&#39;s installation quote brought the total cost to as little as
     £4000. </p>
-  
+
   <h4>Analysis (Payback Calculator)</h4>
   <p>It looks as though the DIY approach was the better option but I wanted to really verify the rough calculations I had done previous and
     work out what the best battery and inverter to go for was. </p>
@@ -97,14 +126,15 @@ published: true
     href='https://garydoessolar.com/utilities/dailymodellingutility/'>Gary Does Solar</a> has a brilliant calculator for solar installations
     but it didn&#39;t work great for what I was looking at. As I couldn&#39;t find a good calculator, I built one. </p>
   <p>
-    The <a href="https://purpleriver.dev/battery-payback">Battery Payback Calculator</a> takes your last years of electricity readings from Octopus (easy to download from your account page),
+    The <a href="https://purpleriver.dev/battery-payback">Battery Payback Calculator</a> takes your last years of electricity readings from
+    Octopus (easy to download from your account page),
     lets you enter some details about the systems you are considering and gives you details about your energy usage and an analysis of the
     batteries you are looking. If you want to give it a play you can download some example energy readings here.
   </p>
 
   <a href="/assets/images/posts/2025/home-ess/BatteryCalculations_Final.png" target="_blank">
     <img src="/assets/images/posts/2025/home-ess/BatteryCalculations_Final.png" alt="Battery Payback Calculator Screenshot"
-          class="img-fluid">
+         class="img-fluid">
   </a>
   <p class="caption"> Click or Tap to open in new tab to see clearer)</p>
 
@@ -118,12 +148,25 @@ published: true
     versatile and &quot;future proof&quot; should the Octopus cheap rate window change for example. It also means that it can cover more of
     the peaks in usage such as when the oven and kettle and washing machine are all on at the same time. </p>
   <h4>Final System </h4>
-  <p><a href="https://www.fogstar.co.uk/collections/solar-battery-storage/products/fogstar-energy-16kwh-48v-solar-battery">Fogstar Energy 16.1kWh Battery</a></p>
-  <p><a href="https://www.victronenergy.com/inverters-chargers/multiplus-ii">Victron Multiplus-II</a> <a href="https://www.victronenergy.com/upload/documents/Datasheet-MultiPlus-II-inverter-charger-EN.pdf">48/8000/110-100</a></p>
-  <p><a href="https://www.victronenergy.com/communication-centres/cerbo-gx">CerboGX MKII</a></p>
-  <p>3 x <a href="https://www.victronenergy.com/meters-and-sensors/energy-meter">ET112</a> -&gt; Monitoring Grid, Feed to Garage and (Future) EVC</p>
+  <ul>
+    <li>
+      <a href="https://www.fogstar.co.uk/collections/solar-battery-storage/products/fogstar-energy-16kwh-48v-solar-battery">Fogstar Energy
+        16.1kWh Battery</a>
+    </li>
+    <li>
+      <a href="https://www.victronenergy.com/inverters-chargers/multiplus-ii">Victron Multiplus-II</a>
+      <a href="https://www.victronenergy.com/upload/documents/Datasheet-MultiPlus-II-inverter-charger-EN.pdf">48/8000/110-100</a>
+    </li>
+    <li>
+      <a href="https://www.victronenergy.com/communication-centres/cerbo-gx">CerboGX MKII</a>
+    </li>
+    <li>
+      3 x <a href="https://www.victronenergy.com/meters-and-sensors/energy-meter">ET112</a> -&gt; Monitoring Grid, Feed to Garage and
+      (Future) EVC
+    </li>
+  </ul>
   <p>All Supplied by <a href="https://www.bimblesolar.com/">Bimble Solar</a></p>
-  
+
   <h4>Layout and Design</h4>
   <p>As I decided to go for the more DIY approach, I then needed to work out extra bits of the installation.
     Paul the Electrican had already laid a new radial to the Garage, he confirmed that the cables were the right size. He had also laid a
@@ -131,9 +174,9 @@ published: true
   <p>There were still questions over whether usual CT clamps would work as sensors for the Victron system (they don&#39;t), how the
     Cerbo gets powered and what additional bits would be needed for the Victron to manage the battery. </p>
   <p>After various questions on Reddit, the Victron Forums and the Octopus Agile forum I ended up with the following design</p>
-  
+
   <img src="/assets/images/posts/2025/home-ess/Battery_Design_(Tidy).png" alt="Home ESS Design" class="img-fluid">
-  
+
   <p>There&#39;s a bit of redundancy in the sensors here, in all the places where I have an ET112 sensor I also have a Shelly EM. The ET112s
     are more of a faff as they need to go in-line rather than using a CT Clamp but they are required for the Victron ESS to work.</p>
   <p>The Cerbo is powered from the battery and has M8 rings that can be added to the terminals in the MP-II</p>
@@ -164,7 +207,8 @@ published: true
       <img data-src="/assets/images/posts/2025/home-ess/installation/cerbo_2.jpg" src="" alt="Cerbo GX MKII">
     </a>
     <a href="/assets/images/posts/2025/home-ess/installation/inverter_inside.jpg" target="_blank">
-      <img data-src="/assets/images/posts/2025/home-ess/installation/inverter_inside.jpg" src="" alt="Inside the inverter cover, showing Cerbo power">
+      <img data-src="/assets/images/posts/2025/home-ess/installation/inverter_inside.jpg" src=""
+           alt="Inside the inverter cover, showing Cerbo power">
     </a>
     <a href="/assets/images/posts/2025/home-ess/installation/garage_cu_1.jpg" target="_blank">
       <img data-src="/assets/images/posts/2025/home-ess/installation/garage_cu_1.jpg" src="" alt="Garage CU with sensors">
@@ -180,8 +224,8 @@ published: true
     </a>
   </div>
   <p class="caption">9 images of the ESS</p>
-  
-  
+
+
   <h3>Configuration (ESS Assistant)</h3>
   <p>Configuration for the system was overall fairly straight forward.</p>
   <p>It took a bit of time to get the Cerbo to correctly recognise the battery, I just need to change the connection type to in Settings&gt;Connectivity
@@ -259,7 +303,6 @@ published: true
   </details>
   <br>
 
-
   <p>The python script actually does a little more, because once you&#39;ve gone that far, then why not. So it merges any adjacent slots and
     averages their cost. I don&#39;t actually use the costs at the moment, but I might do in the future. </p>
   <p>The Scheduled Battery Charge Times sensor&#39;s attributes end up like:</p>
@@ -291,7 +334,9 @@ published: true
     <img src="/assets/images/posts/2025/home-ess/node-red-flow.png" alt="Node Red Flow for CerboGX MQTT">
   </a>
 
-  <p class="caption">Not sure if any extra detail is needed here, happy to provide if you need it! <a href="mailto:ha-help@purpleriver.dev?subject=Node%20Red%20MQTT%20Help&body=I%20want%20some%20help%20setting%20up%20a%20Node%20Red%20flow%20to%20allow%20my%20CerboGX%20to%20talk%20to%20Home%20Assistant!">✉️</a></p>
+  <p class="caption">Not sure if any extra detail is needed here, happy to provide if you need it! <a
+    href="mailto:ha-help@purpleriver.dev?subject=Node%20Red%20MQTT%20Help&body=I%20want%20some%20help%20setting%20up%20a%20Node%20Red%20flow%20to%20allow%20my%20CerboGX%20to%20talk%20to%20Home%20Assistant!">✉️</a>
+  </p>
   <p>Once that was set up, I could listen the the <code>N/#</code> topic to see the messages the CerboGX was publishing and publish a simple
     packet to trigger the battery to charge or discharge.</p>
 
@@ -314,7 +359,8 @@ published: true
     <summary>Battery Charging Window Active Sensor</summary>
     <p><a href="script_examples/battery_charging_window_active_sensor.yaml" target="_blank">Click to open raw file</a></p>
 
-    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/battery_charging_window_active_sensor.yaml %}</code></pre>
+    <pre><code class='language-yaml'
+               lang='yaml'>{% raw_include_relative /script_examples/battery_charging_window_active_sensor.yaml %}</code></pre>
   </details>
   <br>
 
@@ -334,7 +380,8 @@ published: true
     <summary>Battery Charging Session Tracker Automation</summary>
     <p><a href="script_examples/battery_charge_session_tracker.yaml" target="_blank">Click to open raw file</a></p>
 
-    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/battery_charge_session_tracker.yaml %}</code></pre>
+    <pre><code class='language-yaml'
+               lang='yaml'>{% raw_include_relative /script_examples/battery_charge_session_tracker.yaml %}</code></pre>
   </details>
 </section>
 
