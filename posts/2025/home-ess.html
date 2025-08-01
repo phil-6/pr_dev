@@ -95,7 +95,8 @@ published: true
   <p>
     <strong>Do I need to do any regulatory things?</strong> Yes. I need to notify National Grid about this via a G99 application. This must
     be done within 28 days of the install. It&#39;s worth considering an inverter that is already G99 approved. (The Multiplus-II I ended up
-    going for is. It&#39;s ENA Number is <a href='VICEN/10792/V1'>VICEN/10792/V1</a> )
+    going for is. It&#39;s ENA Number is <a href='https://www.ena-eng.org/gen-ttr/Index?Action=ViewDetail&EID=102060360&tab=search'>
+    VICEN/10792/V1</a> )
   </p>
 
 
@@ -136,7 +137,7 @@ published: true
     <img src="/assets/images/posts/2025/home-ess/BatteryCalculations_Final.png" alt="Battery Payback Calculator Screenshot"
          class="img-fluid">
   </a>
-  <p class="caption"> Click or Tap to open in new tab to see clearer)</p>
+  <p class="caption"> Click or Tap to open in new tab to see clearer</p>
 
   <p>From that screenshot, we can see that more than 15kWh of storage is probably the sweet spot and there is 4000kWh of usage during the
     peak rate times that I can aim to offset. </p>
@@ -175,7 +176,10 @@ published: true
     Cerbo gets powered and what additional bits would be needed for the Victron to manage the battery. </p>
   <p>After various questions on Reddit, the Victron Forums and the Octopus Agile forum I ended up with the following design</p>
 
-  <img src="/assets/images/posts/2025/home-ess/Battery_Design_(Tidy).png" alt="Home ESS Design" class="img-fluid">
+  <a href="/assets/images/posts/2025/home-ess/Battery_Design_(Tidy).png" target="_blank">
+    <img src="/assets/images/posts/2025/home-ess/Battery_Design_(Tidy).png" alt="Home ESS Design">
+  </a>
+  <p class="caption">Design of the system. Click to open larger version</p>
 
   <p>There&#39;s a bit of redundancy in the sensors here, in all the places where I have an ET112 sensor I also have a Shelly EM. The ET112s
     are more of a faff as they need to go in-line rather than using a CT Clamp but they are required for the Victron ESS to work.</p>
@@ -240,11 +244,12 @@ published: true
   <h2>Automation - Octopus Agile with ESS</h2>
   <p>Automation was less straight-forward. I can see why a lot of people pay the extra for a system that is tightly coupled and they don&#39;t
     have to do the work to get it working. </p>
-  <p>Home assistant has good HACS integrations for <a href='https://github.com/BottlecapDave/HomeAssistant-OctopusEnergy'>Octopus</a> and <a
+  <p>
+    Home assistant has good HACS integrations for <a href='https://github.com/BottlecapDave/HomeAssistant-OctopusEnergy'>Octopus</a> and <a
     href='https://github.com/sfstar/hass-victron'>Victron</a> and these are the foundation of the automations I put together. After
-    exploring
-    the integrations in general, I could see that Octopus exposes the Agile rates for the current day and the next day when they&#39;re
-    released. </p>
+    exploring the integrations in general, I could see that Octopus exposes the Agile rates for the current day and the next day when
+    they&#39;re released.
+  </p>
 
 
   <h3>Finding the Cheapest Rates</h3>
