@@ -14,6 +14,7 @@ actions:
             value_template: >
               {{ trigger.to_state is defined and trigger.to_state.state ==
               'CHARGING' }}
+            alias: If charging has started
         sequence:
           - variables:
               start_ts: "{{ as_timestamp(now()) }}"
@@ -25,8 +26,8 @@ actions:
                 (SoC {{ start_soc }}%).
             action: logbook.log
           - data:
-              notification_id: battery_charge_session_tracker
-              title: Battery Charging Started 🪫🗹
+              notification_id: battery_charge_session_tracker_{{start_ts}}
+              title: Battery Charging Started 🪫✅
               message: >
                 Charge started at {{ start_ts | timestamp_custom('%H:%M') }}
                 (SoC {{ start_soc }}%).
@@ -42,6 +43,7 @@ actions:
             value_template: >
               {{ trigger.from_state is defined and trigger.from_state.state ==
               'CHARGING' }}
+            alias: If charging has finished
         sequence:
           - variables:
               end_ts: "{{ as_timestamp(now()) }}"
@@ -51,25 +53,39 @@ actions:
                 from_json }}
               start_ts: "{{ session.start }}"
               start_soc: "{{ session.start_soc }}"
-          - data:
-              name: Battery
-              message: >
-                Charge ended at {{ end_ts | timestamp_custom('%H:%M') }} (SoC {{
-                end_soc }}%).
-            action: logbook.log
-          - data:
-              notification_id: battery_charge_session_tracker
-              title: Battery Charging Ended🔋🏁
+              notification_id: battery_charge_session_tracker_{{start_ts}}
               message: >
                 Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
                 start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
                 {{ end_soc }}%).
-            action: persistent_notification.create
-          - data:
-              title: Battery Charging Ended🔋🏁
-              message: >
-                Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
-                start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
-                {{ end_soc }}%).
-            action: notify.mobile_app_device
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: |
+                      {{ (end_ts - start_ts) > 300 }}
+                sequence:
+                  - data:
+                      name: Battery
+                      message: >
+                        Charge ended at {{ end_ts | timestamp_custom('%H:%M') }}
+                        (SoC {{ end_soc }}%).
+                    action: logbook.log
+                  - data:
+                      notification_id:
+                        "[object Object]": null
+                      title: Battery Charging Ended🔋🏁
+                      message:
+                        "[object Object]": null
+                    action: persistent_notification.create
+                  - data:
+                      title: Battery Charging Ended🔋🏁
+                      message:
+                        "[object Object]": null
+                    action: notify.mobile_app_phil_s24u
+                alias: If charging lasted more than 5 minutes
+            default:
+              - data:
+                  notification_id:
+                    "[object Object]": null
+                action: persistent_notification.dismiss
 mode: single
