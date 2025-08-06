@@ -54,7 +54,7 @@ actions:
               start_ts: "{{ session.start }}"
               start_soc: "{{ session.start_soc }}"
               notification_id: battery_charge_session_tracker_{{start_ts}}
-              message: >
+              notification_message: >
                 Charged from {{ start_ts | timestamp_custom('%H:%M') }} (SoC {{
                 start_soc }}%) to {{ end_ts | timestamp_custom('%H:%M') }} (SoC
                 {{ end_soc }}%).
@@ -71,21 +71,17 @@ actions:
                         (SoC {{ end_soc }}%).
                     action: logbook.log
                   - data:
-                      notification_id:
-                        "[object Object]": null
+                      notification_id: "{{ notification_id }}"
                       title: Battery Charging Ended🔋🏁
-                      message:
-                        "[object Object]": null
+                      message: "{{ notification_message }}"
                     action: persistent_notification.create
                   - data:
                       title: Battery Charging Ended🔋🏁
-                      message:
-                        "[object Object]": null
+                      message: "{{ notification_message }}"
                     action: notify.mobile_app_phil_s24u
                 alias: If charging lasted more than 5 minutes
             default:
               - data:
-                  notification_id:
-                    "[object Object]": null
+                  notification_id: "{{ notification_id }}"
                 action: persistent_notification.dismiss
 mode: single
