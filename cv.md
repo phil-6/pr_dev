@@ -14,7 +14,7 @@ published: true
 
 Swansea, Wales, UK
 
-07828170428 \| [Phil@PurpleRiver.dev](mailto:cv@purpleriver.dev) \| [Personal Website](https://purpleriver.dev) \| [LinkedIn](http://www.linkedin.com/in/Phil6) \| [GitHub](https://github.com/phil-6)
+07828170428 \| [Phil@PurpleRiver.dev](mailto:cv@purpleriver.dev) \| [Website](https://purpleriver.dev) \| [LinkedIn](http://www.linkedin.com/in/Phil6) \| [GitHub](https://github.com/phil-6)
 
 Proven engineering leader with a passion for leading teams to deliver effectively and helping people achieve their goals. A breadth of experience in both software engineering and outdoor leadership has led to a clear understanding of the importance of clear and effective communication in all aspects of any role. Excited to explore and solve challenging problems, leveraging the skills and tools available to find and deliver the best possible solution. Always looking to develop personal skill sets and improve ways of working and with a keen attention to detail to identify areas for improvement and growth both personally and in their teams.
 
@@ -28,7 +28,7 @@ _April 2025 - Present_
 #### **Head of Engineering at Ryalto**
 _May 2022 - March 2025_
 
-Led the rebuild of Ryalto, taking it from an  ageing collection of microservices to a modern majestic monolith using  Rails 7 and Hotwire with propshaft and import maps. The new version of  the app scaled to 50000 users at 1/10th of the cost of the previous  infrastructure.
+Led the rebuild of Ryalto, taking it from an ageing collection of microservices to a modern majestic monolith using Rails 8 and Hotwire with propshaft and import maps. The new version of the app scaled to 50000 users at 1/10th of the cost of the previous infrastructure.
 
 Designed and implemented the majority of the new features, including:
 - Instant messaging with Hotwire (Turbo Streams and WebSockets with Action Cable).
@@ -49,7 +49,7 @@ Additional Achievements and Responsibilities
 - Worked extensively with partners to design and implement multiple complex cross-platform integrated solutions.
 - Implemented the Ryalto Developer page using Jekyll.rb with a detailed feature overview.
 - Grew the development team from 4 to 10 members.
-- Led the iterative improvement of existing features, planned and led the implementation of other features including Surveys, CSV Import & Export and VoIP Calling.
+- Led the iterative improvement of existing features, planned and led the implementation of new features including Surveys, CSV Import & Export and VoIP Calling.
 - Responsibility for management of full dev team, technical budget and tooling payments.
 
 #### **Lead Software Developer at Legal Innovation Lab Wales**
@@ -60,7 +60,7 @@ Led the software development team as part of the Legal Innovation Lab Wales proj
 * Recruitment, onboarding, development and management of team members,
 * Creating, developing and evolving all the processes, tooling and infrastructure,
 * Developing and delivering 9 different software projects in our first year,
-* Building and managing the developer page (https://developer.legaltech.wales)
+* Building and managing the [developer page](https://developer.legaltech.wales)
 
 With full responsibility for software development on the project I implemented processes and methodologies that led to an extremely happy and productive team, delivering a wide range of projects which well exceeded all of our aims and targets.  
 As I was leading a small team, I had to be involved with every part of every project. Leading the full stack design and development of each project, contributing to the development of many and reviewing code to ensure its quality. I was also responsible for stakeholder engagement, and helped on a broad range of other areas of the project outside of software.  
@@ -91,18 +91,45 @@ Primary focus was to get more developers building more apps on the Veeqo APIs. H
 07/11 - 03/13 **Warranty Manager at Tredz.co.uk** <br/>
 06/06 - 11/10 **Various Bar and Hospitality Jobs** <br/>
 
-
-## *Skills Matrix*
-
-*Leadership / Software Engineering / Verbal & Written Communication / Project & Product Management / Ruby / Rails / Git / Python / HTML / CSS / Jekyll / APIs / Javascript / AWS / Infrastructure / DevOps / Company Culture / Full Stack Development / Public Speaking / Coaching / Stakeholder & Partner Management / Marketing*
-
 ## *Education*
 
-**2013-17 BSc Computer Science** \- **First Class Honours** - Swansea University  
+**2013-17 BSc Computer Science** - **First Class Honours** - Swansea University  
 
-Final Year Project was building a digital climbing guidebook, using a PHP back-end using the Laravel framework. The front end interacts with the database using a RESTful API with AngularJS, Bootstrap and several other modern web technologies. The final product won the award for Best Project and was extensively used as an example by the department. It is not currently hosted but the code can be seen here on github (https://github.com/phil-6/rockadvisor).  
+Final Year Project was building a digital climbing guidebook called [RockAdvisor](#projects)  
 
-**2007-8  GCE A levels**  \- Physics (C), Maths (C), Chemistry (D) - Old Swinford Hospital
+**2007-8  GCE A-levels** - Physics (C), Maths (C), Chemistry (D) - Old Swinford Hospital
+
+## *Projects*
+
+[Further Details](https://purpleriver.dev/#projects)
+
+***Battery Payback Calculator*** > A tool that calculates the return on investment of residential battery storage based on actual energy usage and battery options.
+
+***Radius Contractors*** > An app to find builders recommended by your connections, inspired by a Google Doc used by our group of friends!
+
+***Ryalto V4*** > Rebuild of Ryalto from microservices to a majestic monolith. Scaled the new application to 50000 users.
+
+***Ryalto Dev Page*** > Jekyll static site.
+
+***LILW Dev Page*** > Jekyll static site to showcase projects, blogs and information for dev team and collaborators.
+
+***Dragon-S*** > Two Rails projects. One which provides an interface to a ML classifier which identifies grooming tactics in conversations,. the other is a bespoke online learning environment tailored to provide learning to safeguarding professionals about the tactics used in grooming and how to offer better protection and support to victims.
+
+***Include Journey*** > Full Stack Ruby on Rails app which facilitates prison leavers on their rehabilitation journey. Led the project through a co-design process with stakeholders and end users. Delivered functional prototype in 12 weeks which won the Ministry of Justice’s Prison Leavers Innovation Challenge and £420k of funding for future development.
+
+***Scenario Platform*** > Full Stack Ruby on Rails application which allows admins to create non-linear branching scenarios where each answer a user selects influences a range of invisible parameters. Delivered the entire project, through problem discovery, research into existing solutions, design, development and deployment.
+
+***Members.Mobilise.Digital*** > Full Stack  Rails application for managing a network of contractors. Designed and delivered full project..
+
+***PurpleRiver.dev*** > Jekyll site Hosted on Cloudflare
+
+***VanSpots.uk*** > First project built with Rails and runs at zero cost; leveraging the Heroku Platform as a Service (PAAS) for the infrastructure, CloudFlare for a CDN and DNS with other technologies including the GoogleMaps JavaScript API. Allows users to sign up, find, add and review spots that are good for camping in vans. Recently rebuilt on Rails 8
+
+***Savage-Adventures.com*** > Jekyll marketing website that runs on Cloudflare
+
+***summoner.purpleriver.dev*** > Serverless application that sends a text message from a website sharing the users location (with their explicit consent), leveraging Cloudflare workers and Twilio.
+
+***RockAdvisor.uk*** > Digital Rock Climbing guide book. Full stack project for University final project, back end built in PHP with the Laravel framework. Front end used AngularJS 1.6.
 
 ## *Qualifications*
 
@@ -114,37 +141,10 @@ Final Year Project was building a digital climbing guidebook, using a PHP back-e
 * Clean, UK driving Licence with D1 provisional.
 * Gold Duke of Edinburgh award.
 
-## *Projects*
 
-Further Details on  [https://purpleriver.dev/\#projects](https://purpleriver.dev/#projects) and [https://developer.legaltech.wales/\#projects](https://developer.legaltech.wales/#projects)
+## *Skills Matrix*
 
-***Battery Payback Calculator*** > A tool that calculates the return on investment of residential battery storage based on actual energy usage and battery options.
-
-***Radius Contractors*** > An app to find builders recommended by your connections, inspired by a Google Doc used by our group of friends!
-
-***Ryalto V4*** \> Rebuild of Ryalto from microservices to a majestic monolith. Scaled the new application to 50000 users.
-
-***Ryalto Dev Page*** \> Jekyll static site.
-
-***LILW Dev Page*** \> Jekyll static site to showcase projects, blogs and information for dev team and collaborators.
-
-***Dragon-S*** > Two Rails projects. One which provides an interface to a ML classifier which identifies grooming tactics in conversations,. the other is a bespoke online learning environment tailored to provide learning to safeguarding professionals about the tactics used in grooming and how to offer better protection and support to victims.
-
-***Include Journey*** \> Full Stack Ruby on Rails app which facilitates prison leavers on their rehabilitation journey. Led the project through a co-design process with stakeholders and end users. Delivered functional prototype in 12 weeks which won the Ministry of Justice’s Prison Leavers Innovation Challenge and £420k of funding for future development.
-
-***Scenario Platform*** \> Full Stack Ruby on Rails application which allows admins to create non-linear branching scenarios where each answer a user selects influences a range of invisible parameters. Delivered the entire project, through problem discovery, research into existing solutions, design, development and deployment.
-
-***Members.Mobilise.Digital** \>* Full Stack  Rails application for managing a network of contractors. Designed and delivered full project..
-
-***PurpleRiver.dev** \>* Jekyll site Hosted on Cloudflare
-
-***VanSpots.uk*** \> First project built with Rails and runs at zero cost; leveraging the Heroku Platform as a Service (PAAS) for the infrastructure, CloudFlare for a CDN and DNS with other technologies including the GoogleMaps JavaScript API. Allows users to sign up, find, add and review spots that are good for camping in vans. Recently rebuilt on Rails 8
-
-***Savage-Adventures.com*** \> Jekyll marketing website that runs on Cloudflare
-
-***summoner.purpleriver.dev** \>* Serverless application that sends a text message from a website sharing the users location (with their explicit consent), leveraging Cloudflare workers and Twilio.
-
-***RockAdvisor.uk** \>* Digital Rock Climbing guide book. Full stack project for University final project, back end built in PHP with the Laravel framework. Front end uses AngularJS 1.6.
+*Leadership / Software Engineering / Verbal & Written Communication / Project & Product Management / Ruby / Rails / Hotwire / StimulusJS / Git / HTML / CSS / Jekyll / APIs / Javascript / Software Architecture / Infrastructure / Python / AWS / DevOps / Company Culture / Full Stack Development / Public Speaking / Coaching / Stakeholder & Partner Management*
 
 ## Volunteering
 
