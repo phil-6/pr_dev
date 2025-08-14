@@ -2,24 +2,20 @@
 # Processes next-day Octopus rates, stores cheapest slots, and returns change status
 
 # Entity IDs and constants
-EVENT_ENTITY = 'event.octopus_energy_electricity_xxx_xxx_next_day_rates'
+NEXT_DAY_RATES_FROM_OCTOPUS = 'event.octopus_energy_electricity_19l2935327_2199998228556_next_day_rates'
+CURRENT_DAY_RATES_FROM_OCTOPUS = 'event.octopus_energy_electricity_19l2935327_2199998228556_current_day_rates'
 SENSOR_ENTITY = 'sensor.scheduled_battery_charge_times'
 CHARGING_SLOTS_COUNT = 6
 
 # Prepare output dict for automation
 output = {}
 
-def get_rates_event():
+def get_raw_rates_from_event(event):
     """Retrieve the rates event entity or log an error."""
-    event = hass.states.get(EVENT_ENTITY)
-    if not event:
-        logger.error(f"Rates event '{EVENT_ENTITY}' not found")
-    return event
-
-
-def extract_raw_rates(event):
-    """Extract raw 'rates' list from event attributes."""
-    return event.attributes.get('rates', []) if event else []
+    event_state = hass.states.get(event)
+    if not event_state:
+        logger.error(f"Rates event '{event}' not found")
+    return event_state.attributes.get('rates', []) if event_state else []
 
 
 def merge_consecutive_slots(slots):
@@ -75,8 +71,15 @@ def build_charging_slots(raw_rates, count):
 
 def get_old_slots():
     """Retrieve existing slots from the sensor, or None if not present."""
-    entity = hass.states.get(SENSOR_ENTITY)
-    return entity.attributes.get('charge_times') if entity else None
+    old_slots_store = hass.states.get(SENSOR_ENTITY)
+    return old_slots_store.attributes.get('charge_times') if old_slots_store else None
+
+
+def get_and_store_old_slots_from_raw():
+    raw_rates = get_raw_rates_from_event(CURRENT_DAY_RATES_FROM_OCTOPUS)
+    slots = build_charging_slots(raw_rates, CHARGING_SLOTS_COUNT)
+    store_new_slots(slots)
+    return slots
 
 
 def store_new_slots(new_slots):
@@ -120,9 +123,13 @@ def parse_slots(slots):
 
 def main():
     # 1) Fetch and parse rates
-    event = get_rates_event()
-    raw_rates = extract_raw_rates(event)
+    raw_rates = get_raw_rates_from_event(NEXT_DAY_RATES_FROM_OCTOPUS)
     old_slots = get_old_slots()
+    if not old_slots:
+        old_slots = get_and_store_old_slots_from_raw()
+
+    if not old_slots:
+        logger.error(f"Old Slots Not Found, something has gone wrong!")
 
     if raw_rates:
         output['rates_available'] = True
@@ -136,14 +143,13 @@ def main():
         output['new_slots'] = new_slots
         output['old_slots'] = old_slots
 
-        if changed:
+        if changed and new_slots:
             # if no previous slots, or last-old end ≤ now, then store
-            if (not old_slots) or (not previous_slots_in_progress(old_slots)):
+            if not previous_slots_in_progress(old_slots):
                 store_new_slots(new_slots)
                 output['slots'] = new_slots
             else:
                 # last old slot still in future → skip write/notification
-                output['changed'] = False
                 output['slots'] = old_slots
                 output['old_slots_in_progress'] = previous_slots_in_progress(old_slots)
     else:
