@@ -95,3 +95,8 @@ systems are architected. An upgrade would have been a lot of work, and rebuildin
 us to build things in a more maintainable and extensible way.
 
 ### I’m excited for the journey we’re heading on!
+
+---
+
+The original document informing the decision to run a rebuild is available here: ([Ryalto Needs an Upgrade](/posts/2024/ryalto/ryalto-needs-an-upgrade)).
+
