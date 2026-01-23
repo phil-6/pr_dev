@@ -1,3 +1,12 @@
+- name: Terminal Emulator Comparison
+  available: True
+  link: /terminal-comparision
+  year: 2026
+  icon: laptop-code
+  description: A quick terminal comparison. Claude web decided to create this rather than just saying "Ghostty"
+  tech: HTML, CSS, JS
+  github: https://github.com/phil-6/pr_dev/blob/main/terminal-comparison.html
+
 - name: Battery Payback Calculator
   available: True
   link: /battery-payback

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ubuntu Terminal Emulator Comparison</title>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --bg-primary: #0d1117;
+                --bg-secondary: #161b22;
+                --bg-tertiary: #21262d;
+                --text-primary: #e6edf3;
+                --text-secondary: #8b949e;
+                --accent-green: #3fb950;
+                --accent-blue: #58a6ff;
+                --accent-purple: #a371f7;
+                --accent-orange: #d29922;
+                --accent-red: #f85149;
+                --accent-cyan: #39c5cf;
+                --border-color: #30363d;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Outfit', sans-serif;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                line-height: 1.6;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 3rem 2rem;
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 4rem;
+                position: relative;
+            }
+
+            header::before {
+                content: '';
+                position: absolute;
+                top: -100px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 600px;
+                height: 600px;
+                background: radial-gradient(circle, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
+                pointer-events: none;
+            }
+
+            h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+                color: var(--text-secondary);
+                max-width: 700px;
+                margin: 0 auto 2rem;
+            }
+
+            .use-case-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: var(--bg-tertiary);
+                border: 1px solid var(--border-color);
+                padding: 0.75rem 1.5rem;
+                border-radius: 2rem;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.875rem;
+                color: var(--accent-cyan);
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .section-title::before {
+                content: '';
+                width: 4px;
+                height: 24px;
+                background: var(--accent-blue);
+                border-radius: 2px;
+            }
+
+            /* Project References Section */
+            .projects-section {
+                margin-bottom: 4rem;
+            }
+
+            .project-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 1.5rem;
+                transition: all 0.3s ease;
+            }
+
+            .project-card:hover {
+                border-color: var(--accent-blue);
+                transform: translateY(-2px);
+            }
+
+            .project-name {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            .project-desc {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .terminal-used {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.875rem;
+                padding: 0.5rem 1rem;
+                background: var(--bg-tertiary);
+                border-radius: 6px;
+                width: fit-content;
+            }
+
+            .terminal-used .label {
+                color: var(--text-secondary);
+            }
+
+            .terminal-used .value {
+                color: var(--accent-green);
+                font-weight: 500;
+            }
+
+            /* Comparison Table */
+            .comparison-section {
+                margin-bottom: 4rem;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.95rem;
+            }
+
+            th {
+                background: var(--bg-tertiary);
+                padding: 1rem;
+                text-align: left;
+                font-weight: 600;
+                border-bottom: 1px solid var(--border-color);
+                white-space: nowrap;
+            }
+
+            th:first-child {
+                min-width: 160px;
+            }
+
+            td {
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+                background: var(--bg-secondary);
+                vertical-align: top;
+            }
+
+            tr:last-child td {
+                border-bottom: none;
+            }
+
+            .terminal-name {
+                font-weight: 600;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .badge {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.5rem;
+                border-radius: 4px;
+                font-weight: 500;
+                text-transform: uppercase;
+            }
+
+            .badge-recommended {
+                background: rgba(63, 185, 80, 0.15);
+                color: var(--accent-green);
+            }
+
+            .badge-omarchy {
+                background: rgba(163, 113, 247, 0.15);
+                color: var(--accent-purple);
+            }
+
+            .badge-omakub {
+                background: rgba(88, 166, 255, 0.15);
+                color: var(--accent-blue);
+            }
+
+            .feature-yes {
+                color: var(--accent-green);
+            }
+
+            .feature-no {
+                color: var(--text-secondary);
+            }
+
+            .feature-partial {
+                color: var(--accent-orange);
+            }
+
+            .feature-cell {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.85rem;
+            }
+
+            /* Terminal Details */
+            .details-section {
+                margin-bottom: 4rem;
+            }
+
+            .terminal-detail {
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                margin-bottom: 1.5rem;
+                overflow: hidden;
+            }
+
+            .detail-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.25rem 1.5rem;
+                background: var(--bg-tertiary);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .detail-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .detail-meta {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+            }
+
+            .detail-content {
+                padding: 1.5rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            @media (max-width: 768px) {
+                .detail-content {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .detail-column h4 {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 0.75rem;
+            }
+
+            .detail-column ul {
+                list-style: none;
+            }
+
+            .detail-column li {
+                padding: 0.5rem 0;
+                display: flex;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .detail-column li::before {
+                content: '→';
+                color: var(--accent-blue);
+                flex-shrink: 0;
+            }
+
+            .install-cmd {
+                font-family: 'JetBrains Mono', monospace;
+                background: var(--bg-primary);
+                padding: 0.75rem 1rem;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                color: var(--accent-cyan);
+                margin-top: 1rem;
+                overflow-x: auto;
+            }
+
+            /* Recommendation Section */
+            .recommendation {
+                background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(163, 113, 247, 0.1));
+                border: 1px solid var(--accent-blue);
+                border-radius: 12px;
+                padding: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .recommendation h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .recommendation p {
+                color: var(--text-secondary);
+                margin-bottom: 1rem;
+            }
+
+            .recommendation-list {
+                list-style: none;
+            }
+
+            .recommendation-list li {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid var(--border-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .recommendation-list li:last-child {
+                border-bottom: none;
+            }
+
+            .use-case-label {
+                font-weight: 500;
+            }
+
+            .terminal-pick {
+                font-family: 'JetBrains Mono', monospace;
+                color: var(--accent-green);
+            }
+
+            footer {
+                text-align: center;
+                padding: 2rem;
+                border-top: 1px solid var(--border-color);
+                color: var(--text-secondary);
+                font-size: 0.875rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Terminal Emulator Comparison</h1>
+                <p class="subtitle">Finding the best Ubuntu terminal for running multiple Claude Code instances side by side</p>
+                <div class="use-case-badge">
+                    <span>🎯</span>
+                    <span>Focus: Native Split Panes & Tiling</span>
+                </div>
+            </header>
+
+            <section class="projects-section">
+                <h2 class="section-title">Reference Projects</h2>
+                <div class="project-cards">
+                    <div class="project-card">
+                        <div class="project-name">Omarchy</div>
+                        <p class="project-desc">Beautiful, modern & opinionated Linux distribution by DHH. Based on Arch Linux with Hyprland tiling WM.</p>
+                        <div class="terminal-used">
+                            <span class="label">Terminal:</span>
+                            <span class="value">Ghostty (default since v3.2)</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-name">Omakub</div>
+                        <p class="project-desc">Opinionated Ubuntu setup script that transforms a fresh install into a modern dev environment.</p>
+                        <div class="terminal-used">
+                            <span class="label">Terminal:</span>
+                            <span class="value">Alacritty + Zellij</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recommendation">
+                <h3>⚡ Quick Recommendations</h3>
+                <p>Based on your use case of running multiple Claude Code instances side by side:</p>
+                <ul class="recommendation-list">
+                    <li>
+                        <span class="use-case-label">Best native splits (modern)</span>
+                        <span class="terminal-pick">Ghostty or Kitty</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label">Best for complex tiling layouts</span>
+                        <span class="terminal-pick">Tilix or Terminator</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label">Best all-in-one solution</span>
+                        <span class="terminal-pick">WezTerm</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label">Best lightweight + multiplexer</span>
+                        <span class="terminal-pick">Alacritty + Zellij/tmux</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="comparison-section">
+                <h2 class="section-title">Feature Comparison</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Terminal</th>
+                            <th>Native Splits</th>
+                            <th>GPU Accel.</th>
+                            <th>Config Format</th>
+                            <th>Multiplexer</th>
+                            <th>Wayland</th>
+                            <th>Language</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Ghostty
+                                    <span class="badge badge-omarchy">Omarchy</span>
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Yes</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ OpenGL</span></td>
+                            <td class="feature-cell">Key-value</td>
+                            <td class="feature-cell"><span class="feature-no">Built-in only</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Native</span></td>
+                            <td class="feature-cell">Zig</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Alacritty
+                                    <span class="badge badge-omakub">Omakub</span>
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-no">✗ No</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ OpenGL</span></td>
+                            <td class="feature-cell">TOML</td>
+                            <td class="feature-cell"><span class="feature-yes">Needs tmux/Zellij</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Native</span></td>
+                            <td class="feature-cell">Rust</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Kitty
+                                    <span class="badge badge-recommended">Popular</span>
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Layouts</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ OpenGL</span></td>
+                            <td class="feature-cell">Custom</td>
+                            <td class="feature-cell"><span class="feature-partial">Built-in</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Native</span></td>
+                            <td class="feature-cell">C/Python</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    WezTerm
+                                    <span class="badge badge-recommended">All-in-one</span>
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Yes</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ OpenGL</span></td>
+                            <td class="feature-cell">Lua</td>
+                            <td class="feature-cell"><span class="feature-yes">Built-in mux</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Native</span></td>
+                            <td class="feature-cell">Rust</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Tilix
+                                    <span class="badge badge-recommended">Tiling</span>
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Advanced</span></td>
+                            <td class="feature-cell"><span class="feature-no">✗ VTE</span></td>
+                            <td class="feature-cell">GUI/dconf</td>
+                            <td class="feature-cell"><span class="feature-yes">Built-in</span></td>
+                            <td class="feature-cell"><span class="feature-partial">Via XWayland</span></td>
+                            <td class="feature-cell">D</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Terminator
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Advanced</span></td>
+                            <td class="feature-cell"><span class="feature-no">✗ VTE</span></td>
+                            <td class="feature-cell">INI</td>
+                            <td class="feature-cell"><span class="feature-yes">Built-in</span></td>
+                            <td class="feature-cell"><span class="feature-partial">Via XWayland</span></td>
+                            <td class="feature-cell">Python</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="terminal-name">
+                                    Konsole
+                                </div>
+                            </td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Yes</span></td>
+                            <td class="feature-cell"><span class="feature-no">✗ No</span></td>
+                            <td class="feature-cell">GUI</td>
+                            <td class="feature-cell"><span class="feature-partial">Basic</span></td>
+                            <td class="feature-cell"><span class="feature-yes">✓ Native</span></td>
+                            <td class="feature-cell">C++</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="details-section">
+                <h2 class="section-title">Detailed Breakdown</h2>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>👻</span>
+                            Ghostty
+                            <span class="badge badge-omarchy">Omarchy Default</span>
+                        </div>
+                        <div class="detail-meta">
+                            <span>By Mitchell Hashimoto</span>
+                            <span>•</span>
+                            <span>v1.2.0</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Native UI on Linux (GTK4/libadwaita) and macOS</li>
+                                <li>Excellent GPU-accelerated performance</li>
+                                <li>Native split panes with keyboard shortcuts</li>
+                                <li>100+ built-in themes</li>
+                                <li>Supports Kitty graphics & keyboard protocols</li>
+                                <li>Quick terminal (drop-down style)</li>
+                                <li>Simple, sensible defaults - works out of the box</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>No official Ubuntu package yet (community PPA)</li>
+                                <li>Requires OpenGL 3.3+ (issues on older GPUs)</li>
+                                <li>No session persistence or layout saving yet</li>
+                                <li>Newer project - still maturing</li>
+                                <li>No broadcast input to multiple panes</li>
+                            </ul>
+                            <div class="install-cmd">
+                                # Build from source or use community PPA<br>
+                                # See: ghostty.org/docs/install/build
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>🚀</span>
+                            Alacritty + Zellij
+                            <span class="badge badge-omakub">Omakub Default</span>
+                        </div>
+                        <div class="detail-meta">
+                            <span>Minimalist + Multiplexer</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Blazing fast - one of the fastest terminals</li>
+                                <li>Extremely lightweight and minimal</li>
+                                <li>Zellij provides rich split/tab management</li>
+                                <li>Session persistence with Zellij</li>
+                                <li>Excellent Wayland support</li>
+                                <li>TOML config is clean and readable</li>
+                                <li>Works on older hardware without issues</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>No native splits - requires Zellij/tmux</li>
+                                <li>Two tools to configure and maintain</li>
+                                <li>Learning curve for Zellij keybindings</li>
+                                <li>No native image display (in Alacritty)</li>
+                            </ul>
+                            <div class="install-cmd">
+                                sudo apt install alacritty<br>
+                                # Or for latest: cargo install alacritty<br>
+                                cargo install zellij
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>🐱</span>
+                            Kitty
+                        </div>
+                        <div class="detail-meta">
+                            <span>By Kovid Goyal</span>
+                            <span>•</span>
+                            <span>Feature-rich</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Advanced layout system (grid, tall, stack, etc.)</li>
+                                <li>Native image display protocol (widely adopted)</li>
+                                <li>GPU-accelerated with excellent performance</li>
+                                <li>Comprehensive keybinding customization</li>
+                                <li>SSH kitten for remote sessions</li>
+                                <li>Remote control API for scripting</li>
+                                <li>Mature and well-documented</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>Config syntax has a learning curve</li>
+                                <li>Can feel heavyweight compared to Alacritty</li>
+                                <li>Some find the defaults opinionated</li>
+                            </ul>
+                            <div class="install-cmd">
+                                sudo apt install kitty<br>
+                                # Or: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>🔧</span>
+                            WezTerm
+                        </div>
+                        <div class="detail-meta">
+                            <span>All-in-one Solution</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Built-in multiplexer - no tmux needed</li>
+                                <li>Powerful Lua scripting configuration</li>
+                                <li>Native splits, tabs, and workspaces</li>
+                                <li>Built-in SSH client with session management</li>
+                                <li>Excellent cross-platform support</li>
+                                <li>GPU-accelerated rendering</li>
+                                <li>Ligatures and true color support</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>Lua config can be complex for simple needs</li>
+                                <li>Larger resource footprint than Alacritty</li>
+                                <li>Can feel overwhelming for new users</li>
+                            </ul>
+                            <div class="install-cmd">
+                                # Download from wezfurlong.org/wezterm/<br>
+                                # Or: flatpak install flathub org.wezfurlong.wezterm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>⬚</span>
+                            Tilix
+                        </div>
+                        <div class="detail-meta">
+                            <span>GTK Tiling Terminal</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Best-in-class tiling/split interface</li>
+                                <li>Drag-and-drop pane arrangement</li>
+                                <li>Session saving and restore</li>
+                                <li>Synchronize input across panes</li>
+                                <li>GUI for configuration - easy setup</li>
+                                <li>GTK3 integrates well with GNOME</li>
+                                <li>Excellent for managing many terminals</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>No GPU acceleration (VTE-based)</li>
+                                <li>Slower than modern GPU-accelerated terminals</li>
+                                <li>Wayland support via XWayland only</li>
+                                <li>Development has slowed</li>
+                            </ul>
+                            <div class="install-cmd">
+                                sudo apt install tilix
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-detail">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <span>📐</span>
+                            Terminator
+                        </div>
+                        <div class="detail-meta">
+                            <span>Classic Tiling Terminal</span>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <div class="detail-column">
+                            <h4>Strengths</h4>
+                            <ul>
+                                <li>Excellent split/tiling functionality</li>
+                                <li>Layout saving and profiles</li>
+                                <li>Broadcast input to all/grouped terminals</li>
+                                <li>Mature and stable</li>
+                                <li>Simple installation on Ubuntu</li>
+                                <li>Good keyboard shortcut support</li>
+                            </ul>
+                        </div>
+                        <div class="detail-column">
+                            <h4>Considerations</h4>
+                            <ul>
+                                <li>VTE-based - no GPU acceleration</li>
+                                <li>Slower than modern alternatives</li>
+                                <li>UI feels dated compared to newer options</li>
+                                <li>Wayland support via XWayland</li>
+                            </ul>
+                            <div class="install-cmd">
+                                sudo apt install terminator
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recommendation" style="background: linear-gradient(135deg, rgba(63, 185, 80, 0.1), rgba(57, 197, 207, 0.1)); border-color: var(--accent-green);">
+                <h3>🎯 My Recommendation for Claude Code</h3>
+                <p>For running multiple Claude Code instances side by side on Ubuntu:</p>
+                <ul class="recommendation-list">
+                    <li>
+                        <span class="use-case-label"><strong>Primary Pick: Ghostty</strong></span>
+                        <span class="terminal-pick">Modern, fast, native splits</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label"><strong>Alternative: Kitty</strong></span>
+                        <span class="terminal-pick">More mature, excellent layouts</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label"><strong>Power User: WezTerm</strong></span>
+                        <span class="terminal-pick">Built-in mux, Lua scripting</span>
+                    </li>
+                    <li>
+                        <span class="use-case-label"><strong>Simple Setup: Tilix</strong></span>
+                        <span class="terminal-pick">GUI config, drag-drop panes</span>
+                    </li>
+                </ul>
+            </section>
+
+            <footer>
+                <p>Comparison created January 2026 • Data sourced from Omarchy, Omakub, and official documentation</p>
+            </footer>
+        </div>
+    </body>
+</html>
