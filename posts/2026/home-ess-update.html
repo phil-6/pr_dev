@@ -35,28 +35,36 @@ published: true
 
 <section id="savings">
   <h2>Savings Update</h2>
-  <p class="small">tl;dr: Prediction was accurate, on track to save ~£890 per year.</p>
+  <p class="small">tl;dr: The original &pound;900/year prediction for house-only usage was accurate. With the EV on top, total
+    electricity savings are closer to &pound;1,500/year vs what we&#39;d pay at the old flat rate.</p>
+
   <p>In the original post, I estimated savings of around &pound;900 per year with a payback period of under 6 years. The
     <a href="https://purpleriver.dev/battery-payback">Battery Payback Calculator</a> predicted that shifting our ~13kWh/day of
     usage from the ~30p/kWh peak rate to the ~7p/kWh off-peak rate would save roughly &pound;75/month.</p>
-  <p>Since then, we&#39;ve added a PHEV and EV charger (more on that <a href="#ev">below</a>), so even with our electricity usage going
-    way up our costs have still gone down.</p>
+
+  <p>Since then, we&#39;ve added a PHEV and EV charger (more on that <a href="#ev">below</a>), so even with our electricity usage
+    going way up our costs have still gone down. Also worth noting: the IOG off-peak rate halved from 6.67p to 3.33p on 1st April
+    2026 as part of the government energy bill discount, which makes the April numbers even more dramatic.
+    I have seen some information that indicates that isn't going to stay like that for long, but I'm enjoying it while I can!</p>
 
   <p>Comparing the same months year-on-year tells the story pretty clearly:</p>
 
   <h3>March: 2025 vs 2026</h3>
   <ul>
-    <li><strong>March 2025:</strong> 353 kWh, &pound;107.04 (30.3p/kWh effective)</li>
-    <li><strong>March 2026:</strong> 600 kWh, &pound;70.04 (11.7p/kWh effective)</li>
+    <li><strong>March 2025:</strong> 354 kWh, &pound;107.04 (30.3p/kWh effective)</li>
+    <li><strong>March 2026:</strong> 600 kWh, &pound;70.06 (11.7p/kWh effective)</li>
   </ul>
   <p>70% more electricity, 35% less cost.</p>
+  <p>The bill breakdown: 548 kWh charged at the 6.67p off-peak rate and just 52 kWh at the 29.93p peak rate.
+    91% of all usage shifted to off-peak by the battery and IOG scheduling.</p>
 
   <h3>April: 2025 vs 2026</h3>
   <ul>
     <li><strong>April 2025:</strong> 352 kWh, &pound;112.40 (31.9p/kWh effective)</li>
-    <li><strong>April 2026:</strong> 589 kWh, &pound;51.51 (8.7p/kWh effective)</li>
+    <li><strong>April 2026:</strong> 589 kWh, &pound;51.50 (8.7p/kWh effective)</li>
   </ul>
-  <p>67% more electricity, 54% less cost.</p>
+  <p>67% more electricity, 54% less cost./p>
+  <p>April benefits from the lower rates (3.33p off-peak, 26.59p peak), with 523 kWh at off-peak and 66 kWh at peak. 89% off-peak.</p>
 
   <div id="slider_savings">
     <a href="/assets/images/posts/2026/ess-update/march-2025-usage.png" target="_blank">
@@ -69,7 +77,7 @@ published: true
       <img data-src="/assets/images/posts/2026/ess-update/march-2026-usage.png" src="" alt="March 2026 Usage - 600 kWh">
     </a>
     <a href="/assets/images/posts/2026/ess-update/march-2026-cost.png" target="_blank">
-      <img data-src="/assets/images/posts/2026/ess-update/march-2026-cost.png" src="" alt="March 2026 Cost - £70.04">
+      <img data-src="/assets/images/posts/2026/ess-update/march-2026-cost.png" src="" alt="March 2026 Cost - £70.06">
     </a>
     <a href="/assets/images/posts/2026/ess-update/april-2025-usage.png" target="_blank">
       <img data-src="/assets/images/posts/2026/ess-update/april-2025-usage.png" src="" alt="April 2025 Usage - 352 kWh">
@@ -81,19 +89,39 @@ published: true
       <img data-src="/assets/images/posts/2026/ess-update/april-2026-usage.png" src="" alt="April 2026 Usage - 589 kWh">
     </a>
     <a href="/assets/images/posts/2026/ess-update/april-2026-cost.png" target="_blank">
-      <img data-src="/assets/images/posts/2026/ess-update/april-2026-cost.png" src="" alt="April 2026 Cost - £51.51">
+      <img data-src="/assets/images/posts/2026/ess-update/april-2026-cost.png" src="" alt="April 2026 Cost - £51.50">
     </a>
   </div>
   <p class="caption">8 screenshots from Octopus Energy: usage and cost for March and April, 2025 vs 2026</p>
 
-  <h3>How does this compare to the prediction?</h3>
-  <p>The original &pound;900/year estimate was for house usage alone, before we had the EV. Our house-only usage was about
-    353kWh/month. The effective rate has dropped from ~31p/kWh to ~10p/kWh, which on the original house-only usage works out to
-    a saving of about &pound;74/month or &pound;890/year. That&#39;s pretty much spot on with the prediction.</p>
-  <p>The extra ~240kWh/month from the EV makes the headline numbers look different though. Across March and April, we saved
-    &pound;97.89 compared to the same months last year, despite using 68% more electricity. The effective cost per kWh dropped by
-    67%. If that same 600kWh had been charged at the old 31p/kWh rate, it would have cost about &pound;186 instead of &pound;70.</p>
-  <p>The system cost ~&pound;4000. At these savings, the payback period is comfortably under 6 years, just as planned.</p>
+  <h3>Breaking down the savings</h3>
+  <p>The year-on-year comparison is dramatic but slightly misleading because we&#39;re comparing different usage levels. Here&#39;s
+    a clearer picture of where the savings actually come from, using March and April combined:</p>
+
+  <h4>1. House-only saving (the original prediction)</h4>
+  <p>House-only usage was about 353 kWh/month last year. If we keep that usage constant and just shift it to off-peak with the
+    battery, the cost drops from ~&pound;110/month (at the old flat rate) to roughly &pound;35/month on IOG. That&#39;s a saving
+    of about &pound;75/month, or <strong>&pound;900/year</strong> &mdash; right on target with the original prediction.</p>
+
+  <h4>2. What the full usage would cost at the old flat rate</h4>
+  <p>If all 600 kWh (March) had been charged at last year&#39;s effective rate of 30.3p/kWh, the bill would have been about
+    &pound;182. For April&#39;s 589 kWh at 31.9p, it would have been about &pound;188. Combined: roughly <strong>&pound;370 for
+      the two months</strong>.</p>
+
+  <h4>3. What we actually paid on IOG</h4>
+  <p>&pound;70.06 (March) + &pound;51.50 (April) = <strong>&pound;121.56</strong>.</p>
+
+  <p>That&#39;s a saving of about <strong>&pound;248 over two months</strong> vs the old flat rate &mdash; roughly
+    &pound;124/month, or about &pound;1,490/year. Of that, ~&pound;900 comes from the battery shifting house usage to off-peak
+    (the original prediction), and the remaining ~&pound;590 comes from the EV charging at 3&ndash;7p instead of 30p.</p>
+
+  <p>The year-on-year comparison shows a more modest &pound;97.89 saving, but that&#39;s comparing 1,189 kWh against last year&#39;s
+    706 kWh. We used 68% more electricity and still paid 45% less. The effective cost per kWh dropped by 67%.</p>
+
+  <h3>Payback</h3>
+  <p>The system cost ~&pound;4,000. On house-only savings of ~&pound;900/year the payback period is about 4.5 years, right in line
+    with the original estimate. Factor in the EV charging savings and the payback drops to under 3 years - although the EV
+    savings obviously depend on having an EV.</p>
 </section>
 
 <section id="ev">
