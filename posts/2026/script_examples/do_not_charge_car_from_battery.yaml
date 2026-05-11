@@ -1,0 +1,218 @@
+alias: Do not charge car from battery
+description: >-
+  Charge home battery during intelligent dispatch slots or cheap rates, optimise
+  otherwise
+triggers:
+  - trigger: state
+    entity_id:
+      - sensor.hypervolt_charging_readiness
+    alias: Hypervolt Charging State Changes
+  - trigger: state
+    entity_id:
+      - >-
+        binary_sensor.octopus_energy_xxx_intelligent_dispatching
+    alias: Intelligent Dispatching Changes
+  - trigger: state
+    entity_id:
+      - sensor.octopus_energy_electricity_xxx_current_rate
+    alias: Electricity Rate Changes
+  - trigger: time
+    at: "05:30:20"
+actions:
+  - action: octopus_energy.refresh_intelligent_dispatches
+    metadata: {}
+    data: {}
+    target:
+      entity_id: >-
+        binary_sensor.octopus_energy_xxx_intelligent_dispatching
+    continue_on_error: true
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - if:
+      - condition: time
+        after: "05:30:00"
+        before: "23:30:00"
+    then:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: sensor.hypervolt_charging_readiness
+                state: Charging
+              - condition: state
+                entity_id: >-
+                  binary_sensor.octopus_energy_xxx_intelligent_dispatching
+                state: "on"
+            alias: Car charging on dispatch slot
+            sequence:
+              - action: select.select_option
+                target:
+                  entity_id: >-
+                    select.victron_mqtt_xxx_system_0_system_ess_batterylife_state
+                data:
+                  option: keep_batteries_charged
+                alias: Set ESS to Keep batteries charged
+              - action: notify.mobile_app_device
+                metadata: {}
+                data:
+                  message: >-
+                    🚙 Arthur is charging on a cheap dispatch slot — batteries
+                    set to charge! 🔋
+                  data:
+                    clickAction: /energy-custom/0
+              - action: persistent_notification.create
+                data:
+                  title: 🔋 Battery Automation
+                  message: >
+                    **Action:** Keep batteries charged (car charging on dispatch
+                    slot)
+
+                    **Trigger:** {{ trigger.description if trigger is defined
+                    else 'Manual run' }}
+
+                    **Charging readiness:** {{
+                    states('sensor.hypervolt_charging_readiness') }}
+
+                    **Dispatching:** {{
+                    states('binary_sensor.octopus_energy_xxx_intelligent_dispatching')
+                    }}
+
+                    **Current rate:** {{
+                    states('sensor.octopus_energy_electricity_xxx_current_rate')
+                    }} GBP/kWh
+
+                    **Fired at:** {{ now().strftime('%d/%m/%Y %H:%M:%S') }}
+                  notification_id: battery_automation_status
+          - conditions:
+              - condition: numeric_state
+                entity_id: >-
+                  sensor.octopus_energy_electricity_xxx_current_rate
+                below: 0.1
+                alias: Rate is below 10p/kWh
+            alias: Cheap rate (regardless of car)
+            sequence:
+              - action: select.select_option
+                target:
+                  entity_id: >-
+                    select.victron_mqtt_xxx_system_0_system_ess_batterylife_state
+                data:
+                  option: keep_batteries_charged
+                alias: Set ESS to Keep batteries charged
+              - action: notify.mobile_app_device
+                metadata: {}
+                data:
+                  message: >-
+                    ⚡ Cheap rate detected ({{
+                    states('sensor.octopus_energy_electricity_xxx_current_rate')
+                    }} GBP/kWh) — batteries set to charge! 🔋
+                  data:
+                    clickAction: /energy-custom/0
+              - action: persistent_notification.create
+                data:
+                  title: ⚡ Battery Automation — Cheap Rate
+                  message: >
+                    **Action:** Keep batteries charged (rate below 10p/kWh)
+
+                    **Trigger:** {{ trigger.description if trigger is defined
+                    else 'Manual run' }}
+
+                    **Charging readiness:** {{
+                    states('sensor.hypervolt_charging_readiness') }}
+
+                    **Dispatching:** {{
+                    states('binary_sensor.octopus_energy_xxx_intelligent_dispatching')
+                    }}
+
+                    **Current rate:** {{
+                    states('sensor.octopus_energy_electricity_xxx_current_rate')
+                    }} GBP/kWh
+
+                    **Fired at:** {{ now().strftime('%d/%m/%Y %H:%M:%S') }}
+                  notification_id: battery_automation_status
+          - conditions:
+              - condition: state
+                entity_id: sensor.hypervolt_charging_readiness
+                state: Charging
+              - condition: state
+                entity_id: >-
+                  binary_sensor.octopus_energy_xxx_intelligent_dispatching
+                state: "off"
+            alias: Car charging outside dispatch at expensive rate
+            sequence:
+              - action: notify.mobile_app_device
+                alias: Push Notification to Phil
+                metadata: {}
+                data:
+                  title: 🚙 Arthur is charging when rates are expensive! ⚠️
+                  message: Check and deactivate charging immediately ⚡🔌
+              - action: notify.mobile_app_device_2
+                alias: Push Notification to Shona
+                metadata: {}
+                data:
+                  title: 🚙 Arthur is charging when rates are expensive! ⚠️
+                  message: Check and deactivate charging immediately ⚡🔌
+              - action: persistent_notification.create
+                data:
+                  title: ⚠️ Battery Automation — Expensive Charging!
+                  message: >
+                    **Action:** Alert sent — car charging outside dispatch slot
+                    at expensive rate!
+
+                    **Trigger:** {{ trigger.description if trigger is defined
+                    else 'Manual run' }}
+
+                    **Charging readiness:** {{
+                    states('sensor.hypervolt_charging_readiness') }}
+
+                    **Dispatching:** {{
+                    states('binary_sensor.octopus_energy_xxx_intelligent_dispatching')
+                    }}
+
+                    **Current rate:** {{
+                    states('sensor.octopus_energy_electricity_xxx_current_rate')
+                    }} GBP/kWh
+
+                    **Fired at:** {{ now().strftime('%d/%m/%Y %H:%M:%S') }}
+                  notification_id: battery_automation_status
+        default:
+          - action: select.select_option
+            target:
+              entity_id: >-
+                select.victron_mqtt_xxx_system_0_system_ess_batterylife_state
+            data:
+              option: with_battery_life
+            alias: Set ESS to Optimized mode
+          - action: notify.mobile_app_device
+            metadata: {}
+            data:
+              message: >-
+                🔋 Car not charging, rate normal — ESS set back to Optimized
+                mode
+              data:
+                clickAction: /energy-custom/0
+          - action: persistent_notification.create
+            data:
+              title: 🔋 Battery Automation — Default
+              message: >
+                **Action:** ESS set to Optimized mode (car not charging, rate
+                above 10p)
+
+                **Trigger:** {{ trigger.description if trigger is defined else
+                'Manual run' }}
+
+                **Charging readiness:** {{
+                states('sensor.hypervolt_charging_readiness') }}
+
+                **Dispatching:** {{
+                states('binary_sensor.octopus_energy_xxx_intelligent_dispatching')
+                }}
+
+                **Current rate:** {{
+                states('sensor.octopus_energy_electricity_xxx_current_rate')
+                }} GBP/kWh
+
+                **Fired at:** {{ now().strftime('%d/%m/%Y %H:%M:%S') }}
+              notification_id: battery_automation_status
+mode: restart

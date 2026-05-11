@@ -1,0 +1,54 @@
+alias: Energy Usage Alert
+description: "Alert when household power draw exceeds 6.5kW (close to inverter limit)"
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.shellyem_xxxxxxxxxxxxx_channel_1_power
+    above: 6500
+    alias: When energy usage is above 6.5kw
+conditions:
+  - condition: state
+    entity_id: binary_sensor.battery_charging_window_active
+    state: "off"
+actions:
+  - action: notify.mobile_app_device
+    data:
+      message: "⚡ Energy Usage Above 6.5kW ⚡"
+      data:
+        clickAction: /energy-custom/0
+  - if:
+      - condition: zone
+        entity_id: person.shona
+        zone: zone.home
+    then:
+      - action: notify.mobile_app_device_2
+        data:
+          message: "⚡ Energy Usage Above 6.5kW ⚡"
+          data:
+            clickAction: /energy-custom/0
+  - action: light.turn_on
+    data:
+      flash: long
+    target:
+      entity_id:
+        - light.desk_lightstrip
+        - light.kitchen_spots_back
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - action: light.turn_on
+    data:
+      color_temp_kelvin: 4507
+      brightness_pct: 100
+    target:
+      entity_id:
+        - light.desk_lightstrip
+        - light.kitchen_spots_back
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+mode: single

@@ -1,6 +1,17 @@
 - layout: blog
   author: Phil
   full-name: Phil Reynolds
+  short-title: home-ess-update
+  full-title: Home Battery ESS - 10 Month Update
+  summary: 10 months in, updated savings, EV integration, automation improvements and FAQs.
+  file-type: html
+  publish-date: May 11
+  publish-year: 2026
+  published: true
+
+- layout: blog
+  author: Phil
+  full-name: Phil Reynolds
   short-title: honeymoon
   full-title: Honeymoon
   summary: We went on honeymoon to New Zealand!

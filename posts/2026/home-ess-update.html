@@ -1,0 +1,474 @@
+---
+layout: blog
+author: Phil
+full-name: Phil Reynolds
+short-title: home-ess-update
+full-title: Home Battery ESS - 10 Month Update
+summary: 10 months in, updated savings, EV integration, automation improvements and FAQs.
+file-type: html
+publish-date: May 11
+publish-year: 2026
+published: true
+---
+
+<h1>Home ESS - 10 Month Update</h1>
+<p class="lead">In <a href="/posts/2025/home-ess">the original post</a>, I walked through planning, installing and automating my home
+  battery energy storage system. It&#39;s been about 10 months since then, so here&#39;s an update on how it&#39;s going, what&#39;s
+  changed and answers to the questions I&#39;ve been asked most.</p>
+
+<p>Quick recap: the system is:</p>
+  <ul>
+    <li><a href="https://www.fogstar.co.uk/collections/solar-battery-storage/products/fogstar-energy-16kwh-48v-solar-battery">Fogstar 16.1kWh battery</a>,</li>
+    <li><a href="https://www.victronenergy.com/inverters-chargers/multiplus-ii">Victron Multiplus-II 48/8000/110-100</a> inverter, and</li>
+    <li><a href="https://www.victronenergy.com/communication-centres/cerbo-gx">CerboGX MKII</a>,</li>
+  </ul>
+  <p>All automated with Victron ESS and Home Assistant. Originally on the Octopus Agile tariff, now on Intelligent Octopus Go (more on that <a href="#ev">below</a>). Total system cost was around &pound;4000.</p>
+
+<h3>Contents</h3>
+<ul>
+  <li><a href="#savings">Savings Update</a></li>
+  <li><a href="#ev">EV Charger Integration</a></li>
+  <li><a href="#automation-updates">Automation Updates</a></li>
+  <li><a href="#victron-gx">Victron GX Migration</a></li>
+  <li><a href="#faqs">FAQs</a></li>
+</ul>
+
+<section id="savings">
+  <h2>Savings Update</h2>
+  <p class="small">tl;dr: Prediction was accurate, on track to save ~£890 per year.</p>
+  <p>In the original post, I estimated savings of around &pound;900 per year with a payback period of under 6 years. The
+    <a href="https://purpleriver.dev/battery-payback">Battery Payback Calculator</a> predicted that shifting our ~13kWh/day of
+    usage from the ~30p/kWh peak rate to the ~7p/kWh off-peak rate would save roughly &pound;75/month.</p>
+  <p>Since then, we&#39;ve added a PHEV and EV charger (more on that <a href="#ev">below</a>), so even with our electricity usage going
+    way up our costs have still gone down.</p>
+
+  <p>Comparing the same months year-on-year tells the story pretty clearly:</p>
+
+  <h3>March: 2025 vs 2026</h3>
+  <ul>
+    <li><strong>March 2025:</strong> 353 kWh, &pound;107.04 (30.3p/kWh effective)</li>
+    <li><strong>March 2026:</strong> 600 kWh, &pound;70.04 (11.7p/kWh effective)</li>
+  </ul>
+  <p>70% more electricity, 35% less cost.</p>
+
+  <h3>April: 2025 vs 2026</h3>
+  <ul>
+    <li><strong>April 2025:</strong> 352 kWh, &pound;112.40 (31.9p/kWh effective)</li>
+    <li><strong>April 2026:</strong> 589 kWh, &pound;51.51 (8.7p/kWh effective)</li>
+  </ul>
+  <p>67% more electricity, 54% less cost.</p>
+
+  <div id="slider_savings">
+    <a href="/assets/images/posts/2026/ess-update/march-2025-usage.png" target="_blank">
+      <img src="/assets/images/posts/2026/ess-update/march-2025-usage.png" alt="March 2025 Usage - 353 kWh">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/march-2025-cost.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/march-2025-cost.png" src="" alt="March 2025 Cost - £107.04">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/march-2026-usage.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/march-2026-usage.png" src="" alt="March 2026 Usage - 600 kWh">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/march-2026-cost.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/march-2026-cost.png" src="" alt="March 2026 Cost - £70.04">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/april-2025-usage.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/april-2025-usage.png" src="" alt="April 2025 Usage - 352 kWh">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/april-2025-cost.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/april-2025-cost.png" src="" alt="April 2025 Cost - £112.40">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/april-2026-usage.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/april-2026-usage.png" src="" alt="April 2026 Usage - 589 kWh">
+    </a>
+    <a href="/assets/images/posts/2026/ess-update/april-2026-cost.png" target="_blank">
+      <img data-src="/assets/images/posts/2026/ess-update/april-2026-cost.png" src="" alt="April 2026 Cost - £51.51">
+    </a>
+  </div>
+  <p class="caption">8 screenshots from Octopus Energy: usage and cost for March and April, 2025 vs 2026</p>
+
+  <h3>How does this compare to the prediction?</h3>
+  <p>The original &pound;900/year estimate was for house usage alone, before we had the EV. Our house-only usage was about
+    353kWh/month. The effective rate has dropped from ~31p/kWh to ~10p/kWh, which on the original house-only usage works out to
+    a saving of about &pound;74/month or &pound;890/year. That&#39;s pretty much spot on with the prediction.</p>
+  <p>The extra ~240kWh/month from the EV makes the headline numbers look different though. Across March and April, we saved
+    &pound;97.89 compared to the same months last year, despite using 68% more electricity. The effective cost per kWh dropped by
+    67%. If that same 600kWh had been charged at the old 31p/kWh rate, it would have cost about &pound;186 instead of &pound;70.</p>
+  <p>The system cost ~&pound;4000. At these savings, the payback period is comfortably under 6 years, just as planned.</p>
+</section>
+
+<section id="ev">
+  <h2>EV Charger Integration</h2>
+  <p>In the original post, I mentioned we were getting a PHEV later in the year. Arthur (the car) arrived and we installed a
+    <a href="https://hypervolt.co.uk">Hypervolt EV charger</a>. We&#39;re now on the Intelligent Octopus Go (IOG) tariff,
+    which gives the whole house ~5.49p/kWh electricity during the off-peak overnight window and during smart dispatch slots when the car is
+    charging.</p>
+  <p class="small">Note: the offpeak rate on IOG seems to be a bit inconsistent at the moment. Perhaps due to large scale uncertainty
+    in the market, I don't know, but one month our off peak rate was 3.49p/kWh!</p>
+
+  <p>Getting the EV and battery working together was pretty straightforward, easier than the automation for Octopus Agile.
+    The only thing to solve was not letting the house battery charge the car and we're on a cheap electricity slot.</p>
+
+  <p>The <a href="https://github.com/BottlecapDave/HomeAssistant-OctopusEnergy">Octopus Energy HACS integration</a> exposes an
+    <code>intelligent_dispatching</code> binary sensor that tells you whether the car is currently in a cheap dispatch slot.
+    Combined with the <a href="https://github.com/gndean/home-assistant-hypervolt-charger">Hypervolt integration&#39;s</a>
+    charging readiness sensor, one automation handles four scenarios:</p>
+
+  <ol>
+    <li><strong>Car charging on an IOG dispatch slot</strong> &mdash; set the ESS to &quot;keep batteries charged&quot; so
+      the house battery tops up alongside the car at the cheap rate.</li>
+    <li><strong>Cheap rate detected (&lt;10p/kWh), regardless of car</strong> &mdash; same thing, charge everything while
+      it&#39;s cheap.</li>
+    <li><strong>Car charging at expensive rate outside a dispatch window</strong> &mdash; send urgent alerts to both phones.
+      This has caught a couple of unexpected charging sessions where the car started drawing power when it shouldn&#39;t have
+      been.</li>
+    <li><strong>Default (car not charging, rate normal)</strong> &mdash; ESS goes back to optimised mode, discharging the
+      battery to power the house.</li>
+  </ol>
+
+  <p>The Victron ESS has a <code>BatteryLife state</code> select entity with options like <code>keep_batteries_charged</code>
+    and <code>with_battery_life</code> (optimised mode). The automation just flips between these depending on what&#39;s
+    happening with the car and the current electricity rate.</p>
+
+  <details>
+    <summary>Do Not Charge Car From Battery - Automation</summary>
+    <p><a href="script_examples/do_not_charge_car_from_battery.yaml" target="_blank">Click to open the raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% raw_include_relative /script_examples/do_not_charge_car_from_battery.yaml %}</code></pre>
+  </details>
+</section>
+
+<section id="automation-updates">
+  <h2>Automation Updates</h2>
+
+  <h3>Node-RED Removed</h3>
+  <p>The Node-RED MQTT bridge from the original post (bridging the CerboGX&#39;s MQTT broker to Home Assistant&#39;s) has been replaced
+    by the <a href="https://github.com/sfstar/hass-victron">Victron MQTT</a> HACS integration, which talks directly to the CerboGX.
+    This simplified the setup and removed a potential point of failure. One fewer moving part.</p>
+
+  <h3>Octopus Agile Scheduling</h3>
+  <p>Since we've been on IOG, this is not used at all. IOG is cheaper (overall) and far simpler.</p>
+  <p>The Octopus Agile scheduling remained the most complex part of the system. The core approach from the original post hasn&#39;t
+    changed much: find the cheapest half-hour slots, store them, and trigger charging during those windows.</p>
+  <p>I did try the <a href="https://bottlecapdave.github.io/HomeAssistant-TargetTimeframes/">Target Timeframes</a> integration
+    (which I mentioned in the original post), but I never managed to get it working consistently enough to rely on. The custom Python
+    script and scheduling automations from the original post did all the heavy lifting.</p>
+
+  <h3>Energy Usage Alert</h3>
+  <p>I added an alert that triggers when grid usage goes above 6.5kW. The Multiplus-II can handle 8kW, but when the oven, kettle and
+    washing machine are all on simultaneously it gets close. The alert sends phone notifications and briefly flashes the kitchen lights.
+    It only triggers outside charging windows so it doesn&#39;t fire constantly overnight.</p>
+  <p>In practice it very rarely fires, but it&#39;s useful to know about and a good safety net.</p>
+
+  <details>
+    <summary>Energy Usage Alert Automation</summary>
+    <p><a href="script_examples/energy_usage_alert.yaml" target="_blank">Click to open the raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% include_relative /script_examples/energy_usage_alert.yaml %}</code></pre>
+  </details>
+  <br>
+
+  <h3>Grid Sensor Lost Alert</h3>
+  <p>There have been a couple of occasions when an MCP has tripped and the ET112 grid sensor lost communication with the CerboGX. When this happens, the
+    ESS can&#39;t function properly. A simple automation now alerts me immediately when the grid lost alarm triggers on the Victron system.</p>
+
+  <details>
+    <summary>Grid Sensor Lost Alert Automation</summary>
+    <p><a href="script_examples/grid_sensor_lost_alert.yaml" target="_blank">Click to open the raw file</a></p>
+
+    <pre><code class='language-yaml' lang='yaml'>{% include_relative /script_examples/grid_sensor_lost_alert.yaml %}</code></pre>
+  </details>
+  <br>
+
+  <p>When I get this alert, I know I need to pop out to garage and flip the MCP. I still haven't managed to identify the root cause of why it's tripping</p>
+
+  <h3>Charge Session Tracking</h3>
+  <p>The Battery Charge Session Tracker from the original post has been refined. It now logs when charging starts and ends, including
+    the start and end SoC, and sends a notification with a summary. Short sessions (under 5 minutes, usually the battery topping off)
+    are filtered out to reduce noise.</p>
+</section>
+
+<section id="victron-gx">
+  <h2>Victron GX Migration</h2>
+  <p>Home Assistant 2026.5 introduced a core <code>victron_gx</code> integration at Platinum quality. This is set to replace the two
+    HACS integrations I&#39;ve been running (Victron Modbus TCP + Victron MQTT), which between them created over 600 entities with a
+    lot of overlap and ~100 stale/unavailable entities.</p>
+
+  <p>I've planned my migration but haven't implemented it yet. The main work is remapping entity IDs across automations, the energy
+    dashboard, and custom dashboards. The payoff is eliminating the HACS dependency for a critical system component and getting a
+    much cleaner entity setup.</p>
+
+  <p>The new integration is written by the same author as the Victron MQTT HACS integration, so it should be a smooth transition.
+    I&#39;ll update this post once it&#39;s done.</p>
+</section>
+
+<section id="faqs">
+  <h1>FAQs</h1>
+  <p>These are compiled from questions I&#39;ve received since the original post was published.</p>
+
+  <ul>
+    <li><a href="#faq-wiring">Wiring &amp; Installation</a>
+      <ul>
+        <li><a href="#faq-wiring-size">What size wiring and what MCB?</a></li>
+        <li><a href="#faq-dc-isolator">Do I need a DC isolator between battery and inverter?</a></li>
+        <li><a href="#faq-can-cable">What cable connects the Fogstar to the GX?</a></li>
+        <li><a href="#faq-moving-house">Can I take the battery kit if I move house?</a></li>
+        <li><a href="#faq-electrician">How do I find a suitable electrician?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-et112">ET112 Sensors</a>
+      <ul>
+        <li><a href="#faq-et112-necessary">Are all three ET112 sensors necessary?</a></li>
+        <li><a href="#faq-et112-placement">Where does the ET112 go?</a></li>
+        <li><a href="#faq-et112-multiple">Can I use multiple ET112s?</a></li>
+        <li><a href="#faq-et112-ev">What is the ET112 on the EV charger for?</a></li>
+        <li><a href="#faq-ct-clamp">What is the yellow CT clamp near the EV charger?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-sizing">Battery Sizing &amp; Charging</a>
+      <ul>
+        <li><a href="#faq-charge-time">How long does the battery take to charge?</a></li>
+        <li><a href="#faq-battery-size">How do I work out the right battery size?</a></li>
+        <li><a href="#faq-four-batteries">The calculator shows four batteries &mdash; do I need four?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-tariffs">Tariffs &amp; Automation</a>
+      <ul>
+        <li><a href="#faq-ha-needed">Do I need Home Assistant for IOG?</a></li>
+        <li><a href="#faq-dispatch-slots">Can the battery charge during extra dispatch slots?</a></li>
+        <li><a href="#faq-ev-discharge">How does it prevent discharging to charge the EV?</a></li>
+        <li><a href="#faq-monitoring">Can I get basic monitoring without Home Assistant?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-system">System &amp; Inverter Choice</a>
+      <ul>
+        <li><a href="#faq-solar">Do you have solar panels?</a></li>
+        <li><a href="#faq-alternatives">Victron vs alternatives?</a></li>
+        <li><a href="#faq-existing-solar">Can I keep existing solar inverters?</a></li>
+        <li><a href="#faq-ups">Can I use the battery as a UPS?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-config">Configuration &amp; Troubleshooting</a>
+      <ul>
+        <li><a href="#faq-grid-failure">Cerbo reports &quot;grid failure&quot; &mdash; what&#39;s wrong?</a></li>
+      </ul>
+    </li>
+    <li><a href="#faq-resources">Useful Resources</a></li>
+  </ul>
+
+  <h2 id="faq-wiring">Wiring &amp; Installation</h2>
+
+  <h4 id="faq-wiring-size">What size wiring do you have from the Victron back to the consumer unit, and what MCB?</h4>
+  <p>10mm&sup2; cable &mdash; 12m open to air (with 10mm bond) inside the house, then 13m of 10mm armoured outside, joined at a
+    junction box. It&#39;s on a 32A MCB (possibly 40A). The cable sizing was specced by Paul the electrician and verified with online
+    cable calculators from electrical wholesalers. Worth running those numbers for your own install as cable length and installation
+    method will affect things, but 10mm&sup2; over a reasonable run should be fine for the 8000.</p>
+
+  <h4 id="faq-dc-isolator">Do I have a separate DC isolator or fuse between the battery and inverter?</h4>
+  <p>No. The Fogstar&#39;s internal BMS handles overcurrent protection on the DC side. That said, if your supplier (e.g. Bimble Solar)
+    recommends one for your specific setup, go with their advice &mdash; having an additional DC isolation point doesn&#39;t do any
+    harm and gives you an easy way to fully isolate the DC side if you ever need to work on anything.</p>
+
+  <h4 id="faq-can-cable">What cable connects the Fogstar battery to the GX device?</h4>
+  <p>A VE.Can to CAN-bus Type-B cable. On my setup it connects to the VE.Can port on the CerboGX and the CAN-bus port on the
+    Fogstar&#39;s BMS. If you have a MultiPlus-II with built-in GX rather than a separate Cerbo, double-check which port you need on
+    the inverter side &mdash; but it should still be a CAN-bus Type-B connection on the Fogstar end.</p>
+  <p><strong>Important config step:</strong> You need to change the connection type in Settings &gt; Connectivity to
+    &quot;CAN-bus BMS LV (500 kbits/s)&quot; for the GX to recognise the battery properly. This caught me out initially.</p>
+
+  <h4 id="faq-moving-house">Can I take the battery kit with me if I move house?</h4>
+  <p>Yes. The battery, inverter and Cerbo GX are all portable &mdash; they come with you. The only things that stay behind are the
+    wiring and consumer unit work, which is a relatively small part of the overall cost.</p>
+
+  <h4 id="faq-electrician">How do I find a suitable electrician for this type of install?</h4>
+  <p>This can be tricky &mdash; you want someone comfortable with Victron ESS installations specifically, not just a general
+    electrician. Some suggestions:</p>
+  <ul>
+    <li>Victron has an installer/dealer network &mdash; check their website for someone in your area with ESS experience.</li>
+    <li><a href="https://www.bimblesolar.com/">Bimble Solar</a> were brilliant for hardware and may be able to recommend an installer
+      near you.</li>
+    <li>The <a href="https://community.victronenergy.com/">Victron Community forums</a> are really active and UK installers post
+      there &mdash; worth asking.</li>
+  </ul>
+
+  <h2 id="faq-et112">ET112 Sensors</h2>
+
+  <h4 id="faq-et112-necessary">Are all three ET112 sensors necessary?</h4>
+  <p>No. The only ET112 that&#39;s essential for the Victron ESS is the <strong>grid meter</strong> &mdash; installed immediately
+    after the meter, before any loads. This is the control input that tells the ESS what&#39;s being imported and exported so it can
+    manage charging and discharging.</p>
+  <p>My other two ET112s (feed to garage and EV charger) are just for monitoring visibility &mdash; nice to have on the dashboards
+    but the ESS doesn&#39;t need them to function. I added them because I wasn&#39;t confident in what I was doing and wanted more
+    data. I&#39;ve actually doubled up more than the diagram shows &mdash; each ET112 also has a Shelly CT clamp monitoring the
+    same feed. The values are always within a margin of error and both feed into Home Assistant.</p>
+
+  <h4 id="faq-et112-placement">Where does the ET112 go in relation to the meter, loads and inverter?</h4>
+  <p>This took me a while to figure out as the documentation isn&#39;t that clear:</p>
+  <ul>
+    <li>The ET112 needs to monitor the grid <strong>immediately after the meter, before any loads</strong>.</li>
+    <li>The sense cables from the ET112 feed into the CerboGX.</li>
+    <li>The CerboGX is the brain, which tells the inverter what to do.</li>
+    <li>The ESS Assistant firmware gets installed on the MultiPlus, not the CerboGX &mdash; this confused me for a while too!</li>
+  </ul>
+
+  <h4 id="faq-et112-multiple">Can I use multiple ET112s to measure different circuits?</h4>
+  <p>Yes, but you only need one configured as the grid meter for the ESS. Additional ET112s can be configured in different roles
+    (PV meter, AC meter, etc.) for monitoring purposes. For a setup where you want to measure the house and garage but exclude the
+    EV charger, a single ET112 measuring the house + garage tail (excluding the EV charger feed) should work well.</p>
+
+  <h4 id="faq-et112-ev">What is the ET112 on the EV charger for?</h4>
+  <p>It&#39;s for monitoring, not for the ESS itself. The automation handles preventing the battery from discharging to charge the
+    car &mdash; see the <a href="#faq-tariffs">IOG dispatch slots question</a> below. The ET112 on the EV charger circuit just
+    gives me visibility of that load on the dashboards.</p>
+
+  <h4 id="faq-ct-clamp">What is the yellow CT clamp sensor near the EV charger in the diagram?</h4>
+  <p>That&#39;s a CT clamp that feeds into the EV charger itself. This is required so the EVC can automatically reduce its draw if
+    the overall household draw gets too high. Consider the (improbable but possible) worst case: 6.6kW MultiPlus + 7.4kW EVC + 7kW
+    oven + kettle + microwave + washing machine + tumble dryer is an insane max load that you have to account for. Most EV chargers
+    require this kind of current sensing.</p>
+
+  <h2 id="faq-sizing">Battery Sizing &amp; Charging</h2>
+
+  <h4 id="faq-charge-time">How long does the battery take to charge?</h4>
+  <p>From real-world data with my 16.1kWh Fogstar and the MP-II 48/8000 inverter:</p>
+  <ul>
+    <li>16% &rarr; 100% in ~2.5 hours (23:32 to 02:00)</li>
+    <li>17% &rarr; 100% in ~2.5 hours (23:30 to 02:00)</li>
+  </ul>
+  <p>That&#39;s roughly 13.5kWh in 2.5 hours, at approximately 105&ndash;110A &mdash; basically the MP-II 48/8000&#39;s full 110A
+    charger rating. The Fogstar BMS doesn&#39;t seem to limit it significantly.</p>
+  <p>With the smaller MP-II 48/5000 (70A charger), the same battery would take closer to 4&ndash;4.5 hours.</p>
+  <p>For a 32kWh battery with the 8000 inverter, expect roughly double &mdash; around 5 hours. Check this fits within your
+    tariff&#39;s off-peak window.</p>
+
+  <h4 id="faq-battery-size">How do I work out the right battery size for my usage?</h4>
+  <p>Download your last 12 months of half-hourly readings from your Octopus account and run them through the
+    <a href="/battery-payback">Battery Payback Calculator</a>. It calculates savings, payback period and charge time vs off-peak
+    window based on your actual usage patterns.</p>
+  <p>As a rough guide: my average daily usage is ~13kWh and the 16.1kWh battery covers it most days. I only fully drain it on about
+    5% of days. If your daily usage is significantly higher (e.g. 25kWh+), a 16.1kWh battery will still save you money but won&#39;t
+    offset all your peak usage.</p>
+
+  <h4 id="faq-four-batteries">The calculator shows four batteries &mdash; do I need four?</h4>
+  <p>No! The calculator lets you compare up to four different battery configurations side by side. The screenshot on the blog shows
+    the Fogstar 16.1kWh with two different inverter options, the Fogstar 32kWh, and the MyEnergi 20kWh system &mdash; just for
+    comparison purposes.</p>
+
+  <h2 id="faq-tariffs">Tariffs &amp; Automation</h2>
+
+  <h4 id="faq-ha-needed">Do I need Home Assistant to run this on Intelligent Octopus Go?</h4>
+  <p>No. IOG has a fixed off-peak window (23:30&ndash;05:30), which is much simpler than Octopus Agile&#39;s half-hourly variable
+    rates. The Victron ESS has built-in scheduled charging that handles a fixed off-peak window without needing Home Assistant or any
+    custom automation.</p>
+  <p>Victron also have Dynamic ESS (DESS), which optimises charge and discharge cycles based on your energy prices and usage patterns.
+    It works with fixed tariffs like IOG as well as dynamic ones, and it&#39;s configured through the Victron VRM portal &mdash; no
+    coding or home automation needed.</p>
+  <p>The complexity in the <a href="/posts/2025/home-ess">original blog post</a> is mostly around automating Octopus Agile. For IOG,
+    once it&#39;s configured it&#39;s straightforward to manage.</p>
+
+  <h4 id="faq-dispatch-slots">Can the battery charge during IOG&#39;s extra dispatch slots (outside the normal off-peak window)?</h4>
+  <p>Yes. The BottlecapDave Octopus Home Assistant integration exposes an <code>intelligent_dispatching</code> sensor that turns on
+    during both the standard 23:30&ndash;05:30 off-peak window <strong>and</strong> any extra dispatch slots that Octopus assigns
+    during the day.</p>
+  <p><strong>Important caveat:</strong> The dispatching sensor can show as &quot;on&quot; during a dispatch slot even if the car
+    isn&#39;t actually charging &mdash; and you won&#39;t get the cheap rate unless the car is genuinely drawing power. My automation
+    checks both the dispatching state and whether the EV charger is actively charging before telling the battery to charge.</p>
+
+  <h4 id="faq-ev-discharge">How does the system prevent the battery from discharging to charge the EV?</h4>
+  <p>This is handled by automation in Home Assistant rather than by the ET112 sensors. My automation monitors:</p>
+  <ol>
+    <li>Whether the EV charger (Hypervolt) is actively charging</li>
+    <li>Whether an IOG intelligent dispatch slot is active</li>
+    <li>The current electricity rate</li>
+  </ol>
+  <p>If the car is charging on a cheap dispatch slot &rarr; the battery charges too (cheap rate for both). If the car is charging
+    outside a dispatch slot at expensive rates &rarr; it sends an alert. If nothing is charging and rates are normal &rarr; the ESS
+    runs in optimised discharge mode. See the full automation in the <a href="#ev">EV Charger Integration</a> section above.</p>
+
+  <h4 id="faq-monitoring">Can I get basic monitoring without going deep into Home Assistant?</h4>
+  <p>Yes. The Victron VRM portal gives you energy flows, system performance and usage data out of the box as a web dashboard &mdash;
+    no Home Assistant needed. HA is only necessary if you want custom automations or deeper integration.</p>
+
+  <h2 id="faq-system">System &amp; Inverter Choice</h2>
+
+  <h4 id="faq-solar">Do you have solar panels?</h4>
+  <p>No. We live in a conservation area, in a mid-terrace with a small south-facing roof space with a large gable end, and the garage
+    roof isn&#39;t strong enough. Solar isn&#39;t an option for us.</p>
+
+  <h4 id="faq-alternatives">Victron vs alternatives (Solis, Luxpower, MyEnergi, GivEnergy)?</h4>
+  <p>I can only speak to Victron + Fogstar, which has been great. I don&#39;t have experience with Solis, Luxpower or other inverter
+    brands, so I can&#39;t compare directly. I chose Victron for the strong community support, depth of capability and solid Home
+    Assistant integration. The more integrated systems (MyEnergi, GivEnergy) are designed to be simpler out of the box but cost
+    more.</p>
+  <p>Victron&#39;s configuration has some complexity upfront, but once it&#39;s set up it&#39;s easy to manage &mdash; especially on
+    a fixed tariff like IOG where the built-in ESS scheduled charging and DESS handle things without custom automation.</p>
+
+  <h4 id="faq-existing-solar">Can I keep my existing solar inverters and add a Victron battery system?</h4>
+  <p>Yes &mdash; AC-coupling existing solar inverters is the simplest approach. The Victron MPPT charge controllers are designed for
+    lower-voltage DC-coupled solar, so if your existing panels are in higher-voltage strings they may not be a good fit for the MPPT.
+    Keeping your current solar inverters feeding into one of the consumer units works well &mdash; the ESS will see the solar
+    production as reduced grid import.</p>
+
+  <h4 id="faq-ups">Can I use the battery as a UPS for critical loads?</h4>
+  <p>It depends on your layout. In my setup, the grid comes in at the front of the house and the inverter is in the garage
+    (Grid &gt; Load &gt; Inverter), so using AC-OUT as a UPS for the house wasn&#39;t feasible. However, if your inverter is near
+    critical loads (e.g. a server/network cabinet in the same garage), you could wire those loads off AC-OUT1. If the grid drops, the
+    inverter keeps those loads running from the battery.</p>
+
+  <h2 id="faq-config">Configuration &amp; Troubleshooting</h2>
+
+  <h4 id="faq-grid-failure">My Cerbo GX reports &quot;grid failure&quot; even though the MultiPlus is connected to mains &mdash; what&#39;s wrong?</h4>
+  <p>If the ESS Assistant shows mains frequency, voltage and current, the MP-II can see the grid &mdash; it&#39;s likely
+    <strong>rejecting</strong> it rather than not seeing it. Common causes:</p>
+  <ul>
+    <li><strong>Grid code:</strong> Check it&#39;s set to UK G99 in VEConfigure. Wrong country code = wrong frequency/voltage
+      tolerances.</li>
+    <li><strong>Firmware:</strong> Make sure both the MP-II and Cerbo GX are on the latest firmware. Older versions have had bugs
+      causing grid rejection.</li>
+    <li><strong>Grid metering:</strong> Check whether the ESS grid metering setting matches your setup &mdash; &quot;External
+      meter&quot; if you have an ET112/CT sensor, &quot;Inverter/Charger&quot; if you don&#39;t.</li>
+    <li><strong>LOM (Loss of Mains) detection:</strong> This anti-islanding feature can falsely trip if cable impedance between the
+      grid and MP-II is high (long or thin cables). For UK it should be on Type B. There&#39;s a &quot;Weak AC input&quot; option in
+      VEConfigure that can help.</li>
+  </ul>
+  <p>The <a href="https://community.victronenergy.com/">Victron Community forums</a> are the best place for troubleshooting specific
+    configuration issues &mdash; there are people who have seen and solved pretty much everything.</p>
+
+  <h2 id="faq-resources">Useful Resources</h2>
+  <ul>
+    <li><a href="/battery-payback">Battery Payback Calculator</a> &mdash; compare battery options with your actual usage data</li>
+    <li><a href="https://community.victronenergy.com/">Victron Community Forums</a> &mdash; invaluable for troubleshooting and
+      design advice</li>
+    <li><a href="https://forum.octopus.energy/">Octopus Forum</a> &mdash; tariff-specific questions and automation ideas</li>
+    <li><a href="https://www.bimblesolar.com/">Bimble Solar</a> &mdash; great for Victron hardware and advice</li>
+    <li><a href="https://bottlecapdave.github.io/HomeAssistant-OctopusEnergy/">BottlecapDave&#39;s Octopus HA Integration</a>
+      &mdash; foundation for Octopus automations in Home Assistant</li>
+    <li><a href="https://community.home-assistant.io/t/victron-integrated-with-ha-and-emhass-my-single-guide/449530">Victron + HA +
+      EMHASS Guide</a> &mdash; comprehensive HA integration guide</li>
+    <li><a href="https://community.home-assistant.io/t/victron-integration-with-octopus-energy-automatic-iog-scheduling-via-mqtt/897087">Victron
+      + Octopus IOG Scheduling via MQTT</a> &mdash; tfboy&#39;s IOG automation approach</li>
+    <li><a href="https://community.victronenergy.com/t/dynamic-ess-for-uk-octopus-users-now-on-regular-vrm/3942">Dynamic ESS for UK
+      Octopus Users</a></li>
+    <li><a href="https://community.home-assistant.io/t/home-assistant-and-victron-gx-multiplus-ii-managing-your-battery-using-modbus-tcp/724762">HA
+      + Victron via Modbus TCP</a></li>
+    <li><a href="https://github.com/victronenergy/venus/wiki">Venus OS Wiki</a></li>
+    <li><a href="https://www.victronenergy.com/media/pg/Energy_Meter_ET112/en/installation-and-configuration.html">ET112 Installation
+      Guide</a></li>
+    <li><a href="https://cdn.shopify.com/s/files/1/1347/0997/files/FogstarEnergy_16.1kWh_Battery_compressed.pdf">Fogstar 16.1kWh
+      Datasheet</a></li>
+  </ul>
+
+  <hr>
+  <p>If you have any other questions, feel free to <a href="mailto:batteryess@purpleriver.dev">email me</a>. The original post with
+    the full planning, installation and automation details is <a href="/posts/2025/home-ess">here</a>.</p>
+  <br /><br /><br />
+</section>
+
+<script>
+  new IdealImageSlider.Slider('#slider_savings');
+  const slider_savings = new IdealImageSlider.Slider({
+    selector: '#slider_savings',
+    height: '16:9',
+    interval: 4000
+  });
+  slider_savings.start();
+</script>

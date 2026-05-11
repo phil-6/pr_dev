@@ -78,7 +78,7 @@ actions:
                   - data:
                       title: Battery Charging Ended🔋🏁
                       message: "{{ notification_message }}"
-                    action: notify.mobile_app_phil_s24u
+                    action: notify.mobile_app_device
                 alias: If charging lasted more than 5 minutes
             default:
               - data:

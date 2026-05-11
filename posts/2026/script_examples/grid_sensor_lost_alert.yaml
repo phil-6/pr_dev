@@ -1,0 +1,16 @@
+alias: Alert when ESS Grid Sensor Lost
+description: "Notify immediately when the Victron inverter reports a grid lost alarm"
+triggers:
+  - trigger: state
+    entity_id:
+      - sensor.victron_mqtt_xxx_vebus_276_vebus_inverter_alarm_grid_lost
+    to:
+      - alarm
+conditions: []
+actions:
+  - action: notify.mobile_app_device
+    data:
+      message: " 🚨 ESS has lost grid sensor 🚨 "
+      data:
+        clickAction: /energy-custom/0
+mode: single
